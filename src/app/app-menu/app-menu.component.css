@@ -1,0 +1,92 @@
+#app-menu {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 300px;
+  background: #455A64;
+}
+#app-menu #current-user {
+  height: 200px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: transparent;
+  /*** Фото текущего пользователя ***/
+  /*** Имя текущего пользователя ***/
+  /*** Должность текущего пользователя ***/
+}
+#app-menu #current-user img {
+  display: block;
+  width: 120px;
+  height: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 50%;
+}
+#app-menu #current-user .current-user-name {
+  margin-top: 10px;
+  font-size: 17px;
+  text-align: center;
+  color: white;
+}
+#app-menu #current-user .current-user-position {
+  font-size: 14px;
+  color: #BDBDBD;
+  text-align: center;
+}
+#app-menu #items-container {
+  margin-top: 20px;
+}
+#app-menu #items-container .menu-item:hover {
+  background: #546E7A;
+}
+#app-menu #items-container .menu-item a {
+  display: block;
+  height: 40px;
+  padding-left: 15px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: white;
+  border-left: 3px solid transparent;
+}
+#app-menu #items-container .menu-item a.active {
+  border-left: 3px solid #FFB74D;
+  background: #37474F;
+}
+#app-menu #items-container .menu-item .menu-item-container {
+  padding-left: 30px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  background: #263238;
+}
+#app-menu #items-container .menu-item .menu-item-container a {
+  display: block;
+  height: auto;
+  min-height: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  font-size: 13px;
+  color: #81D4FA;
+}
+#app-menu #items-container .menu-item .menu-item-container a:hover {
+  color: #0288D1;
+}
+#app-menu #items-container .menu-item .fa {
+  float: left;
+  display: inline-block;
+  height: 40px;
+  margin-right: 15px;
+  font-size: 18px !important;
+  line-height: 40px;
+  color: #CFD8DC;
+}
+#app-menu #items-container .menu-item .menu-item-title {
+  display: inline-block;
+  float: left;
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  text-transform: uppercase;
+}

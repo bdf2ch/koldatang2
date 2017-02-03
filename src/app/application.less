@@ -1,0 +1,175 @@
+@import "../styles/variables";
+
+
+
+/**********
+** BASIC
+ **********/
+html, body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto Regular";
+  background: #FAFAFA;
+}
+
+
+
+/**********
+** FONTS
+*********/
+@font-face {
+  font-family: "Roboto Regular";
+  src: url("../fonts/Roboto-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto Italic";
+  src: url("../fonts/Roboto-Italic.ttf");
+}
+
+
+
+#app-content {
+  position: absolute;
+  left: @app-menu-width;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+
+
+#app-content-header  {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: @app-content-header-height;
+  //padding-left: 20px;
+  box-sizing: border-box;
+  background: @app-content-header-background-color;
+  border-bottom: 1px solid #E0E0E0;
+
+  .app-content-title {
+    float: left;
+    height: @app-content-header-height;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: @app-content-header-height;
+    color: #757575;
+    text-decoration: none;
+    border-bottom: 4px solid transparent;
+
+    &:hover {
+      color: black;
+    }
+  }
+
+  .app-content-title-divider {
+    float: left;
+    width: @app-content-header-height;
+    height: @app-content-header-height;
+    margin-left: -40px;
+    //margin-right: 10px;
+    transform: rotate(45deg);
+    border-top: 1px solid lightgrey;
+    border-right: 1px solid lightgrey;
+  }
+
+  #app-content-controls {
+    float: right;
+    height: @app-content-header-height;
+    padding-right: 10px;
+    box-sizing: border-box;
+    font-size: 20px;
+    line-height: @app-content-header-height;
+
+    a {
+      padding: 10px;
+      color: #BDBDBD !important;
+
+      &:hover {
+        color: #757575 !important;
+      }
+    }
+
+  }
+}
+
+
+#app-content-content {
+  position: absolute;
+  left: 0px;
+  top: @app-content-header-height;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
+}
+
+.panel {
+  position: relative;
+  overflow: auto;
+  background: white;
+  //border: 1px solid #E0E0E0;
+
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+
+  &.no-sidebar {
+    .panel-content {
+      margin-right: 0px;
+      border-right: 1px solid #E0E0E0;
+    }
+  }
+
+  .panel-content {
+    margin-right: 350px;
+    border-top: 1px solid #E0E0E0;
+    border-left: 1px solid #E0E0E0;
+    border-bottom: 1px solid #E0E0E0;
+
+    .header {
+      overflow: auto;
+      box-sizing: border-box;
+    }
+
+    .content {
+      overflow: auto;
+    }
+
+    .title {
+      padding-bottom: 5px;
+      box-sizing: border-box;
+      font-size: 20px;
+      color: black;
+      border-bottom: 1px solid lightgrey;
+    }
+  }
+
+
+
+  .panel-sidebar {
+    position: absolute;
+    width: 350px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    box-sizing: border-box;
+    background: #CFD8DC;
+  }
+
+
+
+  .panel-content-header {
+
+  }
+}

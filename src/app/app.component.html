@@ -1,3 +1,45 @@
-<h1>
-  {{title}}
-</h1>
+<app-menu></app-menu>
+
+<div id="app-content">
+
+  <div id="app-content-header">
+    <a href class="app-content-title active">Пользователи</a>
+    <span class="app-content-title-divider"></span>
+    <a href class="app-content-title">Пользователи Active Directory</a>
+
+    <div id="app-content-controls">
+      <a href="#/new-user">
+        <span class="fa fa-plus" title="Добавить пользователя"></span>
+      </a>
+    </div>
+  </div>
+
+  <div id="app-content-content">
+    <div class="padding-10" ng-view></div>
+  </div>
+
+</div>
+
+
+<!--
+<table>
+  <thead>
+  <tr>
+    <th>Имя</th>
+    <th>e-mail</th>
+    <th>Должность</th>
+  </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let user of users">
+      <td>{{ user.surname }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.position }}</td>
+    </tr>
+  <tr>
+    <td colspan="3" *ngIf="users.length === 0"></td>
+  </tr>
+  </tbody>
+</table>
+-->

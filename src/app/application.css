@@ -1,0 +1,131 @@
+/**********
+** BASIC
+ **********/
+html,
+body {
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+  font-family: "Roboto Regular";
+  background: #FAFAFA;
+}
+/**********
+** FONTS
+*********/
+@font-face {
+  font-family: "Roboto Regular";
+  src: url("../fonts/Roboto-Regular.ttf");
+}
+@font-face {
+  font-family: "Roboto Bold";
+  src: url("../fonts/Roboto-Bold.ttf");
+}
+@font-face {
+  font-family: "Roboto Italic";
+  src: url("../fonts/Roboto-Italic.ttf");
+}
+#app-content {
+  position: absolute;
+  left: 300px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+#app-content-header {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  height: 40px;
+  box-sizing: border-box;
+  background: #EEEEEE;
+  border-bottom: 1px solid #E0E0E0;
+}
+#app-content-header .app-content-title {
+  float: left;
+  height: 40px;
+  padding-left: 20px;
+  padding-right: 20px;
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 40px;
+  color: #757575;
+  text-decoration: none;
+  border-bottom: 4px solid transparent;
+}
+#app-content-header .app-content-title:hover {
+  color: black;
+}
+#app-content-header .app-content-title-divider {
+  float: left;
+  width: 40px;
+  height: 40px;
+  margin-left: -40px;
+  transform: rotate(45deg);
+  border-top: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+}
+#app-content-header #app-content-controls {
+  float: right;
+  height: 40px;
+  padding-right: 10px;
+  box-sizing: border-box;
+  font-size: 20px;
+  line-height: 40px;
+}
+#app-content-header #app-content-controls a {
+  padding: 10px;
+  color: #BDBDBD !important;
+}
+#app-content-header #app-content-controls a:hover {
+  color: #757575 !important;
+}
+#app-content-content {
+  position: absolute;
+  left: 0px;
+  top: 40px;
+  right: 0px;
+  bottom: 0px;
+  overflow: auto;
+}
+.panel {
+  position: relative;
+  overflow: auto;
+  background: white;
+  border-top-left-radius: 2px;
+  border-top-right-radius: 2px;
+}
+.panel.no-sidebar .panel-content {
+  margin-right: 0px;
+  border-right: 1px solid #E0E0E0;
+}
+.panel .panel-content {
+  margin-right: 350px;
+  border-top: 1px solid #E0E0E0;
+  border-left: 1px solid #E0E0E0;
+  border-bottom: 1px solid #E0E0E0;
+}
+.panel .panel-content .header {
+  overflow: auto;
+  box-sizing: border-box;
+}
+.panel .panel-content .content {
+  overflow: auto;
+}
+.panel .panel-content .title {
+  padding-bottom: 5px;
+  box-sizing: border-box;
+  font-size: 20px;
+  color: black;
+  border-bottom: 1px solid lightgrey;
+}
+.panel .panel-sidebar {
+  position: absolute;
+  width: 350px;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+  background: #CFD8DC;
+}
