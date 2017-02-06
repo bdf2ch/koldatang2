@@ -19,6 +19,7 @@ export class $users {
     var length = source.length;
     for (let i = 0; i < length; i++) {
       let user = new User(source[i]);
+      user.setup(["surname", "name", "fname", "position", "email", "isAdministrator"]);
       this.users.push(user);
     }
     return true;
@@ -37,9 +38,9 @@ export class $users {
   /**
    * Поиск пользователя по идентификатору
    * @param id {number} - идентификатор пользователя
-   * @returns {any}
+   * @returns {User|boolean}
    */
-  getById(id: number): User|boolean {
+  getById(id: number): User | boolean {
     length = this.users.length;
     for (let i = 0; i < length; i++) {
       if (this.users[i].id === id)

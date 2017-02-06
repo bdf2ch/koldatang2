@@ -7,7 +7,7 @@ import { usersMock } from './kolenergo/users-mock';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./application.css']
+  styleUrls: []
 })
 export class AppComponent implements OnInit{
   title = 'koldata... works!';

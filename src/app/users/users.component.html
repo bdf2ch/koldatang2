@@ -1,0 +1,58 @@
+
+<!--<table class="stripped selectable">
+  <thead>
+  <tr>
+    <th>Имя</th>
+    <th>e-mail</th>
+    <th>Должность</th>
+  </tr>
+  </thead>
+  <tbody>
+
+    <tr *ngFor="let user of users">
+      <td>{{ user.surname }}</td>
+      <td>{{ user.email }}</td>
+      <td>{{ user.position }}</td>
+    </tr>
+  <tr>
+    <td colspan="3" *ngIf="users.length === 0"></td>
+  </tr>
+  </tbody>
+</table>
+-->
+
+
+
+<div class="panel no-sidebar">
+
+  <div class="panel-content">
+
+    <div class="header padding-10">
+      <input type="text" name="" id="" class="width-100 dark search">
+      <!--<search-box class="width-100"></search-box>-->
+    </div>
+
+    <div class="content">
+      <table class="stripped selectable width-100">
+        <thead>
+        <tr>
+          <th class="width-30">Имя</th>
+          <th class="width-20">e-mail</th>
+          <th class="width-20">Должность</th>
+          <th class="width-30">Отдел</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of users" (click)="selectUser(user)">
+          <td class="width-30">{{ user.surname + " " + user.name + " " + user.fname }}</td>
+          <td class="width-20">{{ user.email }}</td>
+          <td class="width-20">{{ user.position }}</td>
+          <td class="width-30">Сектор по сбору посуды</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+

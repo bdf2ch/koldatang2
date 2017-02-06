@@ -1,3 +1,6 @@
+import { Backup } from './Backup.model';
+import { Status } from './Status.model';
+
 export interface UserConfig {
   readonly id: number;
   tab_id?: number;
@@ -12,7 +15,7 @@ export interface UserConfig {
 };
 
 
-export class User {
+export class User implements Backup, Status {
   readonly id: number = 0;
   tabId: number = 0;
   departmentId: number = 0;
@@ -26,6 +29,7 @@ export class User {
 
 
   constructor (config: UserConfig) {
+    //super();
     this.id = config.id;
     this.surname = config.surname;
     this.name = config.name;

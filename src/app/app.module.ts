@@ -5,18 +5,26 @@ import { HttpModule } from '@angular/http';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { AppMenuComponent } from './app-menu/app-menu.component';
 import { $users } from './kolenergo/$users.service';
+import { UsersComponent } from './users/users.component';
+import { NewUserComponent } from './users/new-user/new-user.component';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
 
 const appRoutes: Routes = [
-  { path: "users", component: AppComponent }
+  { path: "users", component: UsersComponent },
+  { path: "users/new", component: NewUserComponent },
+  { path: "users/:id", component: EditUserComponent },
+  { path: "", component: UsersComponent },
+  { path: "**", redirectTo: "users" }
 ];
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AppMenuComponent
+    UsersComponent,
+    NewUserComponent,
+    EditUserComponent
   ],
   imports: [
     BrowserModule,

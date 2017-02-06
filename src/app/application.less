@@ -1,4 +1,4 @@
-@import "../styles/variables";
+@import "variables";
 
 
 
@@ -31,6 +31,131 @@ html, body {
 @font-face {
   font-family: "Roboto Italic";
   src: url("../fonts/Roboto-Italic.ttf");
+}
+
+
+
+#app-menu {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: @app-menu-width;
+  background: @app-menu-background-color;
+
+
+  #current-user {
+    height: @app-menu-current-user-height;
+    padding: 20px;
+    box-sizing: border-box;
+    background: @app-menu-current-user-background-color;
+
+    /*** Фото текущего пользователя ***/
+    img {
+      display: block;
+      width: @app-menu-current-user-photo-width;
+      height: @app-menu-current-user-photo-height;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 50%;
+    }
+
+    /*** Имя текущего пользователя ***/
+    .current-user-name {
+      margin-top: 10px;
+      font-size: 17px;
+      text-align: center;
+      color: white;
+    }
+
+    /*** Должность текущего пользователя ***/
+    .current-user-position {
+      font-size: 14px;
+      color: #BDBDBD;
+      text-align: center;
+    }
+  }
+
+
+  #items-container {
+    margin-top: 20px;
+    //background: #212121;
+
+    .menu-item {
+
+      &:hover {
+        background: #546E7A;
+      }
+
+      a {
+        display: block;
+        height: @app-menu-item-height;
+        padding-left: 15px;
+        padding-right: 10px;
+        box-sizing: border-box;
+
+        text-decoration: none;
+        color: white;
+        border-left: 3px solid transparent;
+        //background: #37474F;
+
+        &.active {
+          border-left: 3px solid #FFB74D;
+          background: #37474F;
+        }
+      }
+
+      .menu-item-container {
+        //margin-left: 20px;
+        padding-left: 30px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background: #263238;
+
+        a {
+          display: block;
+          height: auto;
+          min-height: 20px;
+          //margin-left: 10px;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          box-sizing: border-box;
+          font-size: 13px;
+          color: #81D4FA;
+
+          &:hover {
+            color: #0288D1;
+          }
+        }
+      }
+
+
+
+
+      .fa {
+        float: left;
+        display: inline-block;
+        height: @app-menu-item-height;
+        margin-right: 15px;
+        font-size: 18px !important;
+        line-height: @app-menu-item-height;
+        color: #CFD8DC;
+      }
+
+      .menu-item-title {
+        display: inline-block;
+        float: left;
+        height: @app-menu-item-height;
+        line-height: @app-menu-item-height;
+        font-size: 13px;
+        text-transform: uppercase;
+      }
+
+
+
+    }
+
+  }
 }
 
 
