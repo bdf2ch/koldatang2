@@ -8,6 +8,8 @@ import { $divisions } from './$divisions.service';
     CommonModule
   ],
   declarations: [],
-  providers: [ $users, $divisions ]
+  providers: [
+    $users, $divisions
+  ]
 })
 export class KolenergoModule { };

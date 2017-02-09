@@ -10,13 +10,15 @@ import { User } from '../models/User.model';
   styleUrls: []
 })
 export class UsersComponent implements OnInit {
-  users: User[] = [];
+  users: User[];
   selectedUser: User;
+  search: string = "";
+  errorMessage: any;
 
   constructor(private usersService: $users, private  router: Router) { };
 
   ngOnInit() {
-    this.users = this.usersService.getAll();
+    this.getUsers();
   };
 
   selectUser(user: User) : void {
@@ -24,5 +26,12 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/user/' + user.id, user.id]);
     console.log("selected user = ", this.selectedUser);
   };
+
+  getUsers() {
+    this.usersService.getAll()
+      .subscribe(
+        users => this.users = users,
+        error =>  this.errorMessage = <any>error);
+  }
 
 }

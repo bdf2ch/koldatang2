@@ -13,17 +13,15 @@ export class AppComponent implements OnInit{
   title = 'koldata... works!';
   users: User[];
 
-  constructor (private usersService: $users) {
-
-  };
+  constructor (private usersService: $users) {};
 
   ngOnInit (): void {
     //this.title = "test";
     console.log("ngOnInit hook");
-    console.info("users = ", this.usersService.getAll());
+    //console.info("users = ", this.usersService.getAll());
 
-    this.usersService.init(usersMock);
-    this.users = this.usersService.getAll();
+    //this.usersService.init(usersMock);
+    //this.users = this.usersService.getAll();
     console.log(this.users);
   };
 }

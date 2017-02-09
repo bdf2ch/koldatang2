@@ -1,5 +1,6 @@
 export class Status {
-
+  isChanged: boolean = false;
+  isSelected: boolean = false;
 
   constructor () {};
 
@@ -9,5 +10,11 @@ export class Status {
     return this.isChanged;
   };
 
+
+  selected(flag: boolean | null): boolean {
+    if (flag !== null)
+      this.isSelected = flag;
+    return this.isSelected;
+  };
 
 };

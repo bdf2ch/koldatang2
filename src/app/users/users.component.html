@@ -28,8 +28,8 @@
   <div class="panel-content">
 
     <div class="header padding-10">
-      <input type="text" name="" id="" class="width-100 dark search">
-      <!--<search-box class="width-100"></search-box>-->
+      <!--<input type="text" name="" id="" class="width-100 dark search" placeholder="Введите имя абонента, телефон или email" [(ngModel)]="search">-->
+      <search-box class="width-100" [placeholder]="'test'"></search-box>
     </div>
 
     <div class="content">
@@ -43,8 +43,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users" (click)="selectUser(user)">
-          <td class="width-30">{{ user.surname + " " + user.name + " " + user.fname }}</td>
+        <tr *ngFor="let user of users | byUserName:search" (click)="selectUser(user)">
+          <td class="width-30">{{ user.fio }}</td>
           <td class="width-20">{{ user.email }}</td>
           <td class="width-20">{{ user.position }}</td>
           <td class="width-30">Сектор по сбору посуды</td>

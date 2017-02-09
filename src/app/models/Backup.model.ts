@@ -1,8 +1,10 @@
 export class Backup {
+  private instance = undefined;
   backup: {} = {};
 
 
-  constructor() {
+  constructor(link) {
+    this.instance = link;
     this.backup = {};
   };
 
@@ -11,12 +13,12 @@ export class Backup {
    *
    * @param fields
    */
-  setup(fields: string[]): void {
+  setup(fields: any[]): void {
     let length: number = fields.length;
     for (var i = 0; i < length; i++) {
-      if (this[fields[i]] !== undefined) {
-        this.backup[fields[i]] = this[fields[i]];
-      }
+      //if ([fields[i]] !== undefined) {
+        this.backup[i] = fields[i];
+      //}
     }
   };
 

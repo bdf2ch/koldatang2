@@ -1,0 +1,39 @@
+.ui-search-box {
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.ui-search-box .icon {
+  float: left;
+  width: 40px;
+  height: 35px;
+  box-sizing: border-box;
+  text-align: center;
+  border-left: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+.ui-search-box .icon .fa {
+  line-height: 35px;
+}
+.ui-search-box .input {
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.ui-search-box .input input[type='text'] {
+  width: 100%;
+  border-left: none;
+  border-right: none;
+}
+.ui-search-box .loader {
+  float: right;
+  width: 40px;
+  height: 35px;
+  box-sizing: border-box;
+  text-align: center;
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+  border-right: 1px solid lightgrey;
+}
+.ui-search-box .loader .fa {
+  line-height: 35px;
+}
