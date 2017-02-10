@@ -8,7 +8,7 @@ import 'rxjs/add/operator/catch';
 
 @Injectable()
 export class $users {
-  users: User[] = [];
+  users: User[];
 
 
   constructor(private http: Http) {};
@@ -34,11 +34,11 @@ export class $users {
    * Возвращает массив всех пользователей
    * @returns {User[]}
    */
-  getAll(): Observable<User[]> {
+  fetchAll(): Observable<User[]> {
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUsers" };
-    return this.http.post("/src/app/serverside/api.php", params, options)
+    return this.http.post("/assets/serverside/api.php", params, options)
       .map(this.extractData)
       .catch(this.handleError);
   };
@@ -58,10 +58,20 @@ export class $users {
     return false;
   };
 
+
   private extractData(res: Response) {
     let body = res.json();
-    return body.data || { };
+    let result: User[] = [];
+
+    let length = body.length;
+    for (let i = 0; i < length; i++) {
+      let user = new User(body[i]);
+      result.push(user);
+    }
+
+    return result;
   };
+
 
   private handleError (error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure

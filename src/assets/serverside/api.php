@@ -1,7 +1,8 @@
 <?php
 
     $DS = DIRECTORY_SEPARATOR;
-    require_once $_SERVER["DOCUMENT_ROOT"].$DS."serverside".$DS."config.php";
+    require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."config.php";
+    require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."users.php";
     $params = json_decode(file_get_contents("php://input"));
 
 
@@ -10,8 +11,8 @@
 
 
     switch ($params -> action) {
-        case "add_user": add_user($params -> data);
-            break;
+        case "getUsers": getUsers(); break;
+        case "addUser": add_user($params -> data); break;
     }
 
 

@@ -28,7 +28,7 @@ export class UsersComponent implements OnInit {
   };
 
   getUsers() {
-    this.usersService.getAll()
+    this.usersService.fetchAll()
       .subscribe(
         users => this.users = users,
         error =>  this.errorMessage = <any>error);

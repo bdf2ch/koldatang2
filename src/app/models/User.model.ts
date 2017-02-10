@@ -82,17 +82,22 @@ export class User extends Model {
       if (config.division_id)
         this.divisionId = config.division_id;
       this.surname = config.surname;
+      this.search += this.surname + " ";
       this.name = config.name;
-      this.fname = config.fname;
+      this.search += this.name + " ";
+      if (config.fname) {
+        this.fname = config.fname;
+        this.search += this.fname + " ";
+      }
       if (config.position)
         this.position = config.position;
-      if (config.email)
+      if (config.email) {
         this.email = config.email;
+        this.search += this.email;
+      }
       if (config.is_administrator)
         this.isAdministrator = config.is_administrator;
     }
-
     this.fio = this.surname + " " + this.name + " " + this.fname;
-    this.search = this.surname.toLowerCase() + " " + this.name.toLowerCase() + " " + this.fname.toLowerCase() + " " + this.email;
   };
 };

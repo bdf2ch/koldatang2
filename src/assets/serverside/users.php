@@ -7,7 +7,7 @@
         $result = pg_query($link, "SELECT get_users()");
         $users = pg_fetch_all($result);
 
-        return $users[0]["get_users"];
+        echo $users[0]["get_users"];
     }
 
 
