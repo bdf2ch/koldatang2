@@ -9,7 +9,8 @@ import 'rxjs/add/operator/catch';
 @Injectable()
 export class $users {
   users: User[];
-
+  start: number = 0;
+  limit: number = 20;
 
   constructor(private http: Http) {};
 
@@ -25,21 +26,104 @@ export class $users {
       let user = new User(source[i]);
       user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
       this.users.push(user);
+      this.limit++;
     }
     return true;
   };
 
 
   /**
-   * Возвращает массив всех пользователей
+   * Запрашивает массив всех пользователей с сервера
    * @returns {User[]}
    */
   fetchAll(): Observable<User[]> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
-    let params = { action: "getUsers" };
+    let params = { action: "getAllUsers" };
     return this.http.post("/assets/serverside/api.php", params, options)
-      .map(this.extractData)
+      .map(function (res: Response) {
+        let body = res.json();
+        let result: User[] = [];
+        let length = body.length;
+        for (let i = 0; i < length; i++) {
+          let user = new User(body[i]);
+          result.push(user);
+        }
+        return result;
+      })
+      .catch(this.handleError);
+  };
+
+
+  /**
+   *
+   * @param start
+   * @param limit
+   * @returns {Observable<R>}
+   */
+  fetch(start: number = this.start, limit: number = this.limit): Observable<User[]> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "getUsers", data: { start: start, limit: limit } };
+
+    return this.http.post("/assets/serverside/api.php", params, options)
+      .map(function (res: Response) {
+        let body = res.json();
+        let length = body.length;
+        for (var i = 0; i < length; i++) {
+          var user = new User(body[i]);
+          user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
+          this.users.push(user);
+          this.limit++;
+        }
+      })
+      .catch(this.handleError);
+  };
+
+
+  /**
+   *
+   * @param id
+   * @returns {Observable<User>}
+   */
+  fetchById(id: number): Observable<User> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "getUserById", data: { id: id } };
+    return this.http.post("/assets/serverside/api.php", params, options)
+      .map(function (res: Response) {
+        let body = res.json();
+        let result: User = new User(body);
+        return result;
+      })
+      .catch(this.handleError);
+  };
+
+
+  /**
+   *
+   * @param search
+   * @returns {Observable<User>}
+   */
+  search(search: string): Observable<User[]> | null {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "searchUsers", data: { search: search } };
+
+    return this.http.post("/assets/serverside/api.php", params, options)
+      .map(function (res: Response | null) {
+        if (res instanceof Response) {
+          let body = res.json();
+          let length = body.length;
+          for (let i = 0; i < length; i++) {
+            let user = new User(body[i]);
+            user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
+            this.users.push(user);
+            this.start = 0;
+          }
+        } else
+          return null;
+      })
       .catch(this.handleError);
   };
 
@@ -50,7 +134,7 @@ export class $users {
    * @returns {User|boolean}
    */
   getById(id: number): User | boolean {
-    length = this.users.length;
+    let length = this.users.length;
     for (let i = 0; i < length; i++) {
       if (this.users[i].id === id)
         return this.users[i];
@@ -58,19 +142,6 @@ export class $users {
     return false;
   };
 
-
-  private extractData(res: Response) {
-    let body = res.json();
-    let result: User[] = [];
-
-    let length = body.length;
-    for (let i = 0; i < length; i++) {
-      let user = new User(body[i]);
-      result.push(user);
-    }
-
-    return result;
-  };
 
 
   private handleError (error: Response | any) {
@@ -85,6 +156,6 @@ export class $users {
     }
     console.error(errMsg);
     return Observable.throw(errMsg);
-  }
+  };
 
 }
