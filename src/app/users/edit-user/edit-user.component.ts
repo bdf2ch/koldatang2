@@ -8,9 +8,20 @@ import { User } from '../../models/User.model';
 })
 export class EditUserComponent implements OnInit {
   @Input()
-  user: User;
+  user: User = new User();
+  submitted: boolean = false;
 
   constructor() {};
 
   ngOnInit() {};
+
+  onSubmit(): void {
+    this.submitted = true;
+    console.log("form submit");
+  };
+
+  onCancel(): void {
+    this.user = new User();
+    this.submitted = false;
+  };
 }

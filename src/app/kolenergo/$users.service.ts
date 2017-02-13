@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
+const apiUrl = "/assets/serverside/api.php";
 
 @Injectable()
 export class $users {
@@ -40,7 +41,7 @@ export class $users {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getAllUsers" };
-    return this.http.post("/assets/serverside/api.php", params, options)
+    return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
         let result: User[] = [];
@@ -66,7 +67,7 @@ export class $users {
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUsers", data: { start: start, limit: limit } };
 
-    return this.http.post("/assets/serverside/api.php", params, options)
+    return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
         let length = body.length;
@@ -90,7 +91,7 @@ export class $users {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUserById", data: { id: id } };
-    return this.http.post("/assets/serverside/api.php", params, options)
+    return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
         let result: User = new User(body);
@@ -110,7 +111,7 @@ export class $users {
     let options = new RequestOptions({ headers: headers });
     let params = { action: "searchUsers", data: { search: search } };
 
-    return this.http.post("/assets/serverside/api.php", params, options)
+    return this.http.post(apiUrl, params, options)
       .map(function (res: Response | null) {
         if (res instanceof Response) {
           let body = res.json();
@@ -145,7 +146,6 @@ export class $users {
 
 
   private handleError (error: Response | any) {
-    // In a real world app, we might use a remote logging infrastructure
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';

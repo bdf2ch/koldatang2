@@ -336,6 +336,13 @@ textarea {
   font-size: 13px;
   color: #BDBDBD;
 }
+.form-error {
+  float: left;
+  padding-top: 5px;
+  font-size: 13px;
+  text-align: left;
+  color: red;
+}
 /**********
 ** BUTTONS
 **********/

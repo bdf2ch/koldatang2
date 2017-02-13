@@ -11,39 +11,79 @@
 
   <div class="panel-content">
 
-    <div class="content padding-20">
-      <div class="title margin-bottom-20">Личные данные</div>
+    <form (ngSubmit)="onSubmit()"  #new_user_form="ngForm">
+      <div class="content padding-20">
+        <div class="title margin-bottom-20">Личные данные</div>
 
-      <div class="row margin-bottom-20">
-        <label for="new-user-name" class="width-100">Имя пользователя</label>
-        <input type="text" name="new_user_name" id="new-user-name" class="width-100 dark" placeholder="Введите имя пользователя" required [(ngModel)]="newUser.name">
+        <div class="row margin-bottom-20">
+          <label for="new-user-name" class="width-100">Имя пользователя</label>
+          <input type="text"
+                 name="new_user_name"
+                 id="new-user-name"
+                 class="width-100 dark"
+                 placeholder="Введите имя пользователя"
+                 required
+                 #name="ngModel"
+                 [(ngModel)]="newUser.name">
+          <div class="form-error"
+               *ngIf="name.invalid && submitted">
+            Вы не указали имя пользователя
+          </div>
+        </div>
+
+        <div class="row margin-bottom-20">
+          <label for="new-user-fname" class="width-100">Отчество пользователя</label>
+          <input type="text" name="new_user_fname" id="new-user-fname" class="width-100 dark" placeholder="Введите отчество пользователя" [(ngModel)]="newUser.fname" >
+        </div>
+
+        <div class="row margin-bottom-30">
+          <label for="new-user-surname" class="width-100">Фамилия пользователя</label>
+          <input type="text"
+                 name="new_user_surname"
+                 id="new-user-surname"
+                 class="width-100 dark"
+                 placeholder="Введите фамилию пользователя"
+                 required
+                 #surname="ngModel"
+                 [(ngModel)]="newUser.surname" >
+          <div class="form-error" *ngIf="surname.invalid && submitted">Вы не указали фамилию пользователя</div>
+        </div>
+
+        <div class="title margin-bottom-20">Контактные данные</div>
+
+        <div class="row margin-bottom-30">
+          <label for="new-user-email" class="width-100">E-mail пользователя</label>
+          <input type="text"
+                 name="new_user_email"
+                 id="new-user-email"
+                 class="width-100 dark"
+                 placeholder="Введите e-mail пользователя"
+                 [(ngModel)]="newUser.email" >
+        </div>
+
+        <div class="title margin-bottom-20">Место работы и должность</div>
+
+
+        <div class="row margin-bottom-20">
+          <label for="new-user-position" class="width-100">Должность пользователя</label>
+          <input type="text"
+                 name="new_user_position"
+                 id="new-user-position"
+                 class="width-100 dark"
+                 placeholder="Введите должность пользователя"
+                 [(ngModel)]="newUser.position">
+        </div>
+
+        <div class="row">
+          <button type="submit"
+                  class="blue"
+                  [disabled]="!new_user_form.form.valid">
+            Добавить
+          </button>
+        </div>
       </div>
+    </form>
 
-      <div class="row margin-bottom-20">
-        <label for="new-user-fname" class="width-100">Отчество пользователя</label>
-        <input type="text" name="new_user_fname" id="new-user-fname" class="width-100 dark" placeholder="Введите отчество пользователя" [(ngModel)]="newUser.fname" >
-      </div>
-
-      <div class="row margin-bottom-30">
-        <label for="new-user-surname" class="width-100">Фамилия пользователя</label>
-        <input type="text" name="new_user_surname" id="new-user-surname" class="width-100 dark" placeholder="Введите фамилию пользователя" required [(ngModel)]="newUser.surname" >
-      </div>
-
-      <div class="title margin-bottom-20">Контактные данные</div>
-
-      <div class="row margin-bottom-30">
-        <label for="new-user-email" class="width-100">E-mail пользователя</label>
-        <input type="text" name="new_user_email" id="new-user-email" class="width-100 dark" placeholder="Введите e-mail пользователя" [(ngModel)]="newUser.email" >
-      </div>
-
-      <div class="title margin-bottom-20">Место работы и должность</div>
-
-
-      <div class="row margin-bottom-20">
-        <label for="new-user-position" class="width-100">Должность пользователя</label>
-        <input type="text" name="new_user_position" id="new-user-position" class="width-100 dark" placeholder="Введите должность пользователя" [(ngModel)]="newUser.position" >
-      </div>
-    </div>
 
   </div>
 

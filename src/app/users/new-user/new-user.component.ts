@@ -8,10 +8,15 @@ import { User } from '../../models/User.model';
 })
 export class NewUserComponent implements OnInit {
   newUser: User = new User();
+  submitted: boolean = false;
 
-  constructor() {
-  };
+  constructor() {};
 
   ngOnInit() {};
+
+  onSubmit() {
+    this.submitted = true;
+    console.log("form submit");
+  };
 
 }

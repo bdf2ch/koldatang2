@@ -1,7 +1,7 @@
 <?php
 
 
-    function getUsers () {
+    function getAllUsers () {
         global $link;
 
         $result = pg_query($link, "SELECT get_users()");

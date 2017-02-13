@@ -11,7 +11,7 @@
 
 
     switch ($params -> action) {
-        case "getUsers": getUsers(); break;
+        case "getAllUsers": getAllUsers(); break;
         case "addUser": add_user($params -> data); break;
     }
 

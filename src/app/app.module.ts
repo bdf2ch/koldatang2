@@ -1,8 +1,6 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { RouterModule, Routes } from '@angular/router';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRouterModule } from './app-router/app-router.module';
 import { KolenergoModule } from './kolenergo/kolenergo.module';
 import { UiModule } from './ui/ui.module';
 
@@ -12,15 +10,10 @@ import { UsersComponent } from './users/users.component';
 import { NewUserComponent } from './users/new-user/new-user.component';
 import { EditUserComponent } from './users/edit-user/edit-user.component';
 import { ByUserNamePipe } from './by-user-name.pipe';
+import { CoreModule } from "./core/core.module";
+import { DivisionsComponent } from './divisions/divisions.component';
+import { PhonebookComponent } from './phonebook/phonebook.component';
 
-
-const appRoutes: Routes = [
-  { path: "users", component: UsersComponent },
-  { path: "users/new", component: NewUserComponent },
-  { path: "users/:id", component: EditUserComponent },
-  { path: "", component: UsersComponent },
-  { path: "**", redirectTo: "users" }
-];
 
 
 @NgModule({
@@ -29,13 +22,14 @@ const appRoutes: Routes = [
     UsersComponent,
     NewUserComponent,
     EditUserComponent,
-    ByUserNamePipe
+    ByUserNamePipe,
+    DivisionsComponent,
+    PhonebookComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    RouterModule.forRoot(appRoutes),
+    CoreModule,
+    AppRouterModule,
     KolenergoModule,
     UiModule
   ],

@@ -2,51 +2,101 @@
 
   <div class="panel-sidebar">
     <div class="row padding-10">
-      <img src="../../../assets/images/no_photo.png" class="width-100" alt="">
+      <div class="row margin-bottom-10">
+        <img src="../../../assets/images/no_photo.png" class="width-100" alt="">
+      </div>
+      <div class="row">
+        <button class="blue width-100">Загрузить фото</button>
+      </div>
     </div>
-    <div class="row padding-10">
-      <button class="blue width-100">Загрузить фото</button>
-    </div>
+
+
   </div>
 
   <div class="panel-content">
 
     <div class="content padding-20">
-      <div class="title margin-bottom-20">Личные данные</div>
 
-      <div class="row margin-bottom-20">
-        <label for="selected-user-name" class="width-100">Имя пользователя</label>
-        <input type="text" name="" id="selected-user-name" class="width-100 dark" placeholder="Введите имя пользователя" [(ngModel)]="user.name">
-      </div>
+      <form (ngSubmit)="onSubmit()" #edit_user_form="ngForm">
+        <div class="title margin-bottom-20">Личные данные</div>
 
-      <div class="row margin-bottom-20">
-        <label for="selected-user-fname" class="width-100">Отчество пользователя</label>
-        <input type="text" name="" id="selected-user-fname" class="width-100 dark" placeholder="Введите отчество пользователя" [(ngModel)]="user.fname">
-      </div>
+        <div class="row margin-bottom-20">
+          <label for="selected-user-name" class="width-100">Имя пользователя</label>
+          <input type="text"
+                 name="name"
+                 id="selected-user-name"
+                 class="width-100 dark"
+                 placeholder="Введите имя пользователя"
+                 required
+                 #name="ngModel"
+                 [(ngModel)]="user.name">
+          <div class="form-error"
+               *ngIf="name.invalid && submitted">
+            Вы не указали имя пользователя
+          </div>
+        </div>
 
-      <div class="row margin-bottom-30">
-        <label for="selected-user-surname" class="width-100">Фамилия пользователя</label>
-        <input type="text" name="" id="selected-user-surname" class="width-100 dark" placeholder="Введите фамилию пользователя" [(ngModel)]="user.surname">
-      </div>
+        <div class="row margin-bottom-20">
+          <label for="selected-user-fname" class="width-100">Отчество пользователя</label>
+          <input type="text"
+                 name="fname"
+                 id="selected-user-fname"
+                 class="width-100 dark"
+                 placeholder="Введите отчество пользователя"
+                 [(ngModel)]="user.fname">
+        </div>
 
-      <div class="title margin-bottom-20">Контактные данные</div>
+        <div class="row margin-bottom-30">
+          <label for="selected-user-surname" class="width-100">Фамилия пользователя</label>
+          <input type="text" name="surname"
+                 id="selected-user-surname"
+                 class="width-100 dark"
+                 placeholder="Введите фамилию пользователя"
+                 required
+                 #surname="ngModel"
+                 [(ngModel)]="user.surname">
+          <div class="form-error"
+               *ngIf="surname.invalid && submitted">
+            Вы не указали фамилию пользователя
+          </div>
+        </div>
 
-      <div class="row margin-bottom-30">
-        <label for="selected-user-email" class="width-100">E-mail пользователя</label>
-        <input type="text" name="" id="selected-user-email" class="width-100 dark" placeholder="Введите e-mail пользователя">
-      </div>
+        <div class="title margin-bottom-20">Контактные данные</div>
 
-      <div class="title margin-bottom-20">Место работы и должность</div>
+        <div class="row margin-bottom-30">
+          <label for="selected-user-email" class="width-100">E-mail пользователя</label>
+          <input type="text"
+                 name="email"
+                 id="selected-user-email"
+                 class="width-100 dark"
+                 placeholder="Введите e-mail пользователя">
+        </div>
 
-      <div class="row margin-bottom-20">
-        <label for="selected-user-name" class="width-100">Имя пользователя</label>
-        <input type="text" name="" id="selected-user-name" class="width-100 dark" placeholder="Введите имя пользователя">
-      </div>
+        <div class="title margin-bottom-20">Место работы и должность</div>
 
-      <div class="row margin-bottom-20">
-        <label for="selected-user-position" class="width-100">Должность пользователя</label>
-        <input type="text" name="" id="selected-user-position" class="width-100 dark" placeholder="Введите должность пользователя">
-      </div>
+        <div class="row margin-bottom-20">
+          <label for="selected-user-position" class="width-100">Должность пользователя</label>
+          <input type="text"
+                 name="position"
+                 id="selected-user-position"
+                 class="width-100 dark"
+                 placeholder="Введите должность пользователя">
+        </div>
+
+        <div class="row">
+          <button type="button" class="red right" (click)="onCancel()">
+          <i class="fa fa-ban"></i>
+          Отмена
+          </button>
+          <button type="submit"
+                  class="green right margin-right-10"
+                  [disabled]="!edit_user_form.form.valid">
+            <i class="fa fa-save"></i>
+            Сохранить
+          </button>
+        </div>
+      </form>
+
     </div>
 
   </div>
