@@ -11,6 +11,22 @@
     }
 
 
+    function getUserById ($parameters) {
+        global $link;
+        $id = $parameters -> id;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT get_user_by_id($1)",
+            array($id)
+        );
+
+        $user = pg_fetch_result($result, 0, 0);
+        echo is_null($user) ? json_encode(NULL) : $user;
+        return true;
+    }
+
+
     function addUser ($parameters) {
         global $link;
         $departmentId = $parameters -> departmentId;

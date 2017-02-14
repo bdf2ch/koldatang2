@@ -221,3 +221,12 @@ body {
   box-sizing: border-box;
   background: #CFD8DC;
 }
+.nothing-found {
+  text-align: center;
+  font-size: 35px;
+  color: lightgray;
+  line-height: 75px;
+}
+.nothing-found .fa {
+  font-size: 75px;
+}

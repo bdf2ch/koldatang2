@@ -24,6 +24,7 @@ import { PhonebookComponent } from './phonebook/phonebook.component';
     EditUserComponent,
     ByUserNamePipe,
     DivisionsComponent,
+    PhonebookComponent,
     PhonebookComponent
   ],
   imports: [

@@ -9,11 +9,12 @@ const apiUrl = "/assets/serverside/api.php";
 
 @Injectable()
 export class $users {
-  users: User[];
+  users: User[] = [];
   start: number = 0;
   limit: number = 20;
 
-  constructor(private http: Http) {};
+  constructor(private http: Http) {
+  };
 
 
   /**
@@ -41,6 +42,7 @@ export class $users {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getAllUsers" };
+    let users = this.users;
     return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
@@ -49,6 +51,7 @@ export class $users {
         for (let i = 0; i < length; i++) {
           let user = new User(body[i]);
           result.push(user);
+          users.push(user);
         }
         return result;
       })
@@ -87,15 +90,18 @@ export class $users {
    * @param id
    * @returns {Observable<User>}
    */
-  fetchById(id: number): Observable<User> {
+  fetchById(id: number): Observable<User|null> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUserById", data: { id: id } };
     return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
-        let result: User = new User(body);
-        return result;
+        console.log(body);
+        if (body !== null) {
+          return new User(body);
+        } else
+          return null;
       })
       .catch(this.handleError);
   };
@@ -134,13 +140,13 @@ export class $users {
    * @param id {number} - идентификатор пользователя
    * @returns {User|boolean}
    */
-  getById(id: number): User | boolean {
+  getById(id: number): User | null {
     let length = this.users.length;
     for (let i = 0; i < length; i++) {
       if (this.users[i].id === id)
         return this.users[i];
     }
-    return false;
+    return null;
   };
 
 

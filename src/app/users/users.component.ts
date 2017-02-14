@@ -15,23 +15,30 @@ export class UsersComponent implements OnInit {
   search: string = "";
   errorMessage: any;
 
-  constructor(private usersService: $users, private  router: Router) { };
+
+  constructor(
+    private usersService: $users,
+    private  router: Router
+  ) {};
+
 
   ngOnInit() {
     this.getUsers();
   };
 
+
   selectUser(user: User) : void {
     this.selectedUser = user;
-    this.router.navigate(['/user/' + user.id, user.id]);
+    this.router.navigate(['/users/', user.id]);
     console.log("selected user = ", this.selectedUser);
   };
+
 
   getUsers() {
     this.usersService.fetchAll()
       .subscribe(
         users => this.users = users,
         error =>  this.errorMessage = <any>error);
-  }
+  };
 
 }
