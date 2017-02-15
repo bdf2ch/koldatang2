@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from './models/User.model';
+import { User } from '../models/User.model';
 
 @Pipe({
   name: 'byUserName'
@@ -19,4 +19,4 @@ export class ByUserNamePipe implements PipeTransform {
       return value;
   };
 
-}
+};

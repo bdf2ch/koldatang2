@@ -44,7 +44,7 @@ function backupable(target: any, key: string) {
 
 export interface UserConfig {
   readonly id: number;
-  tab_id?: number;
+  tab_id?: string;
   department_id?: number;
   division_id?: number;
   surname: string;
@@ -52,13 +52,14 @@ export interface UserConfig {
   fname: string;
   position?: string;
   email?: string;
+  active_directory_account?: string;
   is_administrator?: boolean;
 };
 
 
 export class User extends Model {
   readonly id: number = 0;
-  tabId: number = 0;
+  tabId: string = "";
   departmentId: number = 0;
   divisionId: number = 0;
   surname: string = "";
@@ -66,6 +67,7 @@ export class User extends Model {
   fname: string = "";
   position: string = "";
   email: string = "";
+  activeDirectoryAccount: string = "";
   isAdministrator: boolean = false;
   fio: string = "";
   search: string = "";
@@ -95,6 +97,8 @@ export class User extends Model {
         this.email = config.email;
         this.search += this.email;
       }
+      if (config.active_directory_account)
+        this.activeDirectoryAccount = config.active_directory_account;
       if (config.is_administrator)
         this.isAdministrator = config.is_administrator;
     }

@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { $users } from '../kolenergo/$users.service';
-import { User } from '../models/User.model';
+import { UsersService } from '../users.service';
+import { User } from '../../models/User.model';
 
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.component.html',
+  templateUrl: 'users.component.html',
   styleUrls: []
 })
 export class UsersComponent implements OnInit {
@@ -17,7 +17,7 @@ export class UsersComponent implements OnInit {
 
 
   constructor(
-    private usersService: $users,
+    private usersService: UsersService,
     private  router: Router
   ) {};
 

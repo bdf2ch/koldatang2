@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
-import { $users } from '../../kolenergo/$users.service';
+import { UsersService } from '../users.service';
 import { User } from '../../models/User.model';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
@@ -19,7 +19,7 @@ export class EditUserComponent implements OnInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private users: $users
+    private users: UsersService
   ) {};
 
 
@@ -30,13 +30,14 @@ export class EditUserComponent implements OnInit {
     if (cachedUser === null) {
       this.users.fetchById(id)
         .subscribe((user: User) => {
-          if (user !== null)
+          if (user !== null) {
             this.user = user;
-          else {
+            console.log(this.user);
+          } else {
             this.user = new User();
             this.userNotFound = true;
           }
-      });
+        });
     } else {
       this.user = cachedUser;
     }

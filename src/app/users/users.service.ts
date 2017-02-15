@@ -8,13 +8,12 @@ import 'rxjs/add/operator/catch';
 const apiUrl = "/assets/serverside/api.php";
 
 @Injectable()
-export class $users {
+export class UsersService {
   users: User[] = [];
   start: number = 0;
   limit: number = 20;
 
-  constructor(private http: Http) {
-  };
+  constructor(private http: Http) {};
 
 
   /**
@@ -99,7 +98,9 @@ export class $users {
         let body = res.json();
         console.log(body);
         if (body !== null) {
-          return new User(body);
+          let user = new User(body);
+          user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "isAdministrator"]);
+          return user;
         } else
           return null;
       })

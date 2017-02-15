@@ -27,7 +27,7 @@ var UsersComponent = (function () {
     UsersComponent = __decorate([
         core_1.Component({
             selector: 'app-users',
-            templateUrl: './users.component.html',
+            templateUrl: 'users.component.html',
             styleUrls: []
         })
     ], UsersComponent);

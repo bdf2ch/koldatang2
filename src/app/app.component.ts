@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { OnInit } from '@angular/core';
-import { $users } from './kolenergo/$users.service';
+import { UsersService } from './users/users.service';
 import { User } from './models/User.model';
 import { usersMock } from './kolenergo/users-mock';
 
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit{
   title = 'koldata... works!';
   users: User[];
 
-  constructor (private usersService: $users) {};
+  constructor (private usersService: UsersService) {};
 
   ngOnInit (): void {
     //this.title = "test";

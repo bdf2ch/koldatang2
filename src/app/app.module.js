@@ -13,11 +13,11 @@ var router_1 = require('@angular/router');
 var kolenergo_module_1 = require('./kolenergo/kolenergo.module');
 var ui_module_1 = require('./ui/ui.module');
 var app_component_1 = require('./app.component');
-var _users_service_1 = require('./kolenergo/$users.service');
-var users_component_1 = require('./users/users.component');
+var _users_service_1 = require('./users/$users.service.ts');
+var users_component_1 = require('./users/users/users.component.ts');
 var new_user_component_1 = require('./users/new-user/new-user.component');
 var edit_user_component_1 = require('./users/edit-user/edit-user.component');
-var by_user_name_pipe_1 = require('./by-user-name.pipe');
+var by_user_name_pipe_1 = require('./users/by-user-name.pipe.ts');
 var appRoutes = [
     { path: "users", component: users_component_1.UsersComponent },
     { path: "users/new", component: new_user_component_1.NewUserComponent },
