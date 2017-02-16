@@ -40,7 +40,7 @@
 <div id="app-content">
 
   <div id="app-content-header">
-    <a href class="app-content-title active">Пользователи</a>
+    <a href class="app-content-title active">{{ title }}</a>
     <span class="app-content-title-divider"></span>
     <a href class="app-content-title">Пользователи Active Directory</a>
 
@@ -52,7 +52,7 @@
   </div>
 
   <div id="app-content-content">
-    <div class="padding-20" ng-view>
+    <div class="padding-10" ng-view>
       <router-outlet></router-outlet>
     </div>
   </div>

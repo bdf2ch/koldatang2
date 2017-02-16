@@ -14,7 +14,11 @@ const routes:Routes = [
   { path: "divisions", component: DivisionsComponent },
   { path: "phonebook", component: PhonebookComponent },
   { path: "", redirectTo: "/users", pathMatch: "full" },
-  { path: "**", redirectTo: "users" }
+  { path: "**", redirectTo: "users", data: { title: "00214" } },
+  {
+    path: "users",
+    loadChildren: "app/users/users.module#UsersModule"
+  }
 ];
 
 @NgModule({

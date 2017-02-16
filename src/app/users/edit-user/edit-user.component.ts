@@ -16,49 +16,28 @@ export class EditUserComponent implements OnInit {
   submitted: boolean = false;
 
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private users: UsersService
-  ) {};
+  constructor(private router: Router,
+              private route: ActivatedRoute,
+              private users: UsersService) {
+  };
 
 
   ngOnInit() {
+    console.log(this.route);
+
     let id = +this.route.snapshot.params['id'];
-    let cachedUser = this.users.getById(id);
 
-    if (cachedUser === null) {
-      this.users.fetchById(id)
-        .subscribe((user: User) => {
-          if (user !== null) {
-            this.user = user;
-            console.log(this.user);
-          } else {
-            this.user = new User();
-            this.userNotFound = true;
-          }
-        });
-    } else {
-      this.user = cachedUser;
-    }
-
-    /*
-    this.route.params
-      //.switchMap((params: Params) => id = params["id"])
-      //.switchMap((params: Params) => this.users.fetchById(+params["id"]))
-      //.subscribe((user: User) => this.user = user);
-      .subscribe(function (params: Params) {
-        id = params["id"];
-        console.log("id = ", id);
-
-        let usr = this.users.getById(id);
-        if (usr !== null)
-          this.user = usr;
-        else {
-          this.user = this.users.fetchById(id);
+    this.route.data
+      .subscribe((data: {user: User}) => {
+        if (data.user !== null) {
+          this.user = data.user;
+          console.log("resolved user", this.user);
+        } else {
+          this.user = new User();
+          this.userNotFound = true;
         }
       });
-      */
+
   };
 
 

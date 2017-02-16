@@ -11,6 +11,27 @@
     }
 
 
+    /**
+    * Получает массив пользователей
+    * @start {number} - начальная позиция
+    * @limit {number} - количество
+    **/
+    function getUsersPortion ($parameters) {
+        global $link;
+        $start = $parameters -> start;
+        $limit = $parameters -> limit;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT get_users_portion($1, $2)",
+            array($start, $limit)
+        );
+
+        $users = pg_fetch_all($result);
+        echo $users[0]["get_users_portion"];
+    }
+
+
     function getUserById ($parameters) {
         global $link;
         $id = $parameters -> id;

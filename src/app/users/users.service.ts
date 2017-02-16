@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
 import { User, UserConfig } from '../models/User.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -8,12 +9,36 @@ import 'rxjs/add/operator/catch';
 const apiUrl = "/assets/serverside/api.php";
 
 @Injectable()
-export class UsersService {
+export class UsersService implements Resolve <Observable<User>|User> {
   users: User[] = [];
   start: number = 0;
-  limit: number = 20;
+  limit: number = 50;
+  total: number = 0;
+
 
   constructor(private http: Http) {};
+
+
+  resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User>| User {
+    let id = +route.params["id"];
+    let user = this.getById(id);
+
+    if (user === null) {
+      console.log("starting resolving");
+      let headers = new Headers({ "Content-Type": "application/json" });
+      let options = new RequestOptions({ headers: headers });
+      let params = { action: "getUserById", data: { id: id }};
+
+      return this.http.post(apiUrl, params, options)
+        .map(function (res: Response) {
+          let body = res.json();
+          let user = new User(body);
+          return user;
+        })
+        .catch(this.handleError);
+    } else
+      return user;
+  };
 
 
   /**
@@ -60,25 +85,26 @@ export class UsersService {
 
   /**
    *
-   * @param start
-   * @param limit
    * @returns {Observable<R>}
    */
-  fetch(start: number = this.start, limit: number = this.limit): Observable<User[]> {
+  fetch(): Observable<User[]> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
-    let params = { action: "getUsers", data: { start: start, limit: limit } };
+    let params = { action: "getUsersPortion", data: { start: this.start, limit: this.limit } };
 
     return this.http.post(apiUrl, params, options)
-      .map(function (res: Response) {
+      .map((res: Response) => {
         let body = res.json();
-        let length = body.length;
+        this.total = body.total;
+        let length = body.users.length;
         for (var i = 0; i < length; i++) {
-          var user = new User(body[i]);
+          var user = new User(body.users[i]);
           user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
           this.users.push(user);
-          this.limit++;
+          this.start++;
         }
+        console.log(this.users);
+        console.log("total = ", this.total);
       })
       .catch(this.handleError);
   };
@@ -137,6 +163,15 @@ export class UsersService {
 
 
   /**
+   *
+   * @returns {User[]}
+   */
+  getAll(): User[] {
+    return this.users;
+  };
+
+
+  /**
    * Поиск пользователя по идентификатору
    * @param id {number} - идентификатор пользователя
    * @returns {User|boolean}
@@ -148,6 +183,39 @@ export class UsersService {
         return this.users[i];
     }
     return null;
+  };
+
+
+  /**
+   *
+   * @returns {number}
+   */
+  getTotal (): number {
+    return this.total;
+  };
+
+
+  add(user: User): Observable<User> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = {
+      action: "addUser",
+      data: {
+        divisionId: 0,
+        surname: user.surname,
+        name: user.name,
+        fname: user.fname,
+        position: user.position,
+        email: user.email,
+        activeDirectoryAccount: user.activeDirectoryAccount,
+        isAdministrator: user.isAdministrator
+      }
+    };
+
+    return http.post(apiUrl, params, options)
+      .map((res: Response) => {
+        let body = res.json();
+      });
   };
 
 

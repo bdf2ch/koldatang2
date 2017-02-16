@@ -2,13 +2,14 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRouterModule } from './app-router/app-router.module';
 import { UiModule } from './ui/ui.module';
-import { UsersModule } from './users/users.module';
+//import { UsersModule } from './users/users.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from "./core/core.module";
 import { DivisionsComponent } from './divisions/divisions.component';
 import { PhonebookComponent } from './phonebook/phonebook.component';
-import {SearchBoxComponent} from "./ui/search-box/search-box.component";
+import { SearchBoxComponent} from "./ui/search-box/search-box.component";
+import { AtsComponent } from './phonebook/ats/ats.component';
 
 
 @NgModule({
@@ -16,12 +17,13 @@ import {SearchBoxComponent} from "./ui/search-box/search-box.component";
     AppComponent,
     DivisionsComponent,
     PhonebookComponent,
-    PhonebookComponent
+    PhonebookComponent,
+    AtsComponent
   ],
   imports: [
     BrowserModule,
     CoreModule,
-    UsersModule,
+    //UsersModule,
     AppRouterModule,
     UiModule
   ],
