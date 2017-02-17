@@ -1,7 +1,5 @@
-import { Router, ActivatedRoute, NavigationEnd } from "@angular/router";
-import { Component } from '@angular/core';
-import { OnInit } from '@angular/core';
-import { User } from './models/User.model';
+import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from "@angular/router";
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/observable';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
@@ -15,7 +13,7 @@ import "rxjs/add/operator/mergeMap";
 })
 export class AppComponent implements OnInit{
   title: string;
-  users: User[];
+  breadcrumb: ActivatedRoute[] = [];
 
   constructor (private router: Router, private route: ActivatedRoute) {};
 
@@ -27,25 +25,59 @@ export class AppComponent implements OnInit{
     //this.usersService.init(usersMock);
     //this.users = this.usersService.getAll();
     //console.log(this.users);
-    let url = this.route.root.url[0];
-    console.log("url", url);
-    console.log(this.route);
-    this.route.data.subscribe((data: {title: string}) => {
-      console.info("title", data.title);
-      this.title = data.title;
-    });
+    //let url = this.route.root.url[0];
+    //console.log("url", url);
+    //console.log(this.route);
+    //this.route.data.subscribe((data: {title: string}) => {
+    //  console.info("title", data.title);
+    //  this.title = data.title;
+    //});
 
 
     this.router.events
       .filter(event => event instanceof NavigationEnd)
-      .map(() => this.route)
-      .map(route => {
-        while (route.firstChild) route = route.firstChild;
-        return route;
+      .map(event => {
+
+
+        let temp = [];
+        let currentRoute = this.route.root;
+
+
+        console.log("root", this.route.root);
+
+        /*
+        while (currentRoute.firstChild) {
+          temp.push(currentRoute);
+          currentRoute = currentRoute.firstChild;
+        }
+        */
+
+
+
+
+
+
+
+        //temp.push(currentRoute);
+
+        while (currentRoute.children[0] !== undefined) {
+          currentRoute = currentRoute.children[0];
+          temp.push(currentRoute);
+        }
+
+
+
+
+        //return this.route.pathFromRoot;
+        return temp;
+        //return route;
+
+        //while (route.firstChild) route = route.firstChild;
+        //return route;
       })
       //.filter(route => route.outlet === 'primary')
-      .mergeMap(route => route.data)
-      .subscribe((data) => this.title = data['title']);
+      //.mergeMap(route => route.data)
+      .subscribe((temp) => {this.breadcrumb = temp; console.log("breadcrumb", this.breadcrumb);});
 
 
     /*

@@ -28,9 +28,9 @@ export class EditUserComponent implements OnInit {
     let id = +this.route.snapshot.params['id'];
 
     this.route.data
-      .subscribe((data: {user: User}) => {
-        if (data.user !== null) {
-          this.user = data.user;
+      .subscribe((data: { extras: {user: User, title: string}}) => {
+        if (data.extras !== null) {
+          this.user = data.extras.user;
           console.log("resolved user", this.user);
         } else {
           this.user = new User();

@@ -11,14 +11,16 @@ const routes:Routes = [
   //{ path: "users", component: UsersComponent },
   //{ path: "users/new", component: NewUserComponent },
   //{ path: "users/:id", component: EditUserComponent },
-  { path: "divisions", component: DivisionsComponent },
-  { path: "phonebook", component: PhonebookComponent },
+  { path: "divisions", component: DivisionsComponent, data: { extras: { title: "Структура организации" } } },
+  { path: "phonebook", component: PhonebookComponent, data: { extras: { title: "Телефонный справочник" } } },
   { path: "", redirectTo: "/users", pathMatch: "full" },
-  { path: "**", redirectTo: "users", data: { title: "00214" } },
+  { path: "**", redirectTo: "/users" },
+  /*
   {
     path: "users",
     loadChildren: "app/users/users.module#UsersModule"
   }
+  */
 ];
 
 @NgModule({

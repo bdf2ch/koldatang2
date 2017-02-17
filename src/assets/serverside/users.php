@@ -1,6 +1,8 @@
 <?php
 
-
+    /**
+    *
+    **/
     function getAllUsers () {
         global $link;
 
@@ -32,6 +34,9 @@
     }
 
 
+    /**
+    *
+    **/
     function getUserById ($parameters) {
         global $link;
         $id = $parameters -> id;
@@ -48,6 +53,9 @@
     }
 
 
+    /**
+    *
+    **/
     function addUser ($parameters) {
         global $link;
         $departmentId = $parameters -> departmentId;
@@ -57,17 +65,18 @@
         $fname = $parameters -> fname;
         $position = $parameters -> position;
         $email = $parameters -> email;
+        $activeDirectoryAccount = $parameters -> activeDirectoryAccount;
         $password = $parameters -> password;
         $isAdministrator = $parameters -> isAdministrator == 1 ? true : false;
 
         $result = pg_query_params(
             $link,
-            'SELECT add_user($1, $2, $3, $4, $5, $6, $7, $8, $9)',
-            $departmentId, $divisionId, $surname, $name, $fname, $position, $email, $password, $isAdministrator
+            'SELECT add_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
+            $departmentId, $divisionId, $surname, $name, $fname, $position, $email, $activeDirectoryAccount, $password, $isAdministrator
         );
         $user = pg_fetch_assoc($result);
 
-        echo(json_encode($user));
+        echo($user);
         return true;
     }
 

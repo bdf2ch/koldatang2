@@ -149,6 +149,9 @@ body {
 #app-content-header .app-content-title:hover {
   color: black;
 }
+#app-content-header .app-content-title.active {
+  color: black;
+}
 #app-content-header .app-content-title-divider {
   float: left;
   width: 40px;

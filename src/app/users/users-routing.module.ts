@@ -1,27 +1,49 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UsersComponent } from './users/users.component';
+import { UsersComponent } from './users.component';
+import { UserListComponent } from './user-list/user-list.component';
 import { NewUserComponent } from './new-user/new-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { UsersService } from './users.service';
+import { EditUserResolveGuard } from './edit-user/resolve.guard';
 
 const routes:Routes = [
   {
-    path: "",
+    path: "users",
     component: UsersComponent,
     data: {
-      title: "Пользователи"
+      extras: {
+        title: "Пользователи"
+      }
     },
     children: [
+
       {
-        path: "users/new",
-        component: NewUserComponent
+        path: "",
+        component: UserListComponent,
+        //pathMatch: "full",
+        //redirectTo: "../",
+        data: {
+          extras: {
+            title: "Пользователи"
+          }
+        }
+      },
+
+      {
+        path: "new",
+        component: NewUserComponent,
+        data: {
+          extras: {
+            title: "Новый пользователь"
+          }
+        }
       },
       {
-        path: "users/:id",
+        path: ":id",
         component: EditUserComponent,
         resolve: {
-          user: UsersService
+          extras: EditUserResolveGuard
         }
       }
     ]

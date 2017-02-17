@@ -1,15 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Http, Response, Headers, RequestOptions } from '@angular/http';
-import { Router, ActivatedRouteSnapshot, RouterStateSnapshot, Resolve } from '@angular/router';
 import { User, UserConfig } from '../models/User.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 
-const apiUrl = "/assets/serverside/api.php";
+export const apiUrl = "/assets/serverside/api.php";
 
 @Injectable()
-export class UsersService implements Resolve <Observable<User>|User> {
+export class UsersService {
   users: User[] = [];
   start: number = 0;
   limit: number = 50;
@@ -17,28 +16,6 @@ export class UsersService implements Resolve <Observable<User>|User> {
 
 
   constructor(private http: Http) {};
-
-
-  resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<User>| User {
-    let id = +route.params["id"];
-    let user = this.getById(id);
-
-    if (user === null) {
-      console.log("starting resolving");
-      let headers = new Headers({ "Content-Type": "application/json" });
-      let options = new RequestOptions({ headers: headers });
-      let params = { action: "getUserById", data: { id: id }};
-
-      return this.http.post(apiUrl, params, options)
-        .map(function (res: Response) {
-          let body = res.json();
-          let user = new User(body);
-          return user;
-        })
-        .catch(this.handleError);
-    } else
-      return user;
-  };
 
 
   /**
@@ -195,13 +172,19 @@ export class UsersService implements Resolve <Observable<User>|User> {
   };
 
 
-  add(user: User): Observable<User> {
+  /**
+   *
+   * @param user
+   * @returns {Observable<R>}
+   */
+  add(user: User, callback: any): Observable<User> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = {
       action: "addUser",
       data: {
         divisionId: 0,
+        departmentId: 0,
         surname: user.surname,
         name: user.name,
         fname: user.fname,
@@ -212,9 +195,15 @@ export class UsersService implements Resolve <Observable<User>|User> {
       }
     };
 
-    return http.post(apiUrl, params, options)
+    return this.http.post(apiUrl, params, options)
       .map((res: Response) => {
         let body = res.json();
+        let user = new User(body);
+        user.setupBackup(["tabId", "divisionId", "departmentId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "isAdministrator"]);
+        this.users.push(user);
+        if (callback !== undefined && typeof callback === "function")
+          callback(user);
+        return user;
       });
   };
 

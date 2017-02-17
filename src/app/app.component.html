@@ -40,9 +40,17 @@
 <div id="app-content">
 
   <div id="app-content-header">
+    <!--
     <a href class="app-content-title active">{{ title }}</a>
     <span class="app-content-title-divider"></span>
-    <a href class="app-content-title">Пользователи Active Directory</a>
+    -->
+
+    <div *ngFor="let crumb of breadcrumb; let i = index; let isLast = last">
+      <a routerLink="{{ crumb.snapshot.url[0] }}" class="app-content-title" [hidden]="isLast">{{ crumb.snapshot.data.extras.title }}</a>
+      <span class="app-content-title active" [hidden]="!isLast">{{ crumb.snapshot.data.extras.title }}</span>
+      <span class="app-content-title-divider" [hidden]="isLast"></span>
+    </div>
+
 
     <div id="app-content-controls">
       <a routerLink="/users/new">

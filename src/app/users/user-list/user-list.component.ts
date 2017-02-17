@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {Router, ActivatedRoute} from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../../models/User.model';
 
 
 @Component({
   selector: 'app-users',
-  templateUrl: 'users.component.html',
+  templateUrl: 'user-list.component.html',
   styleUrls: []
 })
-export class UsersComponent implements OnInit {
+export class UserListComponent implements OnInit {
   users: User[] = [];
   selectedUser: User;
   search: string = "";
@@ -34,8 +34,8 @@ export class UsersComponent implements OnInit {
 
   selectUser(user: User) : void {
     this.selectedUser = user;
-    this.router.navigate(['./users/', user.id]);
-    this.router.navigate([user.id], { relativeTo: this.route });
+    //this.router.navigate([user.id]);
+    this.router.navigate([user.id], {relativeTo: this.route });
     console.log("selected user = ", this.selectedUser);
   };
 
