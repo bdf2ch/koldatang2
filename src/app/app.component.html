@@ -40,10 +40,6 @@
 <div id="app-content">
 
   <div id="app-content-header">
-    <!--
-    <a href class="app-content-title active">{{ title }}</a>
-    <span class="app-content-title-divider"></span>
-    -->
 
     <div *ngFor="let crumb of breadcrumb; let i = index; let isLast = last">
       <a routerLink="{{ crumb.snapshot.url[0] }}" class="app-content-title" [hidden]="isLast">{{ crumb.snapshot.data.extras.title }}</a>
@@ -51,12 +47,14 @@
       <span class="app-content-title-divider" [hidden]="isLast"></span>
     </div>
 
-
-    <div id="app-content-controls">
-      <a routerLink="/users/new">
-        <span class="fa fa-plus" title="Добавить пользователя"></span>
-      </a>
+    <div id="app-content-controls" [ngSwitch]="controls">
+      <div *ngSwitchCase="'users'">
+        <a routerLink="users/new">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
     </div>
+
   </div>
 
   <div id="app-content-content">

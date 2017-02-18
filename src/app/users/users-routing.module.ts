@@ -13,23 +13,23 @@ const routes:Routes = [
     component: UsersComponent,
     data: {
       extras: {
-        title: "Пользователи"
+        title: "Пользователи",
+        controls:
+          `<a routerLink="/users/new">
+            <span class="fa fa-plus" title="Добавить пользователя"></span>
+           </a>`
       }
     },
     children: [
-
       {
         path: "",
         component: UserListComponent,
-        //pathMatch: "full",
-        //redirectTo: "../",
         data: {
           extras: {
-            title: "Пользователи"
+            title: ""
           }
         }
       },
-
       {
         path: "new",
         component: NewUserComponent,
