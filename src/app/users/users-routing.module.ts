@@ -48,17 +48,8 @@ const routes:Routes = [
       }
     ]
   }
-  /*
-  {
-    path: "users",
-    component: UsersComponent,
-    data: {
-      title: 'Пользователи+'
-    }
-  },
-  */
-
 ];
+
 
 @NgModule ({
   imports: [

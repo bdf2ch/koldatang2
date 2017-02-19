@@ -1,0 +1,46 @@
+"use strict";
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var core_1 = require('@angular/core');
+var modal_component_1 = require('./modal.component');
+var ModalService = (function () {
+    function ModalService() {
+        this.modals = [];
+    }
+    ;
+    ModalService.prototype.register = function (modal) {
+        this.modals.push(modal);
+        console.log(this.modals);
+        return modal;
+    };
+    ;
+    ModalService.prototype.open = function (id) {
+        var length = this.modals.length;
+        var found = false;
+        for (var i = 0; i < length; i++) {
+            if (this.modals[i].id === id) {
+                console.log("modal found", this.modals[i]);
+                this.modals[i].open();
+                found = true;
+            }
+            else
+                this.modals[i].close();
+        }
+        return found;
+    };
+    ;
+    ModalService.prototype.close = function () {
+        if (this.opened instanceof modal_component_1.ModalComponent)
+            this.opened.close();
+    };
+    ;
+    ModalService = __decorate([
+        core_1.Injectable()
+    ], ModalService);
+    return ModalService;
+}());
+exports.ModalService = ModalService;
