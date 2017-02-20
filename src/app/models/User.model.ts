@@ -49,9 +49,10 @@ export interface UserConfig {
   division_id?: number;
   surname: string;
   name: string;
-  fname: string;
+  fname?: string;
   position?: string;
   email?: string;
+  password?: string;
   active_directory_account?: string;
   is_administrator?: boolean;
 };
@@ -67,6 +68,7 @@ export class User extends Model {
   fname: string = "";
   position: string = "";
   email: string = "";
+  password: string = "";
   activeDirectoryAccount: string = "";
   isAdministrator: boolean = false;
   fio: string = "";
@@ -97,11 +99,32 @@ export class User extends Model {
         this.email = config.email;
         this.search += this.email;
       }
+      if (config.password)
+        this.password = config.password;
       if (config.active_directory_account)
         this.activeDirectoryAccount = config.active_directory_account;
       if (config.is_administrator)
         this.isAdministrator = config.is_administrator;
     }
     this.fio = this.surname + " " + this.name + " " + this.fname;
+  };
+
+
+  /**
+   * Сбрасывает значенеи всех полей
+   */
+  clear(): void {
+    this.tabId = "";
+    this.departmentId = 0;
+    this.divisionId = 0;
+    this.surname = "";
+    this.name = "";
+    this.fname = "";
+    this.position = "";
+    this.email = "";
+    this.password = "";
+    this.activeDirectoryAccount = "";
+    this.isAdministrator = false;
+    this.fio = "";
   };
 };

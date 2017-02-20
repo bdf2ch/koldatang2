@@ -20,7 +20,7 @@ export class ModalContentComponent {};
         background: 'rgba(0, 0, 0, 0.5)'
       })),
 
-      transition('void => *', animate("200ms linear")),
+      transition('void => *', animate("200ms ease-in")),
       transition('* => void', animate("200ms linear")),
       //transition('void => *', [
       //  animate(100, style({ background: 'rgba(0, 0, 0, 0.5)' }))

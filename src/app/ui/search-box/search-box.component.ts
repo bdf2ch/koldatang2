@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Http, RequestOptions, Headers } from '@angular/http';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
+import { User } from '../../models/User.model';
+import { Observable } from 'rxjs/observable';
 
 @Component({
   selector: 'search-box',
@@ -10,11 +13,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
   ]
 })
 export class SearchBoxComponent implements OnInit, ControlValueAccessor {
-  @Input()
-  placeholder: string;
+  @Input() placeholder: string;
+  @Output() onSearch: EventEmitter<Observable<User[]>> = new EventEmitter();
+  private loading: boolean = false;
 
 
-  constructor() { }
+  constructor(private http: Http) {};
 
 
   ngOnInit() {};
@@ -27,5 +31,6 @@ export class SearchBoxComponent implements OnInit, ControlValueAccessor {
 
 
   registerOnTouched(fn: any) {};
+
 
 }

@@ -122,13 +122,14 @@ export class UsersService {
     let params = { action: "searchUsers", data: { search: search } };
 
     return this.http.post(apiUrl, params, options)
-      .map(function (res: Response | null) {
+      .map((res: Response | null) => {
         if (res instanceof Response) {
           let body = res.json();
           let length = body.length;
+          this.users.splice(0, this.users.length);
           for (let i = 0; i < length; i++) {
             let user = new User(body[i]);
-            user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
+            user.setupBackup(["surname", "name", "fname", "position", "email", "activeDirectoryAccount", "password", "isAdministrator", "fio"]);
             this.users.push(user);
             this.start = 0;
           }
@@ -177,12 +178,13 @@ export class UsersService {
    * @param user
    * @returns {Observable<R>}
    */
-  add(user: User, callback: any): Observable<User> {
+  add(user: User, callback?: any): Observable<User> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = {
       action: "addUser",
       data: {
+        tabId: user.tabId,
         divisionId: 0,
         departmentId: 0,
         surname: user.surname,
@@ -190,6 +192,7 @@ export class UsersService {
         fname: user.fname,
         position: user.position,
         email: user.email,
+        password: user.password,
         activeDirectoryAccount: user.activeDirectoryAccount,
         isAdministrator: user.isAdministrator
       }
@@ -200,7 +203,7 @@ export class UsersService {
         let body = res.json();
         let user = new User(body);
         user.setupBackup(["tabId", "divisionId", "departmentId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "isAdministrator"]);
-        this.users.push(user);
+        //this.users.push(user);
         if (callback !== undefined && typeof callback === "function")
           callback(user);
         return user;

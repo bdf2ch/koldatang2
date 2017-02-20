@@ -53,11 +53,28 @@
     }
 
 
+    function searchUsers ($parameters) {
+        global $link;
+        $search = $parameters -> search;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT search_users($1)",
+            array($search)
+        );
+
+        $users = pg_fetch_all($result);
+        echo is_null($users) ? json_encode(NULL) : $users[0]["search_users"];
+        return true;
+    }
+
+
     /**
     *
     **/
     function addUser ($parameters) {
         global $link;
+        $tabId = $parameters -> tabId;
         $departmentId = $parameters -> departmentId;
         $divisionId = $parameters -> divisionId;
         $surname = $parameters -> surname;
@@ -65,17 +82,21 @@
         $fname = $parameters -> fname;
         $position = $parameters -> position;
         $email = $parameters -> email;
-        $activeDirectoryAccount = $parameters -> activeDirectoryAccount;
         $password = $parameters -> password;
-        $isAdministrator = $parameters -> isAdministrator == 1 ? true : false;
+        $activeDirectoryAccount = $parameters -> activeDirectoryAccount;
+        $isAdministrator = $parameters -> isAdministrator;
+
+        //var_dump($parameters);
 
         $result = pg_query_params(
             $link,
-            'SELECT add_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)',
-            $departmentId, $divisionId, $surname, $name, $fname, $position, $email, $activeDirectoryAccount, $password, $isAdministrator
+            "SELECT add_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+            array($tabId, $departmentId, $divisionId, $surname, $name, $fname, $position, $email, $password, $activeDirectoryAccount)
         );
-        $user = pg_fetch_assoc($result);
 
+        var_dump($result);
+
+        $user = pg_fetch_result($result, 0, 0);
         echo($user);
         return true;
     }

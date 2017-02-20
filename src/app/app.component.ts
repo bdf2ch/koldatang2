@@ -39,6 +39,8 @@ export class AppComponent implements OnInit{
       })
       .subscribe((temp) => {
         this.breadcrumb = temp;
+        let content = document.getElementById("app-content-content");
+        content.scrollTop = 0;
         console.log("breadcrumb", this.breadcrumb);
       });
   };

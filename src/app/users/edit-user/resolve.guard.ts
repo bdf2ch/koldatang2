@@ -28,17 +28,22 @@ export class EditUserResolveGuard implements Resolve<Observable<User>|User> {
 
       return this.http.post(apiUrl, params, options)
         .map((res: Response) => {
+          console.log("RESPONSE", res);
           let body = res.json();
-          let user = new User(body);
-          user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "isAdministrator"]);
-          let result = {
-            user: user,
-            title: user.name + " " + user.fname + " " + user.surname
-          };
-          //result.user = user;
-          //result.title = user.name + " " + user.fname + " " + user.surname;
-          //return user;
-          return result;
+          if (body !== null) {
+            let user = new User(body);
+            user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "isAdministrator"]);
+            let result = {
+              user: user,
+              title: user.name + " " + user.fname + " " + user.surname
+            };
+            return result;
+          } else {
+            let result = {
+              user: null
+            };
+            return result;
+          }
         })
         .catch(this.handleError);
     } else {

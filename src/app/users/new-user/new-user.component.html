@@ -18,7 +18,7 @@
 
     <div class="content padding-20">
 
-      <form (ngSubmit)="onSubmit()"  #new_user_form="ngForm">
+      <form (ngSubmit)="save()" #new_user_form="ngForm">
 
         <!-- Личные данные пользователя -->
         <div class="row margin-bottom-30">
@@ -97,6 +97,27 @@
         </div>
 
 
+        <!-- Место работв и должность пользователя -->
+        <div class="row margin-bottom-30">
+          <div class="title margin-bottom-20">Пароль для входа в систему</div>
+          <div class="row margin-bottom-20">
+            <label for="selected-user-password" class="width-100">Пароль пользователя</label>
+            <input type="text"
+                   name="position"
+                   id="selected-user-password"
+                   class="width-100 dark"
+                   placeholder="Введите пароль пользователя"
+                   required
+                   #password="ngModel"
+                   [(ngModel)]="user.password">
+            <div class="form-error"
+                 *ngIf="password.invalid && password.dirty">
+              Вы не указали пароль пользователя
+            </div>
+          </div>
+        </div>
+
+
         <!-- Прочее -->
         <div class="row margin-bottom-30">
           <div class="title margin-bottom-20">Прочее</div>
@@ -119,6 +140,21 @@
                    placeholder="Введите учетную запись в AD"
                    [(ngModel)]="user.activeDirectoryAccount">
           </div>
+        </div>
+
+
+        <div class="row">
+          <button type="button" class="red right" (click)="cancel()">
+            <i class="fa fa-ban"></i>&nbsp;
+            Отмена
+          </button>
+          <button type="submit"
+                  class="green right margin-right-10"
+                  [disabled]="!new_user_form.form.valid || !new_user_form.form.dirty"
+                  (click)="save()">
+            <i class="fa fa-save"></i>&nbsp;
+            Сохранить
+          </button>
         </div>
 
       </form>

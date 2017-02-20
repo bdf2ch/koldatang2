@@ -29,7 +29,7 @@ export class EditUserComponent implements OnInit {
 
     this.route.data
       .subscribe((data: { extras: {user: User, title: string}}) => {
-        if (data.extras !== null) {
+        if (data.extras.user !== null) {
           this.user = data.extras.user;
           console.log("resolved user", this.user);
         } else {

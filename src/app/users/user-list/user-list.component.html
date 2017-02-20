@@ -27,9 +27,25 @@
 
   <div class="panel-content">
 
-    <div class="header padding-10">
-      <!--<input type="text" name="" id="" class="width-100 dark search" placeholder="Введите имя абонента, телефон или email" [(ngModel)]="search">-->
-      <search-box class="width-100" [placeholder]="'test'"></search-box>
+    <div class="header">
+      <div class="row">
+        <div class="width-70 padding-10">
+          <input type="text"
+                 name=""
+                 id=""
+                 class="width-100 dark search"
+                 placeholder="Введите имя абонента, телефон или email"
+                 #userSearch
+                 (keyup)="searchForUsers(userSearch.value)"
+                 [(ngModel)]="search">
+        </div>
+        <div class="width-30 padding-10">
+          <select name="" id="" class="width-100">
+            <option value="">Выберите стр. подразделение</option>
+          </select>
+        </div>
+      </div>
+      <!--<search-box class="width-100" [placeholder]="'test'"></search-box>-->
     </div>
 
     <div class="content">
@@ -43,7 +59,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let user of users | byUserName:search" (click)="selectUser(user)">
+        <tr *ngFor="let user of users" (click)="selectUser(user)">
           <td class="width-30">{{ user.fio }}</td>
           <td class="width-20">{{ user.email }}</td>
           <td class="width-20">{{ user.position }}</td>
@@ -51,7 +67,11 @@
         </tr>
         </tbody>
       </table>
-      <button class="blue big width-100" (click)="loadMore()">Загрузить еще</button>
+      <button class="blue big width-100"
+              *ngIf="usersService.getTotal() > users.length && search === ''"
+              (click)="loadMore()">
+        Загрузить еще
+      </button>
     </div>
   </div>
 

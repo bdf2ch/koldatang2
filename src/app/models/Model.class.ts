@@ -32,6 +32,7 @@ export class Model {
    */
   restoreBackup(): void {
     for (let i in this._backupData) {
+      console.log(i);
       this[i] = this._backupData[i];
     }
   };

@@ -7,7 +7,7 @@ import { User } from '../../models/User.model';
 @Component({
   selector: 'app-users',
   templateUrl: 'user-list.component.html',
-  styleUrls: []
+  styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
   users: User[] = [];
@@ -23,6 +23,10 @@ export class UserListComponent implements OnInit {
 
 
   ngOnInit() {
+    if (this.route.snapshot.queryParams["search"] !== null) {
+      this.search = this.route.snapshot.queryParams["search"];
+    }
+
     console.log("users length = ", this.usersService.getAll().length);
     if (this.usersService.getAll().length === 0) {
       console.log("length = ", this.usersService.getAll().length);
@@ -33,10 +37,12 @@ export class UserListComponent implements OnInit {
 
 
   selectUser(user: User) : void {
-    this.selectedUser = user;
-    //this.router.navigate([user.id]);
-    this.router.navigate([user.id], {relativeTo: this.route });
     console.log("selected user = ", this.selectedUser);
+    this.selectedUser = user;
+    if (this.search !== "")
+      this.router.navigate([user.id, { search: this.search }], {relativeTo: this.route });
+    else
+      this.router.navigate([user.id], {relativeTo: this.route });
   };
 
 
@@ -55,6 +61,17 @@ export class UserListComponent implements OnInit {
 
   isAllUsersLoaded(): boolean {
     return this.usersService.getTotal() === this.usersService.getAll().length ? true : false;
+  };
+
+
+  searchForUsers (value) {
+    console.log("value", value);
+    if (value !== "" && value.length > 2) {
+      this.usersService.search(this.search).subscribe();
+    } else {
+      this.usersService.fetch().subscribe();
+    }
+    this.users = this.usersService.getAll();
   };
 
 }
