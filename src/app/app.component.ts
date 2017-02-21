@@ -1,5 +1,6 @@
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
+import { ModalService } from './ui/modal/modal.service';
 import { Observable } from 'rxjs/observable';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
@@ -17,7 +18,11 @@ export class AppComponent implements OnInit{
   controls: string;
   breadcrumb: ActivatedRoute[] = [];
 
-  constructor (private router: Router, private route: ActivatedRoute) {};
+
+  constructor (private router: Router,
+               private route: ActivatedRoute,
+               private $modals: ModalService) {};
+
 
   ngOnInit (): void {
     this.router.events
@@ -43,5 +48,10 @@ export class AppComponent implements OnInit{
         content.scrollTop = 0;
         console.log("breadcrumb", this.breadcrumb);
       });
+  };
+
+
+  openEditDivisionModal() {
+    this.$modals.open("edit-division");
   };
 }

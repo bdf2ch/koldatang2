@@ -1,0 +1,18 @@
+<div class="ui-tree-container">
+  <div class="tree-item" *ngFor="let item of root" [ngClass]="{expanded: item.isExpanded === true}">
+    <div class="item-details">
+      <div class="item-expander">
+        <i class="fa fa-chevron-down expand"
+           title="Развернуть"
+           *ngIf="item.children.length > 0 && item.isExpanded === false"
+           (click)="expandItem(item.key)"></i>
+        <i class="fa fa-chevron-up collapse"
+           title="Свернуть"
+           *ngIf="item.isExpanded === true"
+           (click)="collapseItem(item.key)"></i>
+      </div>
+      <div class="item-title">{{ item.title }}</div>
+    </div>
+    <tree-item [tree]="tree" [items]="item.children" *ngIf="item.isExpanded === true"></tree-item>
+  </div>
+</div>

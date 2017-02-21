@@ -3,6 +3,7 @@
     $DS = DIRECTORY_SEPARATOR;
     require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."config.php";
     require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."users.php";
+    require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."divisions.php";
     $params = json_decode(file_get_contents("php://input"));
 
 
@@ -16,6 +17,7 @@
         case "getUserById": getUserById($params -> data); break;
         case "searchUsers": searchUsers($params -> data); break;
         case "addUser": addUser($params -> data); break;
+        case "getAllDivisions": getAllDivisions(); break;
     }
 
 

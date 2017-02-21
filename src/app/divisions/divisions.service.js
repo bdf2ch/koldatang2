@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
-var Division_model_1 = require('../models/Division.model');
+var Division_model_1 = require('../models/Division.model.ts');
 var $divisions = (function () {
     function $divisions() {
         this.divisions = [];

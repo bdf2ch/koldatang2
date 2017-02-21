@@ -1,0 +1,37 @@
+.tree-item {
+  overflow: auto;
+  min-height: 30px;
+  margin: 10px;
+  box-sizing: border-box;
+  line-height: 30px;
+}
+.tree-item.with-children {
+  border: 1px solid #ECEFF1;
+}
+.tree-item .item-details {
+  overflow: auto;
+  padding-left: 10px;
+  box-sizing: border-box;
+}
+.tree-item .item-details.with-children {
+  background: #ECEFF1;
+}
+.tree-item .item-details.expanded {
+  background: #F5F5F5;
+  border-bottom: 2px solid #E0E0E0;
+}
+.tree-item .item-details .item-title {
+  height: 30px;
+  margin-right: 30px;
+  font-size: 15px;
+  text-align: left;
+}
+.tree-item .item-details .item-expander {
+  float: right;
+  height: 30px;
+  width: 30px;
+  box-sizing: border-box;
+  font-size: 12px;
+  text-align: center;
+  cursor: pointer;
+}
