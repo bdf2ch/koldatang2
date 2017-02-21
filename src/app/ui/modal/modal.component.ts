@@ -37,9 +37,13 @@ export class ModalContentComponent {};
         transform: 'scale(0.1)'
       })),
 
-      transition('void => *', animate("100ms linear")),
-      transition('true => void', animate("100ms linear")),
+      transition('* => void', [
+        animate(200, style({ transform: 'scale(0.1)' }))
+      ])
       /*
+      transition('void => *', animate("200ms ease-in")),
+      //transition('true => false', animate("200ms linear")),
+
       transition('void => *', [
         animate(100, style({ transform: 'scale(1.0)' }))
       ]),

@@ -3,8 +3,10 @@ import { SearchBoxComponent } from './search-box/search-box.component';
 import { ModalComponent, ModalContentComponent } from './modal/modal.component';
 import { CoreModule } from "../core/core.module";
 import { ModalService } from "./modal/modal.service";
-import { TreeComponent, TreeItemComponent } from './tree/tree.component';
+import { TreeComponent } from './tree/tree.component';
+import { TreeItemComponent } from './tree/tree-item.component';
 import { TreeService } from "./tree/tree.service";
+
 
 @NgModule({
   imports: [

@@ -3,6 +3,10 @@
 
 .ui-modal-fog {
   position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   left: 0px;
   top: 0px;
   right: 0px;
@@ -10,14 +14,16 @@
 }
 
 .ui-modal {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   height: 300px;
   margin-left: auto;
   margin-right: auto;
   background: white;
   //border: 1px solid lightgrey;
   box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
-  //transform: scale(0.1);
+  transform: scale(0.1);
 
   .modal-header {
     display: block;

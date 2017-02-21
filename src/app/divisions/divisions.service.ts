@@ -65,20 +65,6 @@ export class DivisionsService {
   };
 
 
-  private handleError (error: Response | any) {
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = body.error || JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
-  };
-
-
   /**
    *
    * @param id
@@ -92,4 +78,72 @@ export class DivisionsService {
     }
     return null;
   };
+
+
+  /**
+   * Добавляет структурное подразделение
+   * @param division {Division} - добавляемое структурное подразделение
+   * @returns {Observable<Division>}
+   */
+  add(division: Division): Observable<Division> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let parameters = {
+      action: "addDivision",
+      data: {
+        parentId: division.parentId,
+        title: division.title,
+        isDepartment: division.isDepartment
+      }
+    };
+    return this.http.post(apiUrl, parameters, options)
+      .map((res: Response) => {
+        let body = res.json();
+        let division = new Division(body);
+        this.divisions.push(division);
+        return division;
+      })
+      .catch(this.handleError);
+  };
+
+
+  /**
+   * Редактирует структурное подразделение
+   * @param division {Division} - структурное подразделение
+   * @returns {Observable<boolean>}
+   */
+  edit(division: Division): Observable<boolean> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let parameters = {
+      action: "editDivision",
+      data: {
+        id: division.id,
+        parentId: division.parentId,
+        title: division.title,
+        isDepartment: division.isDepartment
+      }
+    };
+    return this.http.post(apiUrl, parameters, options)
+      .map((res: Response) => {
+        let body = res.json();
+        return body;
+      })
+      .catch(this.handleError);
+  };
+
+
+  private handleError (error: Response | any) {
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
+  };
+
 }
