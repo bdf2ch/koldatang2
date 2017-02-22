@@ -9,6 +9,7 @@ export const apiUrl = "/assets/serverside/api.php";
 @Injectable()
 export class DivisionsService {
   divisions: Division[] = [];
+  selected: Division|null = null;
 
 
   constructor(private http: Http) {};
@@ -80,6 +81,10 @@ export class DivisionsService {
   };
 
 
+  getSelected(): Division|null {
+    return this.selected;
+  };
+
   /**
    * Добавляет структурное подразделение
    * @param division {Division} - добавляемое структурное подразделение
@@ -133,7 +138,25 @@ export class DivisionsService {
   };
 
 
-  private handleError (error: Response | any) {
+  /**
+   * Выбирает текущее структурное подразделение
+   * @param id {number|null} - Идентификатор структурного подразделения/null
+   * @returns {Division|null}
+   */
+  select(id: number|null): Division|null {
+    if (id !== null) {
+      let length = this.divisions.length;
+      for (let i = 0; i < length; i++) {
+        if (this.divisions[i].id === id)
+          this.selected = this.divisions[i];
+      }
+    } else
+      this.selected = null;
+    return this.selected;
+  };
+
+
+  private handleError (error: Response|any) {
     let errMsg: string;
     if (error instanceof Response) {
       const body = error.json() || '';

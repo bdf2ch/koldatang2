@@ -6,31 +6,68 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
-var UsersComponent = (function () {
-    function UsersComponent(usersService, router) {
+var UserListComponent = (function () {
+    function UserListComponent(usersService, route, router) {
         this.usersService = usersService;
+        this.route = route;
         this.router = router;
         this.users = [];
         this.search = "";
     }
     ;
-    UsersComponent.prototype.ngOnInit = function () {
+    UserListComponent.prototype.ngOnInit = function () {
+        if (this.route.snapshot.queryParams["search"] !== null) {
+            this.search = this.route.snapshot.queryParams["search"];
+        }
+        console.log("users length = ", this.usersService.getAll().length);
+        if (this.usersService.getAll().length === 0) {
+            console.log("length = ", this.usersService.getAll().length);
+            this.usersService.fetch().subscribe();
+        }
         this.users = this.usersService.getAll();
     };
     ;
-    UsersComponent.prototype.selectUser = function (user) {
-        this.selectedUser = user;
-        this.router.navigate(['/user/' + user.id, user.id]);
+    UserListComponent.prototype.selectUser = function (user) {
         console.log("selected user = ", this.selectedUser);
+        this.selectedUser = user;
+        if (this.search !== "")
+            this.router.navigate([user.id, { search: this.search }], { relativeTo: this.route });
+        else
+            this.router.navigate([user.id], { relativeTo: this.route });
     };
     ;
-    UsersComponent = __decorate([
+    UserListComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.usersService.fetch()
+            .subscribe(function (users) { return _this.users = users; }, function (error) { return _this.errorMessage = error; });
+    };
+    ;
+    UserListComponent.prototype.loadMore = function () {
+        this.usersService.fetch().subscribe();
+    };
+    ;
+    UserListComponent.prototype.isAllUsersLoaded = function () {
+        return this.usersService.getTotal() === this.usersService.getAll().length ? true : false;
+    };
+    ;
+    UserListComponent.prototype.searchForUsers = function (value) {
+        console.log("value", value);
+        if (value !== "" && value.length > 2) {
+            this.usersService.search(this.search).subscribe();
+        }
+        else {
+            this.usersService.fetch().subscribe();
+        }
+        this.users = this.usersService.getAll();
+    };
+    ;
+    UserListComponent = __decorate([
         core_1.Component({
             selector: 'app-users',
-            templateUrl: 'users.component.html',
-            styleUrls: []
+            templateUrl: 'user-list.component.html',
+            styleUrls: ['./user-list.component.css']
         })
-    ], UsersComponent);
-    return UsersComponent;
+    ], UserListComponent);
+    return UserListComponent;
 }());
-exports.UsersComponent = UsersComponent;
+exports.UserListComponent = UserListComponent;

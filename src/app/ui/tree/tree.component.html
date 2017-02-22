@@ -1,6 +1,6 @@
 <div class="ui-tree-container">
   <div class="tree-item" *ngFor="let item of root" [ngClass]="{expanded: item.isExpanded === true}">
-    <div class="item-details">
+    <div class="item-details" [ngClass]="{'selected': item.isSelected === true}">
       <div class="item-expander">
         <i class="fa fa-chevron-down expand"
            title="Развернуть"
@@ -11,7 +11,7 @@
            *ngIf="item.isExpanded === true"
            (click)="collapseItem(item.key)"></i>
       </div>
-      <div class="item-title">{{ item.title }}</div>
+      <div class="item-title" (click)="selectItem(item.key)">{{ item.title }}</div>
     </div>
     <tree-item [tree]="tree" [items]="item.children" *ngIf="item.isExpanded === true"></tree-item>
   </div>

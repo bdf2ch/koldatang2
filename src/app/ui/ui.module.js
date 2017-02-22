@@ -10,6 +10,9 @@ var search_box_component_1 = require('./search-box/search-box.component');
 var modal_component_1 = require('./modal/modal.component');
 var core_module_1 = require("../core/core.module");
 var modal_service_1 = require("./modal/modal.service");
+var tree_component_1 = require('./tree/tree.component');
+var tree_item_component_1 = require('./tree/tree-item.component');
+var tree_service_1 = require("./tree/tree.service");
 var UiModule = (function () {
     function UiModule() {
     }
@@ -20,14 +23,21 @@ var UiModule = (function () {
             ],
             declarations: [
                 search_box_component_1.SearchBoxComponent,
-                modal_component_1.ModalComponent
+                modal_component_1.ModalComponent,
+                modal_component_1.ModalContentComponent,
+                tree_component_1.TreeComponent,
+                tree_item_component_1.TreeItemComponent
             ],
             exports: [
                 search_box_component_1.SearchBoxComponent,
-                modal_component_1.ModalComponent
+                modal_component_1.ModalComponent,
+                modal_component_1.ModalContentComponent,
+                tree_component_1.TreeComponent,
+                tree_item_component_1.TreeItemComponent
             ],
             providers: [
-                modal_service_1.ModalService
+                modal_service_1.ModalService,
+                tree_service_1.TreeService
             ]
         })
     ], UiModule);

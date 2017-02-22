@@ -10,6 +10,19 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 };
 var core_1 = require('@angular/core');
 var modal_service_1 = require('./modal.service');
+var ModalContentComponent = (function () {
+    function ModalContentComponent() {
+    }
+    ModalContentComponent = __decorate([
+        core_1.Component({
+            selector: 'modal-content',
+            template: '<div></div>'
+        })
+    ], ModalContentComponent);
+    return ModalContentComponent;
+}());
+exports.ModalContentComponent = ModalContentComponent;
+;
 var ModalComponent = (function () {
     function ModalComponent(modals) {
         this.modals = modals;
@@ -19,8 +32,6 @@ var ModalComponent = (function () {
     }
     ;
     ModalComponent.prototype.ngOnInit = function () {
-        console.log("withFooter", this.footer);
-        console.log("id = ", this.id);
         if (this.id === null || this.id === undefined || this.id === "") {
             console.error("no id specified");
             return;
@@ -50,6 +61,9 @@ var ModalComponent = (function () {
     ], ModalComponent.prototype, "title", void 0);
     __decorate([
         core_1.Input()
+    ], ModalComponent.prototype, "width", void 0);
+    __decorate([
+        core_1.Input()
     ], ModalComponent.prototype, "footer", void 0);
     __decorate([
         core_1.Output()
@@ -61,7 +75,27 @@ var ModalComponent = (function () {
         core_1.Component({
             selector: 'modal',
             templateUrl: './modal.component.html',
-            styleUrls: ['./modal.component.css']
+            styleUrls: ['./modal.component.css'],
+            animations: [
+                core_1.trigger("fog", [
+                    core_1.state('true', core_1.style({
+                        background: 'rgba(0, 0, 0, 0.5)'
+                    })),
+                    core_1.transition('void => *', core_1.animate("200ms ease-in")),
+                    core_1.transition('* => void', core_1.animate("200ms linear")),
+                ]),
+                core_1.trigger("modal", [
+                    core_1.state('true', core_1.style({
+                        transform: 'scale(1.0)'
+                    })),
+                    core_1.state('false', core_1.style({
+                        transform: 'scale(0.1)'
+                    })),
+                    core_1.transition('* => void', [
+                        core_1.animate(200, core_1.style({ transform: 'scale(0.1)' }))
+                    ])
+                ])
+            ]
         }),
         __param(0, core_1.Inject(core_1.forwardRef(function () { return modal_service_1.ModalService; })))
     ], ModalComponent);

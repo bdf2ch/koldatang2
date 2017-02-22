@@ -8,8 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require('@angular/core');
 var forms_1 = require('@angular/forms');
 var SearchBoxComponent = (function () {
-    function SearchBoxComponent() {
+    function SearchBoxComponent(http) {
+        this.http = http;
+        this.onSearch = new core_1.EventEmitter();
+        this.loading = false;
     }
+    ;
     SearchBoxComponent.prototype.ngOnInit = function () { };
     ;
     SearchBoxComponent.prototype.writeValue = function (value) { };
@@ -21,6 +25,9 @@ var SearchBoxComponent = (function () {
     __decorate([
         core_1.Input()
     ], SearchBoxComponent.prototype, "placeholder", void 0);
+    __decorate([
+        core_1.Output()
+    ], SearchBoxComponent.prototype, "onSearch", void 0);
     SearchBoxComponent = __decorate([
         core_1.Component({
             selector: 'search-box',

@@ -6,11 +6,38 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
+var User_model_1 = require('../../models/User.model');
 var NewUserComponent = (function () {
-    function NewUserComponent() {
+    function NewUserComponent(router, route, users) {
+        this.router = router;
+        this.route = route;
+        this.users = users;
+        this.user = new User_model_1.User();
+        this.submitted = false;
     }
-    NewUserComponent.prototype.ngOnInit = function () {
+    ;
+    NewUserComponent.prototype.ngOnInit = function () { };
+    ;
+    NewUserComponent.prototype.onSubmit = function () {
+        this.submitted = true;
+        console.log("form submit");
     };
+    ;
+    NewUserComponent.prototype.save = function () {
+        var _this = this;
+        this.users.add(this.user).subscribe(function (user) {
+            _this.router.navigate([user.id], { relativeTo: _this.route });
+        });
+    };
+    ;
+    /**
+     * Возврат к списку пользователей
+     */
+    NewUserComponent.prototype.cancel = function () {
+        this.user.clear();
+        this.router.navigate(["../"], { relativeTo: this.route });
+    };
+    ;
     NewUserComponent = __decorate([
         core_1.Component({
             selector: 'app-new-user',

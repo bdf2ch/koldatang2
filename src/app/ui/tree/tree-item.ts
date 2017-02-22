@@ -12,6 +12,7 @@ export class TreeItem {
   title: string = "";
   isRoot: boolean = false;
   isExpanded: boolean = false;
+  isSelected: boolean = false;
   children: TreeItem[] = [];
 
   constructor (config: TreeItemConfig) {

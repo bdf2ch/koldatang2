@@ -7,7 +7,6 @@ import { DivisionsModule } from './divisions/divisions.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from "./core/core.module";
-//import { DivisionsComponent } from './divisions/divisions.component';
 import { PhonebookComponent } from './phonebook/phonebook.component';
 import { SearchBoxComponent} from "./ui/search-box/search-box.component";
 import { AtsComponent } from './phonebook/ats/ats.component';
@@ -16,7 +15,6 @@ import { AtsComponent } from './phonebook/ats/ats.component';
 @NgModule({
   declarations: [
     AppComponent,
-    //DivisionsComponent,
     PhonebookComponent,
     PhonebookComponent,
     AtsComponent

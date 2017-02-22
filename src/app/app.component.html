@@ -54,9 +54,10 @@
         </a>
       </div>
       <div *ngSwitchCase="'divisions'">
-        <a (click)="openEditDivisionModal()">
-          <i class="fa fa-pencil"></i>
-        </a>
+          <i class="fa fa-pencil"
+             (click)="openEditDivisionModal()"
+             *ngIf="$divisions.getSelected() !== null">
+          </i>
       </div>
     </div>
 

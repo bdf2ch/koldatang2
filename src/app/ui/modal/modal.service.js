@@ -14,7 +14,6 @@ var ModalService = (function () {
     ;
     ModalService.prototype.register = function (modal) {
         this.modals.push(modal);
-        console.log(this.modals);
         return modal;
     };
     ;
@@ -23,9 +22,9 @@ var ModalService = (function () {
         var found = false;
         for (var i = 0; i < length; i++) {
             if (this.modals[i].id === id) {
-                console.log("modal found", this.modals[i]);
                 this.modals[i].open();
                 found = true;
+                this.opened = this.modals[i];
             }
             else
                 this.modals[i].close();

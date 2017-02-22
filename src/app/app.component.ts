@@ -1,6 +1,8 @@
 import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from "@angular/router";
 import { Component, OnInit } from '@angular/core';
+import { DivisionsService } from './divisions/divisions.service';
 import { ModalService } from './ui/modal/modal.service';
+import { TreeService } from './ui/tree/tree.service';
 import { Observable } from 'rxjs/observable';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
@@ -19,17 +21,19 @@ export class AppComponent implements OnInit{
   breadcrumb: ActivatedRoute[] = [];
 
 
-  constructor (private router: Router,
-               private route: ActivatedRoute,
-               private $modals: ModalService) {};
+  constructor (private $router: Router,
+               private $route: ActivatedRoute,
+               private $modals: ModalService,
+               private $trees: TreeService,
+               private $divisions: DivisionsService) {};
 
 
   ngOnInit (): void {
-    this.router.events
+    this.$router.events
       .filter(event => event instanceof NavigationEnd)
       .map(event => {
         let temp = [];
-        let currentRoute = this.route.root;
+        let currentRoute = this.$route.root;
 
         while (currentRoute.children[0] !== undefined) {
           currentRoute = currentRoute.children[0];

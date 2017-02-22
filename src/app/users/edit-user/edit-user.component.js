@@ -6,15 +6,47 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
+var User_model_1 = require('../../models/User.model');
+require('rxjs/add/operator/switchMap');
+require('rxjs/add/operator/map');
 var EditUserComponent = (function () {
-    function EditUserComponent() {
+    function EditUserComponent(router, route, users) {
+        this.router = router;
+        this.route = route;
+        this.users = users;
+        this.user = new User_model_1.User();
+        this.userNotFound = false;
+        this.submitted = false;
     }
     ;
-    EditUserComponent.prototype.ngOnInit = function () { };
+    EditUserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        console.log(this.route);
+        var id = +this.route.snapshot.params['id'];
+        this.route.data
+            .subscribe(function (data) {
+            if (data.extras.user !== null) {
+                _this.user = data.extras.user;
+                console.log("resolved user", _this.user);
+            }
+            else {
+                _this.user = new User_model_1.User();
+                _this.userNotFound = true;
+            }
+        });
+    };
     ;
-    __decorate([
-        core_1.Input()
-    ], EditUserComponent.prototype, "user", void 0);
+    EditUserComponent.prototype.onSubmit = function () {
+        this.submitted = true;
+        console.log("form submit");
+    };
+    ;
+    EditUserComponent.prototype.onCancel = function () {
+        this.user = new User_model_1.User();
+        this.submitted = false;
+        this.router.navigate(["/users", { test: "test" }]);
+    };
+    ;
     EditUserComponent = __decorate([
         core_1.Component({
             selector: 'app-edit-user',

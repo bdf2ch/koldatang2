@@ -31,3 +31,4 @@ var ByUserNamePipe = (function () {
     return ByUserNamePipe;
 }());
 exports.ByUserNamePipe = ByUserNamePipe;
+;

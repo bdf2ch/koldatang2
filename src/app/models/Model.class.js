@@ -34,6 +34,7 @@ var Model = (function () {
      */
     Model.prototype.restoreBackup = function () {
         for (var i in this._backupData) {
+            console.log(i);
             this[i] = this._backupData[i];
         }
     };

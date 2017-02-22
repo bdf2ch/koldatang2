@@ -22,11 +22,20 @@
       overflow: auto;
       padding-left: 10px;
 
+      &.selected {
+        background: #E3F2FD;
+      }
+
       .item-title {
+        float: left;
         height: @tree-item-height;
-        margin-right: @tree-item-expander-width;
         font-size: 15px;
         text-align: left;
+        cursor: pointer;
+
+        &:hover {
+          color: #0D47A1;
+        }
       }
       .item-expander {
         float: right;

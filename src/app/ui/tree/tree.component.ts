@@ -10,10 +10,12 @@ import { TreeItem, TreeItemConfig } from './tree-item';
 })
 export class TreeComponent implements OnInit {
   @Input() id:string;
+  @Input() expandOnSelect: boolean;
   @Output() onSelect: EventEmitter<TreeItem|null> = new EventEmitter<TreeItem|null>();
   private tree: TreeComponent;
   private root: TreeItem[] = [];
   private stack: TreeItem[] = [];
+  private selected: TreeItem|null = null;
 
 
   constructor(private $tree:TreeService) {};
@@ -24,6 +26,8 @@ export class TreeComponent implements OnInit {
       console.error("no id specified");
       return;
     }
+    if (this.expandOnSelect === null || this.expandOnSelect === undefined || typeof this.expandOnSelect !== "boolean")
+      this.expandOnSelect = false;
     this.tree = this;
     this.$tree.register(this);
   };
@@ -41,6 +45,15 @@ export class TreeComponent implements OnInit {
         return this.stack[i];
     }
     return null;
+  };
+
+
+  /**
+   * Возвращает выбранный элемент дерева
+   * @returns {TreeItem|null}
+   */
+  getSelectedItem(): TreeItem|null {
+    return this.selected;
   };
 
 
@@ -104,9 +117,21 @@ export class TreeComponent implements OnInit {
   selectItem(key: string): void {
     let length = this.stack.length;
     for (let i = 0; i < length; i++) {
-      if (this.stack[i].key === key)
-        this.onSelect.emit(this.stack[i]);
+      if (this.stack[i].key === key) {
+        if (this.stack[i].isSelected === true) {
+          this.stack[i].isSelected = false;
+          this.selected = null;
+        } else {
+          this.stack[i].isSelected = true;
+          this.selected = this.stack[i];
+          if (this.stack[i].children.length > 0 && this.expandOnSelect === true)
+            this.stack[i].isExpanded = true;
+          this.onSelect.emit(this.stack[i]);
+        }
+      } else
+        this.stack[i].isSelected = false;
     }
+    this.onSelect.emit(this.selected);
   };
 
 

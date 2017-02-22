@@ -30,7 +30,6 @@
 
     &.with-children {
       background: #ECEFF1;
-      //border: 1px solid #E0E0E0;
     }
 
     &.expanded {
@@ -38,11 +37,22 @@
       border-bottom: 2px solid #E0E0E0;
     }
 
+    &.selected {
+      background: #E3F2FD;
+    }
+
     .item-title {
+      float: left;
       height: @tree-item-height;
-      margin-right: @tree-item-expander-width;
+      //margin-right: @tree-item-expander-width;
       font-size: 15px;
       text-align: left;
+      cursor: pointer;
+      //text-decoration: underline;
+
+      &:hover {
+        color: #0D47A1;
+      }
     }
     .item-expander {
       float: right;

@@ -3,6 +3,7 @@ import { DivisionsService } from './divisions.service';
 import { TreeService } from '../ui/tree/tree.service';
 import { ModalService } from '../ui/modal/modal.service';
 import { Division } from "../models/Division.model";
+import { TreeItem } from '../ui/tree/tree-item';
 
 
 @Component({
@@ -41,9 +42,10 @@ export class DivisionsComponent implements OnInit {
   };
 
 
-  select(division: Division) {
-    this.selectedDivision = division;
-    this.$modals.open("edit-division");
+  select(item: TreeItem|null) {
+    console.log(item);
+    if (item !== null)
+      this.$divisions.select(parseInt(item.key));
   };
 
 }
