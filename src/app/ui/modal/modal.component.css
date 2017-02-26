@@ -1,6 +1,5 @@
 .ui-modal-fog {
   position: fixed;
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -11,6 +10,7 @@
 }
 .ui-modal {
   display: flex;
+  position: fixed;
   flex-direction: column;
   justify-content: flex-start;
   margin-left: auto;

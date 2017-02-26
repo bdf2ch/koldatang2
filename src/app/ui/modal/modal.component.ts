@@ -1,4 +1,7 @@
-import { Component, Inject, OnInit, Input, Output, EventEmitter, forwardRef, trigger, state, transition, style, animate } from '@angular/core';
+import {
+  Component, Inject, OnInit, OnChanges, AfterContentInit, AfterViewChecked, HostListener, Input, Output, EventEmitter, forwardRef,
+  ElementRef, trigger, state, transition, style, animate, SimpleChanges
+} from '@angular/core';
 import { ModalService } from './modal.service';
 
 
@@ -19,13 +22,8 @@ export class ModalContentComponent {};
       state('true', style({
         background: 'rgba(0, 0, 0, 0.5)'
       })),
-
-      transition('void => *', animate("200ms ease-in")),
+      transition('void => *', animate("200ms linear")),
       transition('* => void', animate("200ms linear")),
-      //transition('void => *', [
-      //  animate(100, style({ background: 'rgba(0, 0, 0, 0.5)' }))
-      //]),
-      //transition('* <=> void', animate("200ms linear"))
     ]),
     trigger("modal", [
 
@@ -37,42 +35,12 @@ export class ModalContentComponent {};
         transform: 'scale(0.1)'
       })),
 
-      transition('* => void', [
-        animate(200, style({ transform: 'scale(0.1)' }))
-      ])
-      /*
-      transition('void => *', animate("200ms ease-in")),
-      //transition('true => false', animate("200ms linear")),
-
-      transition('void => *', [
-        animate(100, style({ transform: 'scale(1.0)' }))
-      ]),
-      */
-      /*
-      transition('false => true', [
-        animate(100, style({ transform: 'scale(1.0)' }))
-      ]),
-      transition('true => false', [
-        animate(100, style({ transform: 'scale(0.1)' }))
-      ]),
-      */
-      /*
-      transition('* => void', [
-        animate(100, style({ transform: 'scale(0.1)' }))
-      ])
-      */
-      /*
-      transition('* => void', [
-        animate(100, style({ transform: 'scale(0.1)' }))
-      ]),
-      transition('void => *', [
-        animate(100, style({ transform: 'scale(1)' }))
-      ])
-      */
+      transition('void => true', animate(100)),
+      transition('* => void', animate(100)),
     ])
   ]
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent implements OnInit, AfterViewChecked {
   @Input() id: string;
   @Input() title: string;
   @Input() width: number;
@@ -82,7 +50,9 @@ export class ModalComponent implements OnInit {
   private opened: boolean = false;
 
 
-  constructor(@Inject(forwardRef(() => ModalService)) private modals: ModalService) {};
+  constructor(@Inject(forwardRef(() => ModalService)) private modals: ModalService,
+              private element: ElementRef
+  ) {};
 
 
   ngOnInit() {
@@ -95,6 +65,22 @@ export class ModalComponent implements OnInit {
       return;
     }
     this.modals.register(this);
+  };
+
+
+  ngAfterViewChecked () {
+    if (this.element.nativeElement.children.length > 0) {
+      this.element.nativeElement.children[1].style.top = window.innerHeight / 2 - this.element.nativeElement.children[1].clientHeight / 2 + 'px';
+      this.element.nativeElement.children[1].style.left = window.innerWidth / 2 - this.width / 2 + 'px';
+    }
+  };
+
+
+  @HostListener('window:resize', ['$event']) onWindowResize (event) {
+    if (this.opened) {
+      this.element.nativeElement.children[1].style.left = event.target.innerWidth / 2 - this.width / 2 + 'px';
+      this.element.nativeElement.children[1].style.top = event.target.innerHeight / 2 - this.element.nativeElement.children[1].clientHeight / 2 + 'px';
+    }
   };
 
 

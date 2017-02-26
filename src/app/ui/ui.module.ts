@@ -6,6 +6,7 @@ import { ModalService } from "./modal/modal.service";
 import { TreeComponent } from './tree/tree.component';
 import { TreeItemComponent } from './tree/tree-item.component';
 import { TreeService } from "./tree/tree.service";
+import { TabsComponent } from './tabs/tabs.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { TreeService } from "./tree/tree.service";
     ModalComponent,
     ModalContentComponent,
     TreeComponent,
-    TreeItemComponent
+    TreeItemComponent,
+    TabsComponent
   ],
   exports: [
     SearchBoxComponent,

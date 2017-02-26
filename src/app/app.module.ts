@@ -10,6 +10,7 @@ import { CoreModule } from "./core/core.module";
 import { PhonebookComponent } from './phonebook/phonebook.component';
 import { SearchBoxComponent} from "./ui/search-box/search-box.component";
 import { AtsComponent } from './phonebook/ats/ats.component';
+import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AtsComponent } from './phonebook/ats/ats.component';
     AppComponent,
     PhonebookComponent,
     PhonebookComponent,
-    AtsComponent
+    AtsComponent,
+    AuthComponent
   ],
   imports: [
     BrowserModule,
