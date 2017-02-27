@@ -15,6 +15,7 @@ var app_component_1 = require('./app.component');
 var core_module_1 = require("./core/core.module");
 var phonebook_component_1 = require('./phonebook/phonebook.component');
 var ats_component_1 = require('./phonebook/ats/ats.component');
+var auth_component_1 = require('./auth/auth.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -24,7 +25,8 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 phonebook_component_1.PhonebookComponent,
                 phonebook_component_1.PhonebookComponent,
-                ats_component_1.AtsComponent
+                ats_component_1.AtsComponent,
+                auth_component_1.AuthComponent
             ],
             imports: [
                 platform_browser_1.BrowserModule,

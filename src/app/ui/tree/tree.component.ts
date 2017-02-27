@@ -18,10 +18,11 @@ export class TreeComponent implements OnInit {
   private selected: TreeItem|null = null;
 
 
-  constructor(private $tree:TreeService) {};
+  constructor(private $trees:TreeService) {};
 
 
   ngOnInit() {
+    console.log("tree init");
     if (this.id === null || this.id === undefined || this.id === "") {
       console.error("no id specified");
       return;
@@ -29,7 +30,14 @@ export class TreeComponent implements OnInit {
     if (this.expandOnSelect === null || this.expandOnSelect === undefined || typeof this.expandOnSelect !== "boolean")
       this.expandOnSelect = false;
     this.tree = this;
-    this.$tree.register(this);
+
+    let tree = this.$trees.getById(this.id);
+    if (tree === null)
+      this.$trees.register(this);
+    else {
+      this.stack = tree.stack;
+      this.root = tree.root;
+    }
   };
 
 
@@ -63,11 +71,9 @@ export class TreeComponent implements OnInit {
    * @returns {boolean}
    */
   expandItem(key: string): boolean {
-    console.log("expand");
     let length = this.stack.length;
     for (let i = 0; i < length; i++) {
       if (this.stack[i].key === key) {
-        console.log(key + " found");
         this.stack[i].isExpanded = true;
         return true;
       }

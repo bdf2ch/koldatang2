@@ -105,6 +105,7 @@ export class DivisionsService {
       .map((res: Response) => {
         let body = res.json();
         let division = new Division(body);
+        division.setupBackup(["parentId", "title", "isDepartment"]);
         this.divisions.push(division);
         return division;
       })
@@ -117,7 +118,7 @@ export class DivisionsService {
    * @param division {Division} - структурное подразделение
    * @returns {Observable<boolean>}
    */
-  edit(division: Division): Observable<boolean> {
+  edit(division: Division): Observable<Division> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let parameters = {
@@ -130,9 +131,9 @@ export class DivisionsService {
       }
     };
     return this.http.post(apiUrl, parameters, options)
-      .map((res: Response) => {
-        let body = res.json();
-        return body;
+      .map(() => {
+        division.setupBackup(["parentId", "title", "isDepartment"]);
+        return division;
       })
       .catch(this.handleError);
   };

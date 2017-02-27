@@ -1,5 +1,5 @@
 <div [@fog]="opened" class="ui-modal-fog" *ngIf="opened"></div>
-<div [@modal]="opened.toString()" class="ui-modal" *ngIf="opened" [style.width]="width + 'px'">
+<div [@modal]="opened.toString()" class="ui-modal" *ngIf="opened" [style.width]="width + 'px'" [class]="style">
   <div class="modal-header">
     <div class="close-modal-button">
       <i class="fa fa-times" (click)="close()" title="Закрыть"></i>

@@ -55,6 +55,11 @@ export class AppComponent implements OnInit{
   };
 
 
+  openAddDivisionModal () {
+    this.$modals.open('add-division');
+  };
+
+
   openEditDivisionModal() {
     this.$modals.open("edit-division");
   };

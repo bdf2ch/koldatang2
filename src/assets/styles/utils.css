@@ -303,6 +303,12 @@ input[type='number'].big {
   height: 41px;
   padding: 10px;
 }
+input[type='text'].append,
+input[type='password'].append,
+input[type='number'].append {
+  width: calc(68%);
+  margin-right: 35px;
+}
 select {
   height: 35px;
   padding: 7px;
@@ -390,6 +396,12 @@ input[type='button'].very-big,
 input[type='submit'].very-big,
 button.very-big {
   height: 60px;
+}
+input[type='button'].append,
+input[type='submit'].append,
+button.append {
+  display: block;
+  float: right;
 }
 input[type='button'][disabled],
 input[type='submit'][disabled],

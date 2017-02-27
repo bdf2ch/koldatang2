@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { UiModule } from '../ui/ui.module';
 import { DivisionsComponent } from './divisions.component';
 import { DivisionsService } from './divisions.service';
+import { DivisionTitlePipe } from './division-title.pipe';
 
 
 @NgModule({
@@ -12,7 +13,11 @@ import { DivisionsService } from './divisions.service';
     CoreModule
   ],
   declarations: [
-    DivisionsComponent
+    DivisionsComponent,
+    DivisionTitlePipe
+  ],
+  exports: [
+    DivisionTitlePipe
   ],
   providers: [
     DivisionsService

@@ -404,6 +404,11 @@ input[type='text'], input[type='password'], input[type='number'] {
     height: @ui-input-height + 6px;
     padding: 10px;
   }
+
+  &.append {
+    width: calc(100% - 32px);
+    margin-right: 35px;
+  }
 }
 
 select {
@@ -497,6 +502,11 @@ input[type='button'], input[type='submit'], button {
 
   &.very-big {
     height: 60px;
+  }
+
+  &.append {
+    display: block;
+    float: right;
   }
 
   &[disabled] {

@@ -13,12 +13,11 @@ var router_1 = require('@angular/router');
 //import { EditUserComponent } from '../users/edit-user/edit-user.component';
 var divisions_component_1 = require('../divisions/divisions.component');
 var phonebook_component_1 = require('../phonebook/phonebook.component');
+var auth_component_1 = require('../auth/auth.component');
 var routes = [
-    //{ path: "users", component: UsersComponent },
-    //{ path: "users/new", component: NewUserComponent },
-    //{ path: "users/:id", component: EditUserComponent },
     { path: "divisions", component: divisions_component_1.DivisionsComponent, data: { extras: { title: "Структура организации" } } },
     { path: "phonebook", component: phonebook_component_1.PhonebookComponent, data: { extras: { title: "Телефонный справочник" } } },
+    { path: "auth", component: auth_component_1.AuthComponent },
     { path: "", redirectTo: "/users", pathMatch: "full" },
     { path: "**", redirectTo: "/users" },
 ];

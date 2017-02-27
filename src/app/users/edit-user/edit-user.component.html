@@ -89,6 +89,21 @@
           <div class="row margin-bottom-30">
             <div class="title margin-bottom-20">Место работы и должность</div>
             <div class="row margin-bottom-20">
+              <label for="selected-user-division" class="width-100">Структурное подразделение</label>
+              <button class="blue append" (click)="openSelectDivisionModal()">
+                <i class="fa fa-building"></i>
+              </button>
+              <input type="text"
+                     name="position"
+                     id="selected-user-division"
+                     class="dark append"
+                     placeholder="Выберите структурное подразделение"
+                     disabled
+                     [value]="user.divisionId | divisionTitle">
+
+            </div>
+
+            <div class="row margin-bottom-20">
               <label for="selected-user-position" class="width-100">Должность пользователя</label>
               <input type="text"
                      name="position"
@@ -139,14 +154,10 @@
               Сохранить
             </button>
           </div>
+
         </form>
-
       </div>
-
     </div>
-
-
-
   </div>
 </div>
 
@@ -155,5 +166,25 @@
   <i class="fa fa-exclamation-circle"></i>
   Пользователь не найден
 </div>
+
+
+<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="450">
+  <div class="modal-content">
+    <tree [id]="'divisions'" [expandOnSelect]="true" (onSelect)="selectDivision($event)" class="'inline'"></tree>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <button class="blue width-50">
+        <i class="fa fa-check"></i>&nbsp;
+        Выбрать
+      </button>
+      <button class="red width-50">
+        <i class="fa fa-ban"></i>&nbsp;
+        Отмена
+      </button>
+    </div>
+
+  </div>
+</modal>
 
 

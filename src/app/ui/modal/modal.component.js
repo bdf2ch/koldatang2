@@ -24,8 +24,9 @@ var ModalContentComponent = (function () {
 exports.ModalContentComponent = ModalContentComponent;
 ;
 var ModalComponent = (function () {
-    function ModalComponent(modals) {
+    function ModalComponent(modals, element) {
         this.modals = modals;
+        this.element = element;
         this.onOpen = new core_1.EventEmitter();
         this.onClose = new core_1.EventEmitter();
         this.opened = false;
@@ -41,6 +42,20 @@ var ModalComponent = (function () {
             return;
         }
         this.modals.register(this);
+    };
+    ;
+    ModalComponent.prototype.ngAfterViewChecked = function () {
+        if (this.element.nativeElement.children.length > 0) {
+            this.element.nativeElement.children[1].style.top = window.innerHeight / 2 - this.element.nativeElement.children[1].clientHeight / 2 + 'px';
+            this.element.nativeElement.children[1].style.left = window.innerWidth / 2 - this.width / 2 + 'px';
+        }
+    };
+    ;
+    ModalComponent.prototype.onWindowResize = function (event) {
+        if (this.opened) {
+            this.element.nativeElement.children[1].style.left = event.target.innerWidth / 2 - this.width / 2 + 'px';
+            this.element.nativeElement.children[1].style.top = event.target.innerHeight / 2 - this.element.nativeElement.children[1].clientHeight / 2 + 'px';
+        }
     };
     ;
     ModalComponent.prototype.open = function () {
@@ -71,6 +86,9 @@ var ModalComponent = (function () {
     __decorate([
         core_1.Output()
     ], ModalComponent.prototype, "onClose", void 0);
+    __decorate([
+        core_1.HostListener('window:resize', ['$event'])
+    ], ModalComponent.prototype, "onWindowResize", null);
     ModalComponent = __decorate([
         core_1.Component({
             selector: 'modal',
@@ -81,7 +99,7 @@ var ModalComponent = (function () {
                     core_1.state('true', core_1.style({
                         background: 'rgba(0, 0, 0, 0.5)'
                     })),
-                    core_1.transition('void => *', core_1.animate("200ms ease-in")),
+                    core_1.transition('void => *', core_1.animate("200ms linear")),
                     core_1.transition('* => void', core_1.animate("200ms linear")),
                 ]),
                 core_1.trigger("modal", [
@@ -91,9 +109,8 @@ var ModalComponent = (function () {
                     core_1.state('false', core_1.style({
                         transform: 'scale(0.1)'
                     })),
-                    core_1.transition('* => void', [
-                        core_1.animate(200, core_1.style({ transform: 'scale(0.1)' }))
-                    ])
+                    core_1.transition('void => true', core_1.animate(100)),
+                    core_1.transition('* => void', core_1.animate(100)),
                 ])
             ]
         }),

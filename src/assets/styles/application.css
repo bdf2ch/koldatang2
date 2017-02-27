@@ -177,6 +177,15 @@ body {
 #app-content-header #app-content-controls a:hover {
   color: #757575 !important;
 }
+#app-content-header #app-content-controls .action-link {
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #BDBDBD;
+  cursor: pointer;
+}
+#app-content-header #app-content-controls .action-link:hover {
+  color: #757575;
+}
 #app-content-content {
   position: absolute;
   left: 0px;

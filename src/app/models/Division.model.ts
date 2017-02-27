@@ -12,7 +12,7 @@ export interface DivisionConfig {
 export class Division extends Model {
   readonly id: number = 0;
   parentId: number = 0;
-  title: string;
+  title: string = "";
   isDepartment: boolean = false;
 
   constructor (config?: DivisionConfig) {

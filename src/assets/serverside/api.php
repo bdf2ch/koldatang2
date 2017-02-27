@@ -17,7 +17,10 @@
         case "getUserById": getUserById($params -> data); break;
         case "searchUsers": searchUsers($params -> data); break;
         case "addUser": addUser($params -> data); break;
+
         case "getAllDivisions": getAllDivisions(); break;
+        case "addDivision": addDivision($params -> data); break;
+        case "editDivision": editDivision($params -> data); break;
     }
 
 
