@@ -7,8 +7,8 @@ import { DivisionsModule } from './divisions/divisions.module';
 
 import { AppComponent } from './app.component';
 import { CoreModule } from "./core/core.module";
+import { ApplicationService } from './application.service';
 import { PhonebookComponent } from './phonebook/phonebook.component';
-import { SearchBoxComponent} from "./ui/search-box/search-box.component";
 import { AtsComponent } from './phonebook/ats/ats.component';
 import { AuthComponent } from './auth/auth.component';
 
@@ -32,6 +32,9 @@ import { AuthComponent } from './auth/auth.component';
   exports: [
     UiModule,
     CoreModule
+  ],
+  providers: [
+    ApplicationService
   ],
   bootstrap: [ AppComponent ]
 })

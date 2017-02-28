@@ -43,9 +43,9 @@ export class EditUserComponent implements OnInit {
         }
       });
 
-    let divisionsTree = this.$trees.getById('divisions');
-    if (divisionsTree !== null) {
-
+    let editUserDivisionTree = this.$trees.getById('edit-user-division');
+    if (editUserDivisionTree !== null) {
+      console.log(editUserDivisionTree);
     }
 
   };
@@ -71,5 +71,21 @@ export class EditUserComponent implements OnInit {
 
   selectDivision (item: TreeItem) {
 
+  };
+
+
+  populateDivisionsTree() {
+    console.log("populate tree");
+    let tree = this.$trees.getById('edit-user-divisions-tree');
+    let length = this.$divisions.getAll().length;
+    for (let i = 0; i < length; i++) {
+      tree.addItem({
+        key: this.$divisions.getAll()[i].id.toString(),
+        parentKey: this.$divisions.getAll()[i].parentId.toString(),
+        title: this.$divisions.getAll()[i].title,
+        isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false
+      });
+    }
+    console.log(tree);
   };
 }

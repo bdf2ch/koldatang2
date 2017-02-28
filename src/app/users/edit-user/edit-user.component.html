@@ -168,19 +168,19 @@
 </div>
 
 
-<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="450">
+<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="500" [contentHeight]="400" (onOpen)="populateDivisionsTree()">
   <div class="modal-content">
-    <tree [id]="'divisions'" [expandOnSelect]="true" (onSelect)="selectDivision($event)" class="'inline'"></tree>
+    <div class="row padding-10">
+      <tree [id]="'edit-user-divisions-tree'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onSelect)="selectDivision($event)" class="inline"></tree>
+    </div>
   </div>
   <div class="modal-footer">
     <div class="row padding-10">
       <button class="blue width-50">
-        <i class="fa fa-check"></i>&nbsp;
-        Выбрать
+        <i class="fa fa-check"></i>&nbsp;Выбрать
       </button>
       <button class="red width-50">
-        <i class="fa fa-ban"></i>&nbsp;
-        Отмена
+        <i class="fa fa-ban"></i>&nbsp;Отмена
       </button>
     </div>
 

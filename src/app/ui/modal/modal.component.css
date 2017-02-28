@@ -49,13 +49,11 @@
 .ui-modal .modal-header .close-modal-button:hover {
   color: #757575;
 }
-.ui-modal .modal-content hr {
-  margin-top: 0px;
-  margin-bottom: 0px;
-  border-top: none;
-  border-bottom: 1px solid lightgrey;
+.ui-modal .modal-content.fixed-height {
+  overflow: auto;
 }
 .ui-modal .modal-footer {
   display: block;
+  background: #FAFAFA;
   border-top: 1px solid lightgrey;
 }

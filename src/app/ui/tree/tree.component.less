@@ -1,4 +1,5 @@
 @tree-item-height: 30px;
+@tree-item-height-inline: 25px;
 @tree-item-expander-width: 30px;
 
 .ui-tree-container {
@@ -37,6 +38,7 @@
           color: #0D47A1;
         }
       }
+
       .item-expander {
         float: right;
         height: @tree-item-height;
@@ -45,6 +47,64 @@
         font-size: 12px;
         text-align: center;
         cursor: pointer;
+      }
+    }
+  }
+
+
+
+  &.inline {
+    .tree-item {
+      overflow: auto;
+      min-height: @tree-item-height-inline;
+      margin: 0px;
+      box-sizing: border-box;
+      line-height: @tree-item-height-inline;
+      background: white;
+      border: none;
+
+      &.expanded {
+        .item-details {
+          background: white;
+          border: none;
+        }
+      }
+
+
+      .item-details {
+        overflow: auto;
+        padding-left: 10px;
+
+        &.selected {
+          background: #E3F2FD;
+          .item-title {
+            color: #0D47A1;
+          }
+        }
+
+        .item-title {
+          float: left;
+          height: @tree-item-height-inline;
+          font-size: 13px;
+          text-align: left;
+          color: #1E88E5;
+          cursor: pointer;
+
+          &:hover {
+            color: #0D47A1;
+          }
+        }
+
+        .item-expander {
+          display: none;
+          float: right;
+          height: @tree-item-height-inline;
+          width: @tree-item-expander-width;
+          box-sizing: border-box;
+          font-size: 10px;
+          text-align: center;
+          cursor: pointer;
+        }
       }
     }
   }

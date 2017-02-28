@@ -3,6 +3,8 @@ export interface TreeItemConfig {
   parentKey: string;
   title: string;
   isRoot?: boolean;
+  isExpanded?: boolean;
+  isSelected?: boolean;
 };
 
 

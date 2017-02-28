@@ -37,3 +37,47 @@
   text-align: center;
   cursor: pointer;
 }
+.ui-tree-container.inline .tree-item {
+  overflow: auto;
+  min-height: 25px;
+  margin: 0px;
+  box-sizing: border-box;
+  line-height: 25px;
+  background: white;
+  border: none;
+}
+.ui-tree-container.inline .tree-item.expanded .item-details {
+  background: white;
+  border: none;
+}
+.ui-tree-container.inline .tree-item .item-details {
+  overflow: auto;
+  padding-left: 10px;
+}
+.ui-tree-container.inline .tree-item .item-details.selected {
+  background: #E3F2FD;
+}
+.ui-tree-container.inline .tree-item .item-details.selected .item-title {
+  color: #0D47A1;
+}
+.ui-tree-container.inline .tree-item .item-details .item-title {
+  float: left;
+  height: 25px;
+  font-size: 13px;
+  text-align: left;
+  color: #1E88E5;
+  cursor: pointer;
+}
+.ui-tree-container.inline .tree-item .item-details .item-title:hover {
+  color: #0D47A1;
+}
+.ui-tree-container.inline .tree-item .item-details .item-expander {
+  display: none;
+  float: right;
+  height: 25px;
+  width: 30px;
+  box-sizing: border-box;
+  font-size: 10px;
+  text-align: center;
+  cursor: pointer;
+}

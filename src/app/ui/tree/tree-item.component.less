@@ -1,4 +1,5 @@
 @tree-item-height: 30px;
+@tree-item-height-inline: 20px;
 @tree-item-expander-width: 30px;
 
 .tree-item {
@@ -10,17 +11,6 @@
 
   &.with-children {
     border: 1px solid #ECEFF1;
-
-    //.item-details {
-    //  background: #ECEFF1;
-    //}
-  }
-
-  &.expanded {
-    //.item-details:first-of-type {
-    //  background: #F5F5F5;
-    //  border-bottom: 2px solid #E0E0E0;
-    //}
   }
 
   .item-details {
@@ -44,12 +34,9 @@
     .item-title {
       float: left;
       height: @tree-item-height;
-      //margin-right: @tree-item-expander-width;
       font-size: 15px;
       text-align: left;
       cursor: pointer;
-      //text-decoration: underline;
-
       &:hover {
         color: #0D47A1;
       }
@@ -62,6 +49,67 @@
       font-size: 12px;
       text-align: center;
       cursor: pointer;
+    }
+  }
+
+
+  &.inline {
+    overflow: visible;
+    min-height: @tree-item-height-inline;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    box-sizing: border-box;
+    line-height: @tree-item-height-inline - 5px;
+
+    &.with-children {
+      border: none;
+    }
+
+    .item-details {
+      overflow: auto;
+      padding-left: 10px;
+      box-sizing: border-box;
+
+      &.with-children {
+        background: white;
+      }
+
+      &.expanded {
+        background: white;
+        border-bottom: none;
+      }
+
+      &.selected {
+        background: #E3F2FD;
+        .item-title {
+          color: #0D47A1;
+        }
+      }
+
+      .item-title {
+        overflow: visible;
+        float: left;
+        //height: auto !important;
+        min-height: @tree-item-height-inline;
+        line-height: 12px;
+        font-size: 13px;
+        text-align: left;
+        cursor: pointer;
+        color: #1E88E5;
+        &:hover {
+          color: #0D47A1;
+        }
+      }
+      .item-expander {
+        display: none;
+        float: right;
+        height: @tree-item-height-inline;
+        width: @tree-item-expander-width;
+        box-sizing: border-box;
+        font-size: 10px;
+        text-align: center;
+        cursor: pointer;
+      }
     }
   }
 }

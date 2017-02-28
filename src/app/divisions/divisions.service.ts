@@ -51,6 +51,7 @@ export class DivisionsService {
     let length = source.length;
     for (let i = 0; i < length; i++) {
       let division = new Division(source[i]);
+      division.setupBackup(["parentId", "title", "isDepartment"]);
       this.divisions.push(division);
     }
     return true;

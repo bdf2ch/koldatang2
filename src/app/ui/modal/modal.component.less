@@ -1,6 +1,8 @@
 @modal-header-height: 35px;
 @modal-header-close-button-width: 40px;
 
+tree {}
+
 .ui-modal-fog {
   position: fixed;
   flex-direction: column;
@@ -60,18 +62,14 @@
   }
 
   .modal-content {
-
-    hr {
-      margin-top: 0px;
-      margin-bottom: 0px;
-      border-top: none;
-      border-bottom: 1px solid lightgrey;
+    &.fixed-height {
+      overflow: auto;
     }
-
   }
 
   .modal-footer {
     display: block;
+    background: #FAFAFA;
     border-top: 1px solid lightgrey;
   }
 

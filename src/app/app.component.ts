@@ -2,12 +2,12 @@ import { Router, ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd } from "@
 import { Component, OnInit } from '@angular/core';
 import { DivisionsService } from './divisions/divisions.service';
 import { ModalService } from './ui/modal/modal.service';
-import { TreeService } from './ui/tree/tree.service';
-import { Observable } from 'rxjs/observable';
+import { ApplicationService } from './application.service';
 import "rxjs/add/operator/map";
 import "rxjs/add/operator/filter";
 import "rxjs/add/operator/mergeMap";
-import {isNullOrUndefined} from "util";
+import {} from './app.resolve.guard';
+import {DivisionConfig} from "./models/Division.model";
 
 
 @Component({
@@ -24,8 +24,8 @@ export class AppComponent implements OnInit{
   constructor (private $router: Router,
                private $route: ActivatedRoute,
                private $modals: ModalService,
-               private $trees: TreeService,
-               private $divisions: DivisionsService) {};
+               private $divisions: DivisionsService,
+               private $application: ApplicationService) {};
 
 
   ngOnInit (): void {
@@ -34,7 +34,6 @@ export class AppComponent implements OnInit{
       .map(event => {
         let temp = [];
         let currentRoute = this.$route.root;
-
         while (currentRoute.children[0] !== undefined) {
           currentRoute = currentRoute.children[0];
           if (currentRoute.snapshot.data["extras"]["title"] !== undefined && currentRoute.snapshot.data["extras"]["title"] !== "") {
@@ -43,7 +42,6 @@ export class AppComponent implements OnInit{
             temp.push(currentRoute);
           }
         }
-
         return temp;
       })
       .subscribe((temp) => {
@@ -52,6 +50,19 @@ export class AppComponent implements OnInit{
         content.scrollTop = 0;
         console.log("breadcrumb", this.breadcrumb);
       });
+
+
+    /*
+    this.$route.data.subscribe((data: {data: { divisions: DivisionConfig[] }}) => {
+      if (this.$application.getData() === null) {
+        this.$application.setData(data.data);
+        this.$application.parseData();
+      }
+    });
+    */
+
+    //if (this.$divisions.getAll().length === 0)
+    //  this.$divisions.fetchAll().subscribe();
   };
 
 

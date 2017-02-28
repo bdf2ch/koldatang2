@@ -1,12 +1,12 @@
 <div [@fog]="opened" class="ui-modal-fog" *ngIf="opened"></div>
-<div [@modal]="opened.toString()" class="ui-modal" *ngIf="opened" [style.width]="width + 'px'" [class]="style">
+<div [@modal]="opened.toString()" class="ui-modal" *ngIf="opened" [style.width]="width + 'px'">
   <div class="modal-header">
     <div class="close-modal-button">
       <i class="fa fa-times" (click)="close()" title="Закрыть"></i>
     </div>
     <div class="modal-header-title">{{ title }}</div>
   </div>
-  <div class="modal-content">
+  <div class="modal-content" [style.height]="contentHeight !== 0 ? contentHeight + 'px' : 'auto'" [ngClass]="{'fixed-height': contentHeight !== 0}">
     <ng-content select=".modal-content"></ng-content>
   </div>
   <div class="modal-footer" *ngIf="footer">

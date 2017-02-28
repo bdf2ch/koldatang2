@@ -12,6 +12,8 @@
 
 
     switch ($params -> action) {
+        case "getInitialData": getInitialData(); break;
+
         case "getAllUsers": getAllUsers(); break;
         case "getUsersPortion": getUsersPortion($params -> data); break;
         case "getUserById": getUserById($params -> data); break;
@@ -22,8 +24,6 @@
         case "addDivision": addDivision($params -> data); break;
         case "editDivision": editDivision($params -> data); break;
     }
-
-
     pg_close($link);
 
 ?>

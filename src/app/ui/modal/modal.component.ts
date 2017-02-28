@@ -44,12 +44,11 @@ export class ModalComponent implements OnInit, AfterViewChecked {
   @Input() id: string;
   @Input() title: string;
   @Input() width: number;
-  @Input() class: string;
+  @Input() contentHeight: number = 0;
   @Input() private footer: boolean;
   @Output() private onOpen: EventEmitter<void> = new EventEmitter<void>();
   @Output() private onClose: EventEmitter<void> = new EventEmitter<void>();
   private opened: boolean = false;
-  private style: string = "";
 
 
   constructor(@Inject(forwardRef(() => ModalService)) private modals: ModalService,
@@ -58,7 +57,7 @@ export class ModalComponent implements OnInit, AfterViewChecked {
 
 
   ngOnInit() {
-    console.log(this.element.nativeElement);
+    //console.log(this.element);
 
     if (this.id === null || this.id === undefined || this.id === "") {
       console.error("no id specified");
@@ -68,7 +67,6 @@ export class ModalComponent implements OnInit, AfterViewChecked {
       console.error("no title specified");
       return;
     }
-    this.style = this.element.nativeElement.classList.join(" ");
     this.modals.register(this);
   };
 

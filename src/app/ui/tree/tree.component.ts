@@ -1,6 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ElementRef } from '@angular/core';
 import { TreeService } from './tree.service';
 import { TreeItem, TreeItemConfig } from './tree-item';
+import {Observable} from "rxjs";
 
 
 @Component({
@@ -11,18 +12,26 @@ import { TreeItem, TreeItemConfig } from './tree-item';
 export class TreeComponent implements OnInit {
   @Input() id:string;
   @Input() expandOnSelect: boolean;
+  @Input() collapseOnDeselect: boolean;
+  @Output() onInit: EventEmitter<TreeComponent> = new EventEmitter<TreeComponent>();
   @Output() onSelect: EventEmitter<TreeItem|null> = new EventEmitter<TreeItem|null>();
   private tree: TreeComponent;
   private root: TreeItem[] = [];
+  private items: Observable<TreeItem[]>;
   private stack: TreeItem[] = [];
   private selected: TreeItem|null = null;
+  private style: string = "";
 
 
-  constructor(private $trees:TreeService) {};
+  constructor(private $trees:TreeService,
+              private $element: ElementRef) {
+    //this.items = Observable.of(this.stack);
+  };
 
 
   ngOnInit() {
     console.log("tree init");
+    console.log(this.$element);
     if (this.id === null || this.id === undefined || this.id === "") {
       console.error("no id specified");
       return;
@@ -31,6 +40,8 @@ export class TreeComponent implements OnInit {
       this.expandOnSelect = false;
     this.tree = this;
 
+    this.style = this.$element.nativeElement.classList.value;
+
     let tree = this.$trees.getById(this.id);
     if (tree === null)
       this.$trees.register(this);
@@ -38,6 +49,12 @@ export class TreeComponent implements OnInit {
       this.stack = tree.stack;
       this.root = tree.root;
     }
+    this.onInit.emit(this);
+
+    //this.items.subscribe((items) => {
+    //  console.log("changed", items);
+    //  this.stack = items;
+    //});
   };
 
 
@@ -125,6 +142,8 @@ export class TreeComponent implements OnInit {
     for (let i = 0; i < length; i++) {
       if (this.stack[i].key === key) {
         if (this.stack[i].isSelected === true) {
+          if (this.stack[i].isExpanded === true && this.collapseOnDeselect === true)
+            this.stack[i].isExpanded = false;
           this.stack[i].isSelected = false;
           this.selected = null;
         } else {
@@ -132,12 +151,17 @@ export class TreeComponent implements OnInit {
           this.selected = this.stack[i];
           if (this.stack[i].children.length > 0 && this.expandOnSelect === true)
             this.stack[i].isExpanded = true;
-          this.onSelect.emit(this.stack[i]);
+          //this.onSelect.emit(this.stack[i]);
         }
       } else
         this.stack[i].isSelected = false;
     }
     this.onSelect.emit(this.selected);
+  };
+
+
+  totalItemsCount(): number {
+    return this.stack.length;
   };
 
 

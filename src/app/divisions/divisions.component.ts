@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DivisionsService } from './divisions.service';
 import { TreeService } from '../ui/tree/tree.service';
 import { ModalService } from '../ui/modal/modal.service';
-import { Division } from "../models/Division.model";
+import {Division, DivisionConfig} from "../models/Division.model";
 import { TreeItem } from '../ui/tree/tree-item';
+import { ApplicationService } from "../application.service";
 
 
 @Component({
@@ -18,33 +19,44 @@ export class DivisionsComponent implements OnInit {
 
   constructor(private $divisions: DivisionsService,
               private $trees: TreeService,
-              private $modals: ModalService) {};
+              private $modals: ModalService,
+              private $application: ApplicationService) {};
 
 
   ngOnInit() {
-    if (this.$divisions.getAll().length === 0) {
-      this.$divisions.fetchAll().subscribe(
-        (divisions) => {
-          this.divisions = divisions;
-          let length = this.divisions.length;
-          for (let i = 0; i < length; i++) {
-            this.$trees.getById('divisions').addItem({
-              key: this.divisions[i].id.toString(),
-              parentKey: this.divisions[i].parentId.toString(),
-              title: this.divisions[i].title,
-              isRoot: this.divisions[i].parentId === 0 ? true : false
-            });
-          }
-      })
+    //if (this.$divisions.getAll().length === 0) {
+    //  this.$divisions.fetchAll().subscribe(
+    //    (divisions) => {
+    //      this.divisions = divisions;
+
+      //})
+    //}
+    //his.$application.data.subscribe((data: { divisions: DivisionConfig }));
+  };
+
+
+  populateDivisionsTree() {
+    let tree = this.$trees.getById('divisions');
+    if (tree !== null && tree.totalItemsCount() === 0) {
+      let length = this.$divisions.getAll().length;
+      for (let i = 0; i < length; i++) {
+        this.$trees.getById('divisions').addItem({
+          key: this.$divisions.getAll()[i].id.toString(),
+          parentKey: this.$divisions.getAll()[i].parentId.toString(),
+          title: this.$divisions.getAll()[i].title,
+          isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false
+        });
+      }
     }
   };
+
 
 
   selectDivision(item: TreeItem|null) {
     console.log(item);
     if (item !== null) {
       this.$divisions.select(parseInt(item.key));
-      console.log(this.$divisions.getSelected());
+      console.log("selected", this.$divisions.getSelected());
       this.newDivision.parentId = this.$divisions.getSelected().id;
     } else {
       this.$divisions.select(null);
