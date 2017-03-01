@@ -371,6 +371,15 @@ input[type='text'], input[type='password'], input[type='number'] {
   height: @ui-input-height;
   padding: 7px;
   box-sizing: border-box;
+  border-radius: 2px;
+  &::-webkit-input-placeholder { color: #BDBDBD; opacity: 1; transition: opacity 0.3s ease; }
+  &::-moz-placeholder          { color: #BDBDBD; opacity: 1; transition: opacity 0.3s ease; } /* Firefox 19+ */
+  &:-moz-placeholder           { color: #BDBDBD; opacity: 1; transition: opacity 0.3s ease; } /* Firefox 18- */
+  &:-ms-input-placeholder      { color: #BDBDBD; opacity: 1; transition: opacity 0.3s ease; }
+  &:focus::-webkit-input-placeholder {opacity: 0; transition: opacity 0.3s ease;}
+  &:focus::-moz-placeholder          {opacity: 0; transition: opacity 0.3s ease;}
+  &:focus:-moz-placeholder           {opacity: 0; transition: opacity 0.3s ease;}
+  &:focus:-ms-input-placeholder      {opacity: 0; transition: opacity 0.3s ease;}
 
   &.ng-invalid {
     //border: 1px solid @color-red;
@@ -543,6 +552,9 @@ input[type='button'], input[type='submit'], button {
     background: @color-red;
     &:hover {
       background: @color-red-hover;
+    }
+    &[disabled] {
+      background: @color-light-red;
     }
   }
 

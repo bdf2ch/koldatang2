@@ -30,7 +30,7 @@ export class EditUserComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log(this.route);
+    console.log(this.user);
     let id = +this.route.snapshot.params['id'];
     this.route.data
       .subscribe((data: { extras: {user: User, title: string}}) => {
@@ -57,10 +57,11 @@ export class EditUserComponent implements OnInit {
   };
 
 
-  onCancel(): void {
-    this.user = new User();
-    this.submitted = false;
-    this.router.navigate(["/users", { test: "test" }]);
+  cancel(): void {
+    //this.user = new User();
+    //this.submitted = false;
+    //this.router.navigate(["/users", { test: "test" }]);
+    this.user.restoreBackup();
   };
 
 
@@ -69,23 +70,35 @@ export class EditUserComponent implements OnInit {
   };
 
 
-  selectDivision (item: TreeItem) {
-
+  closeSelectDivisionModal () {
+    console.log(this.user._statusData);
   };
+
+
+  selectDivision () {
+    this.user.divisionId = this.$divisions.getById(parseInt(this.$trees.getById('edit-user-divisions-tree').getSelectedItem().key)).id;
+    this.user.changed(true);
+    console.log(this.user._statusData);
+  };
+
 
 
   populateDivisionsTree() {
     console.log("populate tree");
     let tree = this.$trees.getById('edit-user-divisions-tree');
-    let length = this.$divisions.getAll().length;
-    for (let i = 0; i < length; i++) {
-      tree.addItem({
-        key: this.$divisions.getAll()[i].id.toString(),
-        parentKey: this.$divisions.getAll()[i].parentId.toString(),
-        title: this.$divisions.getAll()[i].title,
-        isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false
-      });
+    if (tree.totalItemsCount() === 0) {
+      let length = this.$divisions.getAll().length;
+      for (let i = 0; i < length; i++) {
+        tree.addItem({
+          key: this.$divisions.getAll()[i].id.toString(),
+          parentKey: this.$divisions.getAll()[i].parentId.toString(),
+          title: this.$divisions.getAll()[i].title,
+          isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false,
+          isExpanded: this.$divisions.getAll()[i].id === 13 || this.$divisions.getAll()[i].id === 16 ? true : false
+        });
+      }
+      //tree.selectItem("13");
+      console.log(tree);
     }
-    console.log(tree);
   };
 }

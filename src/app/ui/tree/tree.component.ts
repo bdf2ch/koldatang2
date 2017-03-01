@@ -17,7 +17,6 @@ export class TreeComponent implements OnInit {
   @Output() onSelect: EventEmitter<TreeItem|null> = new EventEmitter<TreeItem|null>();
   private tree: TreeComponent;
   private root: TreeItem[] = [];
-  private items: Observable<TreeItem[]>;
   private stack: TreeItem[] = [];
   private selected: TreeItem|null = null;
   private style: string = "";
@@ -30,7 +29,6 @@ export class TreeComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log("tree init");
     console.log(this.$element);
     if (this.id === null || this.id === undefined || this.id === "") {
       console.error("no id specified");
@@ -50,11 +48,6 @@ export class TreeComponent implements OnInit {
       this.root = tree.root;
     }
     this.onInit.emit(this);
-
-    //this.items.subscribe((items) => {
-    //  console.log("changed", items);
-    //  this.stack = items;
-    //});
   };
 
 
@@ -151,7 +144,6 @@ export class TreeComponent implements OnInit {
           this.selected = this.stack[i];
           if (this.stack[i].children.length > 0 && this.expandOnSelect === true)
             this.stack[i].isExpanded = true;
-          //this.onSelect.emit(this.stack[i]);
         }
       } else
         this.stack[i].isSelected = false;
@@ -160,6 +152,10 @@ export class TreeComponent implements OnInit {
   };
 
 
+  /**
+   * Возвращает количество элемелемнтов дерева
+   * @returns {number}
+   */
   totalItemsCount(): number {
     return this.stack.length;
   };

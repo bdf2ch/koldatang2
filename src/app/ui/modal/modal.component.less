@@ -1,7 +1,6 @@
 @modal-header-height: 35px;
 @modal-header-close-button-width: 40px;
 
-tree {}
 
 .ui-modal-fog {
   position: fixed;
@@ -19,11 +18,9 @@ tree {}
   position: fixed;
   flex-direction: column;
   justify-content: flex-start;
-  //height: 300px;
   margin-left: auto;
   margin-right: auto;
   background: white;
-  //border: 1px solid lightgrey;
   box-shadow: 1px 1px 15px 1px rgba(0, 0, 0, 0.2);
   transform: scale(0.1);
 
@@ -40,10 +37,13 @@ tree {}
       overflow: hidden;
       margin-right: @modal-header-close-button-width;
       box-sizing: border-box;
+      font-size: 12px;
       line-height: @modal-header-height;
       white-space: nowrap;
       text-wrap: none;
       text-overflow: ellipsis;
+      text-transform: uppercase;
+      color: #616161;
     }
 
     .close-modal-button {
@@ -52,12 +52,15 @@ tree {}
       font-size: 18px;
       line-height: @modal-header-height;
       text-align: center;
-      color: #BDBDBD;
-      cursor: pointer;
 
-      &:hover {
-        color: #757575;
+      i {
+        color: #BDBDBD;
+        cursor: pointer;
+        &:hover {
+          color: #757575;
+        }
       }
+
     }
   }
 
@@ -72,5 +75,4 @@ tree {}
     background: #FAFAFA;
     border-top: 1px solid lightgrey;
   }
-
 }

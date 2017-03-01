@@ -55,7 +55,8 @@
 
   &.inline {
     overflow: visible;
-    min-height: @tree-item-height-inline;
+    min-height: 10px;
+    height: auto !important;
     margin-top: 0px;
     margin-bottom: 0px;
     box-sizing: border-box;
@@ -89,8 +90,10 @@
       .item-title {
         overflow: visible;
         float: left;
-        //height: auto !important;
-        min-height: @tree-item-height-inline;
+        height: auto;
+        //min-height: @tree-item-height-inline;
+        padding-top: 5px;
+        padding-bottom: 5px;
         line-height: 12px;
         font-size: 13px;
         text-align: left;
@@ -103,7 +106,7 @@
       .item-expander {
         display: none;
         float: right;
-        height: @tree-item-height-inline;
+        height: auto;
         width: @tree-item-expander-width;
         box-sizing: border-box;
         font-size: 10px;

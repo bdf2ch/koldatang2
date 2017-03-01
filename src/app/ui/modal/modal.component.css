@@ -32,10 +32,13 @@
   overflow: hidden;
   margin-right: 40px;
   box-sizing: border-box;
+  font-size: 12px;
   line-height: 35px;
   white-space: nowrap;
   text-wrap: none;
   text-overflow: ellipsis;
+  text-transform: uppercase;
+  color: #616161;
 }
 .ui-modal .modal-header .close-modal-button {
   float: right;
@@ -43,10 +46,12 @@
   font-size: 18px;
   line-height: 35px;
   text-align: center;
+}
+.ui-modal .modal-header .close-modal-button i {
   color: #BDBDBD;
   cursor: pointer;
 }
-.ui-modal .modal-header .close-modal-button:hover {
+.ui-modal .modal-header .close-modal-button i:hover {
   color: #757575;
 }
 .ui-modal .modal-content.fixed-height {

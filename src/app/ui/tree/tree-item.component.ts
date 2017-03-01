@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ElementRef, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TreeComponent } from './tree.component';
 import { TreeItem } from './tree-item';
 
@@ -8,22 +8,15 @@ import { TreeItem } from './tree-item';
   templateUrl: './tree-item.component.html',
   styleUrls: ["./tree-item.component.css"]
 })
-export class TreeItemComponent implements OnInit, OnChanges {
+export class TreeItemComponent implements OnInit {
   @Input() items: TreeItem[] = [];
   @Input() tree: TreeComponent;
   @Input() style: string;
 
 
-  constructor (private $element: ElementRef) {};
+  constructor () {};
 
 
-  ngOnInit () {
-    //this.style = this.$element.nativeElement.classList.value;
-    console.log(this.$element);
-  };
-
-  ngOnChanges (changes: SimpleChanges) {
-    console.log(changes);
-  };
+  ngOnInit () {};
 
 };

@@ -36,6 +36,7 @@
                      placeholder="Введите имя пользователя"
                      required
                      #name="ngModel"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.name">
               <div class="form-error"
                    *ngIf="name.invalid && name.dirty">
@@ -50,6 +51,7 @@
                      id="selected-user-fname"
                      class="width-100 dark"
                      placeholder="Введите отчество пользователя"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.fname">
             </div>
 
@@ -61,6 +63,7 @@
                      placeholder="Введите фамилию пользователя"
                      required
                      #surname="ngModel"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.surname">
               <div class="form-error"
                    *ngIf="surname.invalid && surname.dirty">
@@ -80,6 +83,7 @@
                      id="selected-user-email"
                      class="width-100 dark"
                      placeholder="Введите e-mail пользователя"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.email">
             </div>
           </div>
@@ -100,7 +104,6 @@
                      placeholder="Выберите структурное подразделение"
                      disabled
                      [value]="user.divisionId | divisionTitle">
-
             </div>
 
             <div class="row margin-bottom-20">
@@ -110,6 +113,7 @@
                      id="selected-user-position"
                      class="width-100 dark"
                      placeholder="Введите должность пользователя"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.position"
                      #position="ngModel">
             </div>
@@ -126,6 +130,7 @@
                      id="selected-user-tab-id"
                      class="width-100 dark"
                      placeholder="Введите табельный номер пользователя"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.tabId">
             </div>
 
@@ -136,22 +141,23 @@
                      id="selected-user-active-directory-account"
                      class="width-100 dark"
                      placeholder="Введите учетную запись в AD"
+                     (change)="user.changed(true)"
                      [(ngModel)]="user.activeDirectoryAccount">
             </div>
           </div>
 
 
-
           <div class="row">
-            <button type="button" class="red right" (click)="onCancel()">
-              <i class="fa fa-ban"></i>&nbsp;
-              Отмена
+            <button type="button"
+                    class="red right"
+                    [disabled]="user._statusData.isChanged === false"
+                    (click)="cancel()">
+              <i class="fa fa-ban"></i>&nbsp;Отмена
             </button>
             <button type="submit"
                     class="green right margin-right-10"
                     [disabled]="!edit_user_form.form.valid || !edit_user_form.form.dirty">
-              <i class="fa fa-save"></i>&nbsp;
-              Сохранить
+              <i class="fa fa-save"></i>&nbsp;Сохранить
             </button>
           </div>
 
@@ -168,18 +174,23 @@
 </div>
 
 
-<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="500" [contentHeight]="400" (onOpen)="populateDivisionsTree()">
+<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="500" [contentHeight]="400" (onClose)="closeSelectDivisionModal()">
   <div class="modal-content">
     <div class="row padding-10">
-      <tree [id]="'edit-user-divisions-tree'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onSelect)="selectDivision($event)" class="inline"></tree>
+      <tree [id]="'edit-user-divisions-tree'"
+            [expandOnSelect]="true"
+            [collapseOnDeselect]="true"
+            (onInit)="populateDivisionsTree()"
+            class="inline">
+      </tree>
     </div>
   </div>
   <div class="modal-footer">
     <div class="row padding-10">
-      <button class="blue width-50">
+      <button class="blue width-50" [disabled]="$trees.getById('edit-user-divisions-tree').getSelectedItem() === null" (click)="selectDivision()">
         <i class="fa fa-check"></i>&nbsp;Выбрать
       </button>
-      <button class="red width-50">
+      <button class="red width-50" (click)="$modals.close()">
         <i class="fa fa-ban"></i>&nbsp;Отмена
       </button>
     </div>

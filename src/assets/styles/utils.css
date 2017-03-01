@@ -268,6 +268,61 @@ input[type='number'] {
   height: 35px;
   padding: 7px;
   box-sizing: border-box;
+  border-radius: 2px;
+  /* Firefox 19+ */
+  /* Firefox 18- */
+}
+input[type='text']::-webkit-input-placeholder,
+input[type='password']::-webkit-input-placeholder,
+input[type='number']::-webkit-input-placeholder {
+  color: #BDBDBD;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+input[type='text']::-moz-placeholder,
+input[type='password']::-moz-placeholder,
+input[type='number']::-moz-placeholder {
+  color: #BDBDBD;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:-moz-placeholder,
+input[type='password']:-moz-placeholder,
+input[type='number']:-moz-placeholder {
+  color: #BDBDBD;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:-ms-input-placeholder,
+input[type='password']:-ms-input-placeholder,
+input[type='number']:-ms-input-placeholder {
+  color: #BDBDBD;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:focus::-webkit-input-placeholder,
+input[type='password']:focus::-webkit-input-placeholder,
+input[type='number']:focus::-webkit-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:focus::-moz-placeholder,
+input[type='password']:focus::-moz-placeholder,
+input[type='number']:focus::-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:focus:-moz-placeholder,
+input[type='password']:focus:-moz-placeholder,
+input[type='number']:focus:-moz-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+input[type='text']:focus:-ms-input-placeholder,
+input[type='password']:focus:-ms-input-placeholder,
+input[type='number']:focus:-ms-input-placeholder {
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 input[type='text'].error,
 input[type='password'].error,
@@ -455,6 +510,11 @@ input[type='button'].red:hover,
 input[type='submit'].red:hover,
 button.red:hover {
   background: #D32F2F;
+}
+input[type='button'].red[disabled],
+input[type='submit'].red[disabled],
+button.red[disabled] {
+  background: #FFCDD2;
 }
 input[type='button'].transparent,
 input[type='submit'].transparent,
