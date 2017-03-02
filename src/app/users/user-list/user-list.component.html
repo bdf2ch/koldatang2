@@ -23,57 +23,95 @@
 
 
 
+<!--
 <div class="panel no-sidebar">
 
   <div class="panel-content">
 
     <div class="header">
       <div class="row">
-        <div class="width-70 padding-10">
-          <input type="text"
-                 name=""
-                 id=""
-                 class="width-100 dark search"
-                 placeholder="Введите имя абонента, телефон или email"
-                 #userSearch
-                 (keyup)="searchForUsers(userSearch.value)"
-                 [(ngModel)]="search">
-        </div>
-        <div class="width-30 padding-10">
-          <select name="" id="" class="width-100">
-            <option value="">Выберите стр. подразделение</option>
-          </select>
+        <div class="width-100 padding-10">
+
         </div>
       </div>
-      <!--<search-box class="width-100" [placeholder]="'test'"></search-box>-->
     </div>
 
     <div class="content">
-      <table class="stripped selectable width-100">
-        <thead>
-        <tr>
-          <th class="width-30">Имя</th>
-          <th class="width-20">e-mail</th>
-          <th class="width-20">Должность</th>
-          <th class="width-30">Отдел</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr *ngFor="let user of users" (click)="selectUser(user)">
-          <td class="width-30">{{ user.fio }}</td>
-          <td class="width-20">{{ user.email }}</td>
-          <td class="width-20">{{ user.position }}</td>
-          <td class="width-30">Сектор по сбору посуды</td>
-        </tr>
-        </tbody>
-      </table>
-      <button class="blue big width-100"
-              *ngIf="usersService.getTotal() > users.length && search === ''"
-              (click)="loadMore()">
-        Загрузить еще
-      </button>
+
     </div>
   </div>
 
+</div>
+-->
+
+
+<div class="row margin-bottom-20">
+  <input type="text"
+         name=""
+         id=""
+         class="width-100 big dark search"
+         placeholder="Введите имя абонента, телефон или email"
+         #userSearch
+         (keyup)="searchForUsers(userSearch.value)"
+         [(ngModel)]="search">
+</div>
+
+
+
+<!--
+<table class="stripped selectable width-100">
+  <thead>
+  <tr>
+    <th class="width-10"></th>
+    <th class="width-30">Имя</th>
+    <th class="width-20">e-mail</th>
+    <th class="width-20">Должность</th>
+    <th class="width-20">Отдел</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let user of $users.getAll()" (click)="selectUser(user)">
+    <td class="width-10"><img src="" alt=""></td>
+    <td class="width-30">{{ user.fio }}</td>
+    <td class="width-20">{{ user.email }}</td>
+    <td class="width-20">{{ user.position }}</td>
+    <td class="width-30">Сектор по сбору посуды</td>
+  </tr>
+  </tbody>
+</table>
+<button class="blue big width-100"
+        *ngIf="showLoadMoreButton()"
+        (click)="loadMore()">
+  Загрузить еще
+</button>
+-->
+
+
+
+<div class="row users-header">
+  <div class="user-photo"></div>
+  <div class="user-fio">Имя и должность</div>
+  <div class="user-email">E-mail</div>
+  <div class="user-tab">Табельный #</div>
+  <div class="user-position">Место работы</div>
+</div>
+
+<div class="user" *ngFor="let user of this.$users.getAll()">
+  <div class="user-photo">
+    <div class="photo"></div>
+  </div>
+  <div class="user-fio">
+    <span class="leading">{{ user.fio }}</span>
+    <span class="additional">{{ user.position }}</span>
+  </div>
+  <div class="user-email">{{ user.email }}</div>
+  <div class="user-tab">
+    <span>{{ user.tabId }}</span>
+    <span class="additional">AD: {{ user.activeDirectoryAccount }}</span>
+  </div>
+  <div class="user-division">
+    <span *ngIf="user.divisionId !== 0">{{ $divisions.getById(user.divisionId).title }}</span>
+    <span class="additional">Северные электрические сети</span>
+  </div>
 </div>
 

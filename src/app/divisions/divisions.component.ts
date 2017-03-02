@@ -24,32 +24,21 @@ export class DivisionsComponent implements OnInit {
 
 
   ngOnInit() {
-    //if (this.$divisions.getAll().length === 0) {
-    //  this.$divisions.fetchAll().subscribe(
-    //    (divisions) => {
-    //      this.divisions = divisions;
-
-      //})
-    //}
-    //his.$application.data.subscribe((data: { divisions: DivisionConfig }));
+      this.$divisions.fetchAll().subscribe(() => {
+        let tree = this.$trees.getById('divisions');
+        if (tree !== null && tree.totalItemsCount() === 0) {
+          let length = this.$divisions.getAll().length;
+          for (let i = 0; i < length; i++) {
+            this.$trees.getById('divisions').addItem({
+              key: this.$divisions.getAll()[i].id.toString(),
+              parentKey: this.$divisions.getAll()[i].parentId.toString(),
+              title: this.$divisions.getAll()[i].title,
+              isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false
+            });
+          }
+        }
+      });
   };
-
-
-  populateDivisionsTree() {
-    let tree = this.$trees.getById('divisions');
-    if (tree !== null && tree.totalItemsCount() === 0) {
-      let length = this.$divisions.getAll().length;
-      for (let i = 0; i < length; i++) {
-        this.$trees.getById('divisions').addItem({
-          key: this.$divisions.getAll()[i].id.toString(),
-          parentKey: this.$divisions.getAll()[i].parentId.toString(),
-          title: this.$divisions.getAll()[i].title,
-          isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false
-        });
-      }
-    }
-  };
-
 
 
   selectDivision(item: TreeItem|null) {
@@ -65,7 +54,7 @@ export class DivisionsComponent implements OnInit {
   };
 
 
-  onCloseAddDivisionModal(form: any) {
+  closeAddDivisionModal(form: any) {
     form.reset();
     this.newDivision.restoreBackup();
   };
@@ -85,8 +74,7 @@ export class DivisionsComponent implements OnInit {
   };
 
 
-  onCloseEditDivisionModal (form: any) {
-    console.log(form);
+  closeEditDivisionModal (form: any) {
     if (form.dirty)
       form.reset();
     this.$divisions.getSelected().restoreBackup();

@@ -21,7 +21,9 @@ export class TreeItem {
     this.key = config.key;
     this.parentKey = config.parentKey;
     this.title = config.title;
-    if (config.isRoot)
+    if (config.isRoot !== undefined)
       this.isRoot = config.isRoot;
+    if (config.isExpanded !== undefined)
+      this.isExpanded = config.isExpanded;
   };
 };

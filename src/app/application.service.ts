@@ -12,6 +12,7 @@ export class ApplicationService {
 
   constructor(private $http: Http,
               private $divisions: DivisionsService) {
+    /*
     if (this.data === null) {
       this.fetchInitialData().subscribe(
         (data: { divisions: DivisionConfig[] }) => {
@@ -23,6 +24,7 @@ export class ApplicationService {
         console.log("fetch initial data complete");
       })
     };
+    */
   };
 
 

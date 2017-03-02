@@ -94,15 +94,16 @@
             <div class="title margin-bottom-20">Место работы и должность</div>
             <div class="row margin-bottom-20">
               <label for="selected-user-division" class="width-100">Структурное подразделение</label>
-              <button class="blue append" (click)="openSelectDivisionModal()">
+              <button class="blue append" (click)="openSelectDivisionModal(edit_user_form)">
                 <i class="fa fa-building"></i>
               </button>
               <input type="text"
-                     name="position"
+                     name="division"
                      id="selected-user-division"
                      class="dark append"
                      placeholder="Выберите структурное подразделение"
                      disabled
+                     [ngModel]="user.divisionId | divisionTitle"
                      [value]="user.divisionId | divisionTitle">
             </div>
 
@@ -150,8 +151,8 @@
           <div class="row">
             <button type="button"
                     class="red right"
-                    [disabled]="user._statusData.isChanged === false"
-                    (click)="cancel()">
+                    [disabled]="!edit_user_form.form.dirty"
+                    (click)="cancel(edit_user_form)">
               <i class="fa fa-ban"></i>&nbsp;Отмена
             </button>
             <button type="submit"

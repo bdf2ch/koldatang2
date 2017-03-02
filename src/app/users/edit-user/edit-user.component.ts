@@ -18,6 +18,7 @@ export class EditUserComponent implements OnInit {
   user: User = new User();
   userNotFound: boolean = false;
   submitted: boolean = false;
+  form: any;
 
 
   constructor(private router: Router,
@@ -48,6 +49,26 @@ export class EditUserComponent implements OnInit {
       console.log(editUserDivisionTree);
     }
 
+    if (this.$divisions.getAll().length === 0) {
+      this.$divisions.fetchAll().subscribe(() => {
+        console.log("populate tree");
+        let tree = this.$trees.getById('edit-user-divisions-tree');
+        if (tree.totalItemsCount() === 0) {
+          let length = this.$divisions.getAll().length;
+          for (let i = 0; i < length; i++) {
+            tree.addItem({
+              key: this.$divisions.getAll()[i].id.toString(),
+              parentKey: this.$divisions.getAll()[i].parentId.toString(),
+              title: this.$divisions.getAll()[i].title,
+              isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false,
+              isExpanded: this.$divisions.getAll()[i].id === 13 || this.$divisions.getAll()[i].id === 16 ? true : false
+            });
+          }
+          console.log(tree);
+        }
+      });
+    }
+
   };
 
 
@@ -57,15 +78,28 @@ export class EditUserComponent implements OnInit {
   };
 
 
-  cancel(): void {
+  cancel(form: any): void {
+    console.log(form);
+    form.reset({
+      name: this.user.name,
+      fname: this.user.fname,
+      surname: this.user.surname,
+      email: this.user.email,
+      position: this.user.position,
+      tab_id: this.user.tabId,
+      active_directory_account: this.user.activeDirectoryAccount
+    });
     //this.user = new User();
     //this.submitted = false;
     //this.router.navigate(["/users", { test: "test" }]);
     this.user.restoreBackup();
+    //this.user.changed(false);
+    console.log(this.user);
   };
 
 
-  openSelectDivisionModal () {
+  openSelectDivisionModal (form: any) {
+    this.form = form;
     this.$modals.open('edit-user-division');
   };
 
@@ -76,9 +110,10 @@ export class EditUserComponent implements OnInit {
 
 
   selectDivision () {
+    this.form.form.controls.division.markAsDirty();
     this.user.divisionId = this.$divisions.getById(parseInt(this.$trees.getById('edit-user-divisions-tree').getSelectedItem().key)).id;
-    this.user.changed(true);
     console.log(this.user._statusData);
+    this.$modals.close();
   };
 
 
@@ -97,7 +132,6 @@ export class EditUserComponent implements OnInit {
           isExpanded: this.$divisions.getAll()[i].id === 13 || this.$divisions.getAll()[i].id === 16 ? true : false
         });
       }
-      //tree.selectItem("13");
       console.log(tree);
     }
   };

@@ -1,3 +1,186 @@
+table {
+  border-collapse: separate;
+  border-spacing: 0px 10px;
+}
+table thead th {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #90A4AE;
+  background: transparent;
+}
+table tbody tr {
+  padding: 10px;
+  background: white;
+  border-radius: 4px;
+}
 table tbody td {
-  font-size: 14px;
+  font-size: 15px;
+}
+table tbody td .user-photo {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-basis: auto;
+  width: 40px;
+  min-width: 40px;
+}
+table tbody td .user-photo .photo {
+  height: 40px;
+  background: #F5F5F5;
+  border-radius: 50%;
+}
+.sticky-header {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  height: 60px;
+  padding: 20px;
+  box-sizing: border-box;
+  background: #ECEFF1;
+}
+.users-header {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  font-family: 'Roboto Bold';
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #90A4AE;
+}
+.users-header .user-photo {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-basis: auto;
+  width: 40px;
+  min-width: 40px;
+}
+.users-header .user-fio {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.users-header .user-email {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.users-header .user-tab {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 10%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.users-header .user-division {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: auto;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.user {
+  display: flex;
+  flex-direction: row;
+  flex-basis: auto;
+  height: 60px;
+  margin-bottom: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.user:hover {
+  background: #E0F2F1;
+}
+.user .leading {
+  display: block;
+  overflow: hidden;
+  font-family: 'Roboto Bold';
+  color: #37474F;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.user .additional {
+  overflow: hidden;
+  padding-top: 3px;
+  color: #78909C;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.user .user-photo {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-basis: auto;
+  width: 40px;
+  min-width: 40px;
+}
+.user .user-photo .photo {
+  height: 40px;
+  background: #F5F5F5;
+  border-radius: 50%;
+}
+.user .user-fio {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.user .user-email {
+  overflow: hidden;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.user .user-tab {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 10%;
+  padding-left: 20px;
+}
+.user .user-division {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex: auto;
+  padding-left: 20px;
+  box-sizing: border-box;
 }

@@ -3,13 +3,13 @@
 
   <div class="panel-content">
     <div class="content padding-10">
-      <tree [id]="'divisions'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onInit)="populateDivisionsTree($event)" (onSelect)="selectDivision($event)"></tree>
+      <tree [id]="'divisions'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onSelect)="selectDivision($event)"></tree>
     </div>
   </div>
 </div>
 
 
-<modal [id]="'add-division'" [footer]="true" [title]="'Новое структурное подразделение'" [width]="450" (onClose)="onCloseAddDivisionModal(new_division_form)">
+<modal [id]="'add-division'" [footer]="true" [title]="'Новое структурное подразделение'" [width]="450" (onClose)="closeAddDivisionModal(new_division_form)">
   <div class="modal-content">
     <div class="row">
       <form action="" #new_division_form="ngForm">
@@ -69,7 +69,7 @@
 </modal>
 
 
-<modal [id]="'edit-division'" [footer]="true" [title]="$divisions.getSelected()._backupData.title" [width]="450" *ngIf="$divisions.getSelected() !== null" (onClose)="onCloseEditDivisionModal(edit_division_form)">
+<modal [id]="'edit-division'" [footer]="true" [title]="$divisions.getSelected()._backupData.title" [width]="450" *ngIf="$divisions.getSelected() !== null" (onClose)="closeEditDivisionModal(edit_division_form)">
   <div class="modal-content">
     <div class="row">
       <form #edit_division_form="ngForm">
