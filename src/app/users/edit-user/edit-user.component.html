@@ -21,7 +21,7 @@
 
       <div class="content padding-20">
 
-        <form (ngSubmit)="onSubmit()" #edit_user_form="ngForm">
+        <form (ngSubmit)="onSubmit()" #edit_user_form="ngForm" novalidate>
 
 
           <!-- Личные данные пользователя -->
@@ -188,14 +188,40 @@
   </div>
   <div class="modal-footer">
     <div class="row padding-10">
-      <button class="blue width-50" [disabled]="$trees.getById('edit-user-divisions-tree').getSelectedItem() === null" (click)="selectDivision()">
-        <i class="fa fa-check"></i>&nbsp;Выбрать
-      </button>
-      <button class="red width-50" (click)="$modals.close()">
-        <i class="fa fa-ban"></i>&nbsp;Отмена
-      </button>
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="$trees.getById('edit-user-divisions-tree').getSelectedItem() === null" (click)="selectDivision()">
+          <i class="fa fa-check"></i>&nbsp;Выбрать
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban"></i>&nbsp;Отмена
+        </button>
+      </div>
     </div>
 
+  </div>
+</modal>
+
+
+
+<modal [id]="'edit-user-confirm-changes'" [footer]="false" [title]="'Данные были изменены'" [width]="350" [result]="false" (onClose)="closeConfirmChangesModal()">
+  <div class="modal-content">
+    <div class="row padding-10">
+      <div class="row margin-bottom-20">Данные пользователя были изменены. Сохранить изменения?</div>
+      <div class="row">
+        <div class="width-50 padding-right-5">
+          <button class="green width-100" (click)="confirmChanges()">
+            <i class="fa fa-save"></i>&nbsp;Сохранить
+          </button>
+        </div>
+        <div class="width-50 padding-left-5">
+          <button class="red width-100" (click)="cancelChanges()">
+            <i class="fa fa-ban"></i>&nbsp;Отмена
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </modal>
 

@@ -8,6 +8,7 @@ import { ModalService } from '../../ui/modal/modal.service';
 import { TreeService } from '../../ui/tree/tree.service';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
+import {Observable} from "rxjs";
 
 @Component({
   selector: 'app-edit-user',
@@ -19,6 +20,7 @@ export class EditUserComponent implements OnInit {
   userNotFound: boolean = false;
   submitted: boolean = false;
   form: any;
+  //confirmation: Observable<boolean> = Observable.of(false);
 
 
   constructor(private router: Router,
@@ -93,7 +95,7 @@ export class EditUserComponent implements OnInit {
     //this.submitted = false;
     //this.router.navigate(["/users", { test: "test" }]);
     this.user.restoreBackup();
-    //this.user.changed(false);
+    this.user.changed(false);
     console.log(this.user);
   };
 
@@ -105,17 +107,17 @@ export class EditUserComponent implements OnInit {
 
 
   closeSelectDivisionModal () {
-    console.log(this.user._statusData);
+    this.form.form.controls.division.markAsPristine();
+    this.$trees.getById('edit-user-divisions-tree').deselectItem();
   };
 
 
   selectDivision () {
     this.form.form.controls.division.markAsDirty();
     this.user.divisionId = this.$divisions.getById(parseInt(this.$trees.getById('edit-user-divisions-tree').getSelectedItem().key)).id;
-    console.log(this.user._statusData);
-    this.$modals.close();
+    this.user.changed(true);
+    this.$modals.close(true);
   };
-
 
 
   populateDivisionsTree() {
@@ -134,5 +136,27 @@ export class EditUserComponent implements OnInit {
       }
       console.log(tree);
     }
+  };
+
+
+  openConfirmChangesModal(): void {
+    this.$modals.open('edit-user-confirm-changes');
+  };
+
+
+  closeConfirmChangesModal(): void {
+    this.$modals.setAsyncResult('edit-user-confirm-changes', false);
+  };
+
+
+  confirmChanges(): void {
+    console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
+    this.$modals.setAsyncResult('edit-user-confirm-changes', true);
+  };
+
+
+  cancelChanges(): void {
+    this.$modals.setAsyncResult('edit-user-confirm-changes', false);
+    this.$modals.close(true);
   };
 }

@@ -47,13 +47,13 @@
 
 <div class="row margin-bottom-20">
   <input type="text"
-         name=""
+         name="search"
          id=""
          class="width-100 big dark search"
          placeholder="Введите имя абонента, телефон или email"
          #userSearch
          (keyup)="searchForUsers(userSearch.value)"
-         [(ngModel)]="search">
+         [(ngModel)]="$users.searchQuery">
 </div>
 
 
@@ -88,15 +88,15 @@
 
 
 
-<div class="row users-header">
+<div class="row users-header" *ngIf="$users.getAll().length !== 0">
   <div class="user-photo"></div>
   <div class="user-fio">Имя и должность</div>
   <div class="user-email">E-mail</div>
   <div class="user-tab">Табельный #</div>
-  <div class="user-position">Место работы</div>
+  <div class="user-division">Место работы</div>
 </div>
 
-<div class="user" *ngFor="let user of this.$users.getAll()">
+<div class="user" *ngFor="let user of this.$users.getAll()" (click)="selectUser(user)">
   <div class="user-photo">
     <div class="photo"></div>
   </div>
@@ -107,11 +107,21 @@
   <div class="user-email">{{ user.email }}</div>
   <div class="user-tab">
     <span>{{ user.tabId }}</span>
-    <span class="additional">AD: {{ user.activeDirectoryAccount }}</span>
+    <span class="additional" *ngIf="user.activeDirectoryAccount !== ''">AD: {{ user.activeDirectoryAccount }}</span>
   </div>
   <div class="user-division">
-    <span *ngIf="user.divisionId !== 0">{{ $divisions.getById(user.divisionId).title }}</span>
+    <span *ngIf="user.divisionId !== 0">{{ user.divisionId | divisionTitle }}</span>
     <span class="additional">Северные электрические сети</span>
   </div>
+</div>
+<div class="row" *ngIf="showLoadMoreButton()">
+  <button class="blue width-100 big" (click)="loadMore()">
+    Загрузить еще
+  </button>
+</div>
+
+
+<div class="row nothing-found margin-top-30 padding-30" *ngIf="$users.isInSearchMode() === true && $users.getAll().length === 0">
+  <i class="fa fa-search"></i>&nbsp; Пользователи не найдены
 </div>
 

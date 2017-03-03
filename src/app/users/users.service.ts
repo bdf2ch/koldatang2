@@ -13,6 +13,8 @@ export class UsersService {
   start: number = 0;
   limit: number = 50;
   total: number = 0;
+  inSearchMode: boolean = false;
+  searchQuery: string = "";
 
 
   constructor(private http: Http) {};
@@ -27,12 +29,13 @@ export class UsersService {
     var length = source.length;
     for (let i = 0; i < length; i++) {
       let user = new User(source[i]);
-      user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
+      user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
       this.users.push(user);
       this.limit++;
     }
     return true;
   };
+
 
 
   /**
@@ -44,6 +47,7 @@ export class UsersService {
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getAllUsers" };
     let users = this.users;
+    this.inSearchMode = false;
     return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
@@ -68,15 +72,18 @@ export class UsersService {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUsersPortion", data: { start: this.start, limit: this.limit } };
+    this.inSearchMode = false;
 
     return this.http.post(apiUrl, params, options)
       .map((res: Response) => {
+        if (this.start === 0)
+          this.users = [];
         let body = res.json();
         this.total = body.total;
         let length = body.users.length;
         for (var i = 0; i < length; i++) {
           var user = new User(body.users[i]);
-          user.setupBackup(["surname", "name", "fname", "position", "email", "isAdministrator", "fio"]);
+          user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
           this.users.push(user);
           this.start++;
         }
@@ -102,7 +109,7 @@ export class UsersService {
         console.log(body);
         if (body !== null) {
           let user = new User(body);
-          user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "isAdministrator"]);
+          user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
           return user;
         } else
           return null;
@@ -116,10 +123,11 @@ export class UsersService {
    * @param search
    * @returns {Observable<User>}
    */
-  search(search: string): Observable<User[]> | null {
+  search(): Observable<User[]> | null {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
-    let params = { action: "searchUsers", data: { search: search } };
+    let params = { action: "searchUsers", data: { search: this.searchQuery } };
+    this.inSearchMode = true;
 
     return this.http.post(apiUrl, params, options)
       .map((res: Response | null) => {
@@ -129,7 +137,7 @@ export class UsersService {
           this.users.splice(0, this.users.length);
           for (let i = 0; i < length; i++) {
             let user = new User(body[i]);
-            user.setupBackup(["surname", "name", "fname", "position", "email", "activeDirectoryAccount", "password", "isAdministrator", "fio"]);
+            user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
             this.users.push(user);
             this.start = 0;
           }
@@ -202,7 +210,7 @@ export class UsersService {
       .map((res: Response) => {
         let body = res.json();
         let user = new User(body);
-        user.setupBackup(["tabId", "divisionId", "departmentId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "isAdministrator"]);
+        user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
         //this.users.push(user);
         if (callback !== undefined && typeof callback === "function")
           callback(user);
@@ -210,6 +218,38 @@ export class UsersService {
       });
   };
 
+
+  edit(user: User): Observable<User> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let parameters = {
+      action: 'editUser',
+      data: {
+        id: user.id,
+        departmentId: 0,
+        divisionId: user.divisionId,
+        tabId: user.tabId,
+        surname: user.surname,
+        name: user.name,
+        fname: user.fname,
+        email: user.email,
+        position: user.position,
+        activeDirectoryAccount: user.activeDirectoryAccount,
+        password: '',
+        isAdministrator: user.isAdministrator
+      }
+    };
+    return this.$http.post(apiUrl, parameters, opt)
+  };
+
+
+  /**
+   *
+   * @returns {boolean}
+   */
+  isInSearchMode(): boolean {
+    return this.inSearchMode;
+  };
 
 
   private handleError (error: Response | any) {

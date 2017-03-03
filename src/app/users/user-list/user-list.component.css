@@ -116,8 +116,10 @@ table tbody td .user-photo .photo {
   background: #E3F2FD;
 }
 .user .leading {
-  display: block;
   overflow: hidden;
+  display: block;
+  position: relative;
+  width: 100%;
   font-family: 'Roboto Bold';
   color: #37474F;
   white-space: nowrap;
@@ -125,6 +127,8 @@ table tbody td .user-photo .photo {
 }
 .user .additional {
   overflow: hidden;
+  display: block;
+  width: 100%;
   padding-top: 3px;
   color: #78909C;
   white-space: nowrap;

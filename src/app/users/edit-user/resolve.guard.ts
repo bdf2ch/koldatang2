@@ -47,6 +47,7 @@ export class EditUserResolveGuard implements Resolve<Observable<User>|User> {
         })
         .catch(this.handleError);
     } else {
+      console.log("getting user from cache");
       let result = {
         user: user,
         title: user.name + " " + user.fname + " " + user.surname

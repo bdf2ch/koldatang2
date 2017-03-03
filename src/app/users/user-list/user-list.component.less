@@ -109,7 +109,6 @@ table {
     justify-content: flex-start;
     align-items: flex-start;
     flex: auto;
-    //align-self: stretch;
     padding-left: 20px;
     box-sizing: border-box;
   }
@@ -132,8 +131,10 @@ table {
   }
 
   .leading {
-    display: block;
     overflow: hidden;
+    display: block;
+    position: relative;
+    width: 100%;
     font-family: 'Roboto Bold';
     color: #37474F;
     white-space: nowrap;
@@ -141,6 +142,8 @@ table {
   }
   .additional {
     overflow: hidden;
+    display: block;
+    width: 100%;
     padding-top: 3px;
     color: #78909C;
     white-space: nowrap;

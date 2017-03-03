@@ -4,20 +4,16 @@ import { UsersComponent } from './users.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { NewUserComponent } from './new-user/new-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
-import { UsersService } from './users.service';
 import { EditUserResolveGuard } from './edit-user/resolve.guard';
+import { EditUserCanDeactivateGuard } from './edit-user/can-deactivate.guard';
 
-const routes:Routes = [
+const routes: Routes = [
   {
     path: "users",
     component: UsersComponent,
     data: {
       extras: {
-        title: "Пользователи",
-        controls:
-          `<a routerLink="/users/new">
-            <span class="fa fa-plus" title="Добавить пользователя"></span>
-           </a>`
+        title: "Пользователи"
       }
     },
     children: [
@@ -44,7 +40,8 @@ const routes:Routes = [
         component: EditUserComponent,
         resolve: {
           extras: EditUserResolveGuard
-        }
+        },
+        canDeactivate: [ EditUserCanDeactivateGuard ]
       }
     ]
   }

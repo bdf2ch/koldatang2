@@ -236,11 +236,14 @@ body {
   background: #CFD8DC;
 }
 .nothing-found {
-  text-align: center;
-  font-size: 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  font-size: 30px;
   color: lightgray;
-  line-height: 75px;
 }
 .nothing-found .fa {
-  font-size: 75px;
+  font-size: 30px;
 }

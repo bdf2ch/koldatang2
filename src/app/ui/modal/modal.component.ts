@@ -1,7 +1,8 @@
 import {
-  Component, Inject, OnInit, OnChanges, AfterContentInit, AfterViewChecked, HostListener, Input, Output, EventEmitter, forwardRef,
-  ElementRef, trigger, state, transition, style, animate, SimpleChanges
+  Component, Inject, OnInit, AfterViewChecked, HostListener, Input, Output, EventEmitter, forwardRef,
+  ElementRef, trigger, state, transition, style, animate
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { ModalService } from './modal.service';
 
 
@@ -18,7 +19,6 @@ export class ModalContentComponent {};
   styleUrls: ['./modal.component.css'],
   animations: [
     trigger("fog", [
-
       state('true', style({
         background: 'rgba(0, 0, 0, 0.5)'
       })),
@@ -26,15 +26,12 @@ export class ModalContentComponent {};
       transition('* => void', animate("200ms linear")),
     ]),
     trigger("modal", [
-
       state('true', style({
         transform: 'scale(1.0)'
       })),
-
       state('false', style({
         transform: 'scale(0.1)'
       })),
-
       transition('void => true', animate(100)),
       transition('* => void', animate(100)),
     ])
@@ -49,16 +46,32 @@ export class ModalComponent implements OnInit, AfterViewChecked {
   @Output() private onOpen: EventEmitter<void> = new EventEmitter<void>();
   @Output() private onClose: EventEmitter<void> = new EventEmitter<void>();
   private opened: boolean = false;
+  @Input() private result: any;
+  private resultObserver: Observable<any>;
 
 
   constructor(@Inject(forwardRef(() => ModalService)) private modals: ModalService,
               private element: ElementRef
-  ) {};
+  ) {
+    //this.resultObserver = Observable.of(this.result).map((result) => {
+    //  return result;
+    //});
+    //this.resultObserver = this.result.asObservable();
+    this.resultObserver = Observable.create((observer) => {
+      setTimeout(() => {
+        observer.next(this.result);
+      }, 1000);
+      //observer.complete();
+      //observer.first();
+    }).map((result: boolean) => {
+      return result;
+    });
+
+
+  };
 
 
   ngOnInit() {
-    //console.log(this.element);
-
     if (this.id === null || this.id === undefined || this.id === "") {
       console.error("no id specified");
       return;
@@ -93,9 +106,20 @@ export class ModalComponent implements OnInit, AfterViewChecked {
   };
 
 
-  close () {
+  close (withoutCallback?: boolean) {
     this.opened = false;
-    this.onClose.emit();
+    if (withoutCallback === undefined || withoutCallback !== true)
+      this.onClose.emit();
+  };
+
+
+  setResult(result: any) {
+    this.result = result;
+  };
+
+
+  getResult(): Observable<any> {
+    return this.resultObserver;
   };
 
 }

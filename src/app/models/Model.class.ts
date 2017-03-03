@@ -34,10 +34,10 @@ export class Model {
     if (fields) {
       let length = fields.length;
       for (let i = 0; i < length; i++) {
-        if (this._backupData[fields[i]])
+        if (this._backupData[fields[i]] !== undefined)
           this[fields[i]] = this._backupData[fields[i]];
         else
-          console.error("Поле $fields[i] не найдено");
+          console.error("Поле " + fields[i] + " не найдено");
       }
     } else {
       for (let i in this._backupData) {

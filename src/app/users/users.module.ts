@@ -8,6 +8,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { NewUserComponent } from './new-user/new-user.component';
 import { EditUserComponent } from './edit-user/edit-user.component';
 import { EditUserResolveGuard } from './edit-user/resolve.guard';
+import { EditUserCanDeactivateGuard } from './edit-user/can-deactivate.guard';
 import { UsersService } from './users.service';
 import { ByUserNamePipe } from './by-user-name.pipe';
 
@@ -29,7 +30,8 @@ import { ByUserNamePipe } from './by-user-name.pipe';
   ],
   providers: [
     UsersService,
-    EditUserResolveGuard
+    EditUserResolveGuard,
+    EditUserCanDeactivateGuard
   ]
 })
 export class UsersModule {};

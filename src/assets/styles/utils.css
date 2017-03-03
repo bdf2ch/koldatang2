@@ -96,6 +96,7 @@
 .width-65 {
   float: left;
   width: 65%;
+  box-sizing: border-box;
 }
 .width-60 {
   float: left;
@@ -110,22 +111,27 @@
 .width-50 {
   float: left;
   width: 50%;
+  box-sizing: border-box;
 }
 .width-45 {
   float: left;
   width: 45%;
+  box-sizing: border-box;
 }
 .width-40 {
   float: left;
   width: 40%;
+  box-sizing: border-box;
 }
 .width-35 {
   float: left;
   width: 35%;
+  box-sizing: border-box;
 }
 .width-33 {
   float: left;
   width: 33%;
+  box-sizing: border-box;
 }
 .width-30 {
   float: left;
@@ -175,11 +181,29 @@
 .padding-30 {
   padding: 30px;
 }
+.padding-left-5 {
+  padding-left: 5px;
+}
+.padding-left-10 {
+  padding-left: 10px;
+}
+.padding-right-5 {
+  padding-right: 5px;
+}
+.padding-right-10 {
+  padding-right: 10px;
+}
 .margin-top-5 {
   margin-top: 5px;
 }
 .margin-top-10 {
   margin-top: 10px;
+}
+.margin-top-20 {
+  margin-top: 20px;
+}
+.margin-top-30 {
+  margin-top: 30px;
 }
 .margin-20 {
   margin: 20px !important;
@@ -204,6 +228,12 @@
 }
 .margin-right-10 {
   margin-right: 10px !important;
+}
+.margin-left-5 {
+  margin-left: 5px;
+}
+.margin-left-10 {
+  margin-left: 10px;
 }
 /**********
 ** FORMS
@@ -418,6 +448,7 @@ button {
   font-size: 14px;
   box-sizing: border-box;
   outline: none;
+  border-radius: 2px;
 }
 input[type='button'].rounded,
 input[type='submit'].rounded,
