@@ -9,15 +9,10 @@ export class EditUserCanDeactivateGuard implements CanDeactivate<EditUserCompone
 
   constructor (private $modals: ModalService) {};
 
-  canDeactivate (component: EditUserComponent, route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-    console.log("can deaqctivate guard started");
+  canDeactivate (component: EditUserComponent, route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>|boolean {
+    console.log("can deactivate guard started");
     if (component.user.changed() === true) {
       component.openConfirmChangesModal();
-      this.$modals.getAsyncResult('edit-user-confirm-changes')
-        .map((result:boolean) => {
-          console.log("result = ", result);
-          return result;
-      });
     } else
       return true;
   };

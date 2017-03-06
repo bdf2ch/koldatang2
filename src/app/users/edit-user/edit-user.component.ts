@@ -18,9 +18,7 @@ import {Observable} from "rxjs";
 export class EditUserComponent implements OnInit {
   user: User = new User();
   userNotFound: boolean = false;
-  submitted: boolean = false;
   form: any;
-  //confirmation: Observable<boolean> = Observable.of(false);
 
 
   constructor(private router: Router,
@@ -74,9 +72,10 @@ export class EditUserComponent implements OnInit {
   };
 
 
-  onSubmit(): void {
-    this.submitted = true;
+  submit(): void {
     console.log("form submit");
+    this.user.changed(false);
+    //this.$modals.close();
   };
 
 
@@ -91,9 +90,8 @@ export class EditUserComponent implements OnInit {
       tab_id: this.user.tabId,
       active_directory_account: this.user.activeDirectoryAccount
     });
-    //this.user = new User();
-    //this.submitted = false;
-    //this.router.navigate(["/users", { test: "test" }]);
+    if (this.$trees.getById('edit-user-divisions-tree').getSelectedItem() !== null)
+      this.$trees.getById('edit-user-divisions-tree').deselectItem();
     this.user.restoreBackup();
     this.user.changed(false);
     console.log(this.user);
@@ -108,6 +106,7 @@ export class EditUserComponent implements OnInit {
 
   closeSelectDivisionModal () {
     this.form.form.controls.division.markAsPristine();
+    this.user.divisionId = 0;
     this.$trees.getById('edit-user-divisions-tree').deselectItem();
   };
 
@@ -150,13 +149,15 @@ export class EditUserComponent implements OnInit {
 
 
   confirmChanges(): void {
-    console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
-    this.$modals.setAsyncResult('edit-user-confirm-changes', true);
+    //console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
+    //this.$modals.setAsyncResult('edit-user-confirm-changes', true);
+    //console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
+    this.submit();
   };
 
 
   cancelChanges(): void {
-    this.$modals.setAsyncResult('edit-user-confirm-changes', false);
+    this.cancel(this.form);
     this.$modals.close(true);
   };
 }

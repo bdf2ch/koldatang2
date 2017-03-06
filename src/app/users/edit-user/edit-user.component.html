@@ -21,7 +21,7 @@
 
       <div class="content padding-20">
 
-        <form (ngSubmit)="onSubmit()" #edit_user_form="ngForm" novalidate>
+        <form (ngSubmit)="submit()" #edit_user_form="ngForm" novalidate>
 
 
           <!-- Личные данные пользователя -->
@@ -158,7 +158,7 @@
             <button type="submit"
                     class="green right margin-right-10"
                     [disabled]="!edit_user_form.form.valid || !edit_user_form.form.dirty">
-              <i class="fa fa-save"></i>&nbsp;Сохранить
+              <i class="fa fa-save"></i>&nbsp;Сохранить изменения
             </button>
           </div>
 

@@ -2,7 +2,7 @@ import {
   Component, Inject, OnInit, AfterViewChecked, HostListener, Input, Output, EventEmitter, forwardRef,
   ElementRef, trigger, state, transition, style, animate
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subject, Observer } from 'rxjs';
 import { ModalService } from './modal.service';
 
 
@@ -47,7 +47,7 @@ export class ModalComponent implements OnInit, AfterViewChecked {
   @Output() private onClose: EventEmitter<void> = new EventEmitter<void>();
   private opened: boolean = false;
   @Input() private result: any;
-  private resultObserver: Observable<any>;
+  private resultObs: Observable<any>;
 
 
   constructor(@Inject(forwardRef(() => ModalService)) private modals: ModalService,
@@ -57,15 +57,18 @@ export class ModalComponent implements OnInit, AfterViewChecked {
     //  return result;
     //});
     //this.resultObserver = this.result.asObservable();
-    this.resultObserver = Observable.create((observer) => {
-      setTimeout(() => {
-        observer.next(this.result);
-      }, 1000);
-      //observer.complete();
-      //observer.first();
-    }).map((result: boolean) => {
-      return result;
-    });
+    //this.resultObs = Observable.create(
+    //  (observer: Observer<any>) => {
+    //    observer.onNext()
+    //});
+
+
+    //let subject = new Subject();
+
+    // Subscribe in Component
+    //subject.subscribe(next => {
+    //  console.log(next);
+    //});
 
 
   };
@@ -119,7 +122,7 @@ export class ModalComponent implements OnInit, AfterViewChecked {
 
 
   getResult(): Observable<any> {
-    return this.resultObserver;
+    return Observable.of(this.result);
   };
 
 }

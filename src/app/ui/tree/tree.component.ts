@@ -153,10 +153,9 @@ export class TreeComponent implements OnInit {
 
 
   deselectItem(): void {
-    if (this.selected !== null) {
+    if (this.selected !== null)
       this.selected.isSelected = false;
-      this.selected = null;
-    }
+    this.selected = null;
   };
 
 

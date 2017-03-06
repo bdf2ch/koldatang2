@@ -173,7 +173,7 @@ export class UsersService {
 
 
   /**
-   *
+   * Получение общего количества пользователей
    * @returns {number}
    */
   getTotal (): number {
@@ -182,8 +182,8 @@ export class UsersService {
 
 
   /**
-   *
-   * @param user
+   * Добавление нового пользователя
+   * @param user {User} - добавляемый пользователь
    * @returns {Observable<R>}
    */
   add(user: User, callback?: any): Observable<User> {
@@ -219,6 +219,11 @@ export class UsersService {
   };
 
 
+  /**
+   * Сохранение данных редактируемого пользователя
+   * @param user {User} - редактируемый пользователь
+   * @returns {Observable<R>}
+   */
   edit(user: User): Observable<User> {
     let headers = new Headers({ "Content-Type": "application/json" });
     let options = new RequestOptions({ headers: headers });
@@ -239,12 +244,17 @@ export class UsersService {
         isAdministrator: user.isAdministrator
       }
     };
-    return this.$http.post(apiUrl, parameters, opt)
+    return this.http.post(apiUrl, parameters, options)
+      .map((response: Response) => {
+        user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
+        user.changed(false);
+        return user;
+      });
   };
 
 
   /**
-   *
+   * Получение статуса нахождения в режиме поиска пользователей
    * @returns {boolean}
    */
   isInSearchMode(): boolean {
@@ -252,6 +262,11 @@ export class UsersService {
   };
 
 
+  /**
+   * Обработчик ошибок
+   * @param error {Response|any}
+   * @returns {any}
+   */
   private handleError (error: Response | any) {
     let errMsg: string;
     if (error instanceof Response) {
