@@ -21,9 +21,9 @@ export class EditUserComponent implements OnInit {
   form: any;
 
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private users: UsersService,
+  constructor(private $router: Router,
+              private $route: ActivatedRoute,
+              private $users: UsersService,
               private $divisions: DivisionsService,
               private $modals: ModalService,
               private $trees: TreeService) {
@@ -32,8 +32,8 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.user);
-    let id = +this.route.snapshot.params['id'];
-    this.route.data
+    let id = +this.$route.snapshot.params['id'];
+    this.$route.data
       .subscribe((data: { extras: {user: User, title: string}}) => {
         if (data.extras.user !== null) {
           this.user = data.extras.user;
@@ -43,11 +43,6 @@ export class EditUserComponent implements OnInit {
           this.userNotFound = true;
         }
       });
-
-    let editUserDivisionTree = this.$trees.getById('edit-user-division');
-    if (editUserDivisionTree !== null) {
-      console.log(editUserDivisionTree);
-    }
 
     if (this.$divisions.getAll().length === 0) {
       this.$divisions.fetchAll().subscribe(() => {
@@ -73,9 +68,12 @@ export class EditUserComponent implements OnInit {
 
 
   submit(): void {
-    console.log("form submit");
-    this.user.changed(false);
+    //console.log("form submit");
+    //this.user.changed(false);
     //this.$modals.close();
+    this.$users.edit(this.user).subscribe((user: User) => {
+
+    });
   };
 
 

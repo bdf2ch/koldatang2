@@ -13,6 +13,7 @@ export class UsersService {
   start: number = 0;
   limit: number = 50;
   total: number = 0;
+  loading: boolean = false;
   inSearchMode: boolean = false;
   searchQuery: string = "";
 
@@ -39,7 +40,7 @@ export class UsersService {
 
 
   /**
-   * Запрашивает массив всех пользователей с сервера
+   * Запрашивает всех пользователей с сервера
    * @returns {User[]}
    */
   fetchAll(): Observable<User[]> {
@@ -65,7 +66,7 @@ export class UsersService {
 
 
   /**
-   *
+   * Запрашивает страницу пользователей с сервера
    * @returns {Observable<R>}
    */
   fetch(): Observable<User[]> {
@@ -95,8 +96,8 @@ export class UsersService {
 
 
   /**
-   *
-   * @param id
+   * Запрашивает пользователя с сервера по идентификатору
+   * @param id {number} - идентификатор пользователя
    * @returns {Observable<User>}
    */
   fetchById(id: number): Observable<User|null> {
@@ -119,8 +120,7 @@ export class UsersService {
 
 
   /**
-   *
-   * @param search
+   * Запрашивает пользователей с сервера в соответствии сусловиями поиска
    * @returns {Observable<User>}
    */
   search(): Observable<User[]> | null {
@@ -128,6 +128,7 @@ export class UsersService {
     let options = new RequestOptions({ headers: headers });
     let params = { action: "searchUsers", data: { search: this.searchQuery } };
     this.inSearchMode = true;
+    this.loading = true;
 
     return this.http.post(apiUrl, params, options)
       .map((res: Response | null) => {
@@ -140,16 +141,19 @@ export class UsersService {
             user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
             this.users.push(user);
             this.start = 0;
+            this.loading = false;
           }
-        } else
+        } else {
+          this.loading = false;
           return null;
+        }
       })
       .catch(this.handleError);
   };
 
 
   /**
-   *
+   * Получение всех загруженных пользователей
    * @returns {User[]}
    */
   getAll(): User[] {
@@ -158,7 +162,7 @@ export class UsersService {
 
 
   /**
-   * Поиск пользователя по идентификатору
+   * Получение пользователя по идентификатору
    * @param id {number} - идентификатор пользователя
    * @returns {User|boolean}
    */
@@ -205,7 +209,6 @@ export class UsersService {
         isAdministrator: user.isAdministrator
       }
     };
-
     return this.http.post(apiUrl, params, options)
       .map((res: Response) => {
         let body = res.json();
@@ -244,12 +247,15 @@ export class UsersService {
         isAdministrator: user.isAdministrator
       }
     };
+    this.loading = true;
     return this.http.post(apiUrl, parameters, options)
       .map((response: Response) => {
         user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
         user.changed(false);
+        this.loading = false;
         return user;
-      });
+      })
+      .catch(this.handleError);
   };
 
 
@@ -260,6 +266,11 @@ export class UsersService {
   isInSearchMode(): boolean {
     return this.inSearchMode;
   };
+
+
+  isLoading() : boolean {
+    return this.loading;
+  } ;
 
 
   /**
@@ -276,6 +287,7 @@ export class UsersService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
+    this.loading = false;
     console.error(errMsg);
     return Observable.throw(errMsg);
   };

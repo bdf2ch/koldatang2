@@ -106,11 +106,11 @@
   </div>
   <div class="user-email">{{ user.email }}</div>
   <div class="user-tab">
-    <span>{{ user.tabId }}</span>
+    <span class="regular">{{ user.tabId }}</span>
     <span class="additional" *ngIf="user.activeDirectoryAccount !== ''">AD: {{ user.activeDirectoryAccount }}</span>
   </div>
   <div class="user-division">
-    <span *ngIf="user.divisionId !== 0">{{ user.divisionId | divisionTitle }}</span>
+    <span class="regular" *ngIf="user.divisionId !== 0" title="{{ user.divisionId | divisionTitle }}">{{ user.divisionId | divisionTitle }}</span>
     <span class="additional">Северные электрические сети</span>
   </div>
 </div>

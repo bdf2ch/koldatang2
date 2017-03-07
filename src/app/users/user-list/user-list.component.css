@@ -134,6 +134,15 @@ table tbody td .user-photo .photo {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+.user .regular {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
 .user .user-photo {
   flex-direction: column;
   align-items: center;

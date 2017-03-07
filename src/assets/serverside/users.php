@@ -86,8 +86,6 @@
         $activeDirectoryAccount = $parameters -> activeDirectoryAccount;
         $isAdministrator = $parameters -> isAdministrator;
 
-        //var_dump($parameters);
-
         $result = pg_query_params(
             $link,
             "SELECT add_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
@@ -98,6 +96,36 @@
 
         $user = pg_fetch_result($result, 0, 0);
         echo($user);
+        return true;
+    }
+
+
+    /**
+    *
+    **/
+    function editUser ($parameters) {
+        global $link;
+        $id = $parameters -> id;
+        $departmentId = $parameters -> departmentId;
+        $divisionId = $parameters -> divisionId;
+        $tabId = $parameters -> tabId;
+        $surname = $parameters -> surname;
+        $name = $parameters -> name;
+        $fname = $parameters -> fname;
+        $email = $parameters -> email;
+        $position = $parameters -> position;
+        $activeDirectoryAccount = $parameters -> activeDirectoryAccount;
+        $password = $parameters -> password;
+        $isAdministrator = $parameters -> isAdministrator;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT edit_user($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)",
+            array($id, $departmentId, $divisionId, $tabId, $surname, $name, $fname, $email, $position, $activeDirectoryAccount, $password, $isAdministrator ? 't' : 'f')
+        );
+
+        $user = pg_fetch_all($result);
+        echo $user[0]["edit_user"];
         return true;
     }
 

@@ -5,6 +5,8 @@ import { Resolve } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { UsersService, apiUrl } from '../users.service';
 import { User } from '../../models/User.model';
+import { DivisionsService } from '../../divisions/divisions.service';
+import { Division } from '../../models/Division.model';
 
 
 @Injectable()
@@ -12,7 +14,8 @@ export class EditUserResolveGuard implements Resolve<Observable<User>|User> {
 
 
   constructor(private http: Http,
-              private users: UsersService) {
+              private users: UsersService,
+              private $divisions: DivisionsService) {
   };
 
 
@@ -21,6 +24,9 @@ export class EditUserResolveGuard implements Resolve<Observable<User>|User> {
     let user = this.users.getById(id);
 
     if (user === null) {
+      if (this.$divisions.getAll().length === 0)
+      this.$divisions.fetchAll().subscribe();
+
       console.log("starting resolving");
       let headers = new Headers({ "Content-Type": "application/json" });
       let options = new RequestOptions({ headers: headers });
