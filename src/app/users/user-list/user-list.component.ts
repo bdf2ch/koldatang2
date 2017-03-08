@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../../models/User.model';
+import { DivisionsService } from '../../divisions/divisions.service';
 
 
 @Component({
@@ -14,16 +15,19 @@ export class UserListComponent implements OnInit {
   errorMessage: any;
 
 
-  constructor(private $users: UsersService,
-              private $route: ActivatedRoute,
-              private $router: Router) {
+  constructor(private $route: ActivatedRoute,
+              private $router: Router,
+              private $users: UsersService,
+              private $divisions: DivisionsService) {
   };
 
 
   ngOnInit() {
-    if (this.$users.isInSearchMode() === false && this.$users.getAll().length === 0) {
+    if (this.$users.isInSearchMode() === false && this.$users.getAll().length === 0)
       this.$users.fetch().subscribe();
-    }
+
+    if (this.$divisions.getAll().length === 0)
+      this.$divisions.fetchAll().subscribe();
   };
 
 
