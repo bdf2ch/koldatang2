@@ -1,41 +1,3 @@
-table {
-  border-collapse: separate;
-  border-spacing: 0px 10px;
-  thead {
-    th {
-      font-size: 12px;
-      text-transform: uppercase;
-      color: #90A4AE;
-      background: transparent;
-    }
-  }
-  tbody {
-    tr {
-      padding: 10px;
-      background: white;
-      border-radius: 4px;
-    }
-    td {
-      font-size: 15px;
-      .user-photo {
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex-basis: auto;
-        width: 40px;
-        min-width: 40px;
-
-        .photo {
-          height: 40px;
-          background: #F5F5F5;
-          border-radius: 50%;
-        }
-      }
-    }
-  }
-}
-
-
 
 .sticky-header {
   position: absolute;
@@ -58,10 +20,19 @@ table {
   display: flex;
   flex-direction: row;
   padding: 10px;
+  box-sizing: border-box;
   font-family: 'Roboto Bold';
   font-size: 12px;
   text-transform: uppercase;
   color: #90A4AE;
+
+  .fa {
+    color: #0097A7;
+    cursor: pointer;
+    &:hover {
+      color: #006064;
+    }
+  }
 
 
   .user-photo {
@@ -105,14 +76,17 @@ table {
   .user-division {
     overflow: hidden;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
     flex: auto;
+    width: 30%;
     padding-left: 20px;
     box-sizing: border-box;
   }
 }
+
+
 
 .user {
   display: flex;
@@ -206,6 +180,7 @@ table {
     align-items: flex-start;
     width: 10%;
     padding-left: 20px;
+    box-sizing: border-box;
   }
 
   .user-division {
@@ -215,8 +190,43 @@ table {
     justify-content: flex-start;
     align-items: flex-start;
     flex: auto;
+    width: 30%;
     //align-self: stretch;
     padding-left: 20px;
     box-sizing: border-box;
+  }
+}
+
+
+.filter-caption {
+  float: left;
+  padding: 3px;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: darkgrey;
+}
+
+
+.filter {
+  display: inline-block;
+  float: left;
+  font-size: 12px;
+  color: white;
+  background: #90CAF9;
+  border-radius: 2px;
+
+  .filter-title {
+    padding: 3px;
+    text-align: center;
+  }
+
+  .fa {
+    padding: 3px;
+    color: white;
+    background: #64B5F6;
+    cursor: pointer;
+    &:hover {
+      background: #1565C0;
+    }
   }
 }

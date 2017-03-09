@@ -11,6 +11,8 @@ import { EditUserResolveGuard } from './edit-user/resolve.guard';
 import { EditUserCanDeactivateGuard } from './edit-user/can-deactivate.guard';
 import { UsersService } from './users.service';
 import { ByUserNamePipe } from './by-user-name.pipe';
+import { DepartmentByDivisionIdPipe } from './department-by-division-id.pipe';
+import { SearchPipe } from './search.pipe';
 
 
 
@@ -26,7 +28,13 @@ import { ByUserNamePipe } from './by-user-name.pipe';
     UserListComponent,
     NewUserComponent,
     EditUserComponent,
-    ByUserNamePipe
+    ByUserNamePipe,
+    DepartmentByDivisionIdPipe,
+    DepartmentByDivisionIdPipe,
+    DepartmentByDivisionIdPipe,
+    SearchPipe,
+    SearchPipe,
+    SearchPipe
   ],
   providers: [
     UsersService,

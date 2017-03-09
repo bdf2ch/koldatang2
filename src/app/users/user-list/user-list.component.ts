@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { UsersService } from '../users.service';
 import { User } from '../../models/User.model';
 import { DivisionsService } from '../../divisions/divisions.service';
+import { ModalService } from "../../ui/modal/modal.service";
+import { TreeService } from "../../ui/tree/tree.service";
 
 
 @Component({
@@ -11,23 +13,29 @@ import { DivisionsService } from '../../divisions/divisions.service';
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  search = "";
   errorMessage: any;
+  usersLocalSearch: User[] = [];
+  filerDivisionId: number = 0;
 
 
   constructor(private $route: ActivatedRoute,
               private $router: Router,
               private $users: UsersService,
-              private $divisions: DivisionsService) {
+              private $divisions: DivisionsService,
+              private $modals: ModalService,
+              private $trees: TreeService) {
   };
 
 
   ngOnInit() {
+    if (this.$divisions.getAll().length === 0) {
+      this.$divisions.fetchAll().subscribe(() => {
+        if (this.$users.isInSearchMode() === false && this.$users.getAll().length === 0)
+          this.$users.fetch().subscribe();
+      });
+    }
     if (this.$users.isInSearchMode() === false && this.$users.getAll().length === 0)
       this.$users.fetch().subscribe();
-
-    if (this.$divisions.getAll().length === 0)
-      this.$divisions.fetchAll().subscribe();
   };
 
 
@@ -37,27 +45,75 @@ export class UserListComponent implements OnInit {
   };
 
 
-  getUsers() {
-    this.$users.fetch().subscribe();
-  };
-
-
   loadMore(): void {
     this.$users.fetch().subscribe();
   };
 
 
   showLoadMoreButton(): boolean {
-    return this.$users.isInSearchMode() === false && this.$users.getAll().length < this.$users.getTotal() ? true : false;
+    return this.$users.isInSearchMode() === false && this.filerDivisionId === 0 && this.$users.isLoading() === false && this.$users.getAll().length < this.$users.getTotal() ? true : false;
   };
 
 
-  searchForUsers (value) {
+  searchForUsers (value: string) {
     if (value.length >= 3) {
-      this.$users.search().subscribe();
+      if (this.filerDivisionId === 0) {
+        this.$users.search().subscribe();
+      }
     } else if (value.length === 2 && this.$users.isInSearchMode() === true) {
-      this.$users.fetch().subscribe();
+      if (this.filerDivisionId === 0)
+        this.$users.fetch().subscribe();
     }
+  };
+
+
+  clearSearch() {
+    if (this.$users.searchQuery.length >= 3) {
+      if (this.filerDivisionId !== 0)
+        this.$users.fetchByDivisionId(this.filerDivisionId).subscribe();
+      else
+        this.$users.fetch().subscribe();
+    }
+    this.$users.searchQuery = "";
+  };
+
+
+  openDivisionsFilterModal () {
+    this.$modals.open('users-list-division-filter');
+  };
+
+
+  populateDivisionsTree() {
+    console.log("populate tree");
+    let tree = this.$trees.getById('users-list-division-filter-tree');
+    if (tree.totalItemsCount() === 0) {
+      let length = this.$divisions.getAll().length;
+      for (let i = 0; i < length; i++) {
+        tree.addItem({
+          key: this.$divisions.getAll()[i].id.toString(),
+          parentKey: this.$divisions.getAll()[i].parentId.toString(),
+          title: this.$divisions.getAll()[i].title,
+          isRoot: this.$divisions.getAll()[i].parentId === 0 ? true : false,
+          isExpanded: this.$divisions.getAll()[i].id === 13 || this.$divisions.getAll()[i].id === 16 ? true : false
+        });
+      }
+      console.log(tree);
+    }
+  };
+
+
+  selectFilterDivision() {
+    this.filerDivisionId = parseInt(this.$trees.getById('users-list-division-filter-tree').getSelectedItem().key);
+    this.$users.fetchByDivisionId(this.filerDivisionId).subscribe(() => {
+      this.$modals.close();
+    });
+  };
+
+
+  cancelFilterDivision () {
+    this.filerDivisionId = 0;
+    this.$trees.getById('users-list-division-filter-tree').deselectItem();
+    this.$users.fetch().subscribe();
   };
 
 }

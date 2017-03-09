@@ -94,6 +94,19 @@
             <div class="title margin-bottom-20">Место работы и должность</div>
             <div class="row margin-bottom-20">
               <label for="selected-user-division" class="width-100">Структурное подразделение</label>
+
+
+              <div class="input-with-controls dark">
+                <input type="text"
+                       name="division"
+                       id="selected-user-division"
+                       placeholder="Выберите структурное подразделение"
+                       disabled
+                       [value]="user.divisionId | divisionTitle">
+                <button type="button" class="blue appended" (click)="openSelectDivisionModal(edit_user_form)"><i class="fa fa-building"></i></button>
+              </div>
+
+              <!--
               <button class="blue append" (click)="openSelectDivisionModal(edit_user_form)">
                 <i class="fa fa-building"></i>
               </button>
@@ -103,8 +116,8 @@
                      class="dark append"
                      placeholder="Выберите структурное подразделение"
                      disabled
-                     [ngModel]="user.divisionId | divisionTitle"
                      [value]="user.divisionId | divisionTitle">
+                     -->
             </div>
 
             <div class="row margin-bottom-20">

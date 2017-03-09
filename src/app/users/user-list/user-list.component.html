@@ -1,105 +1,24 @@
-
-<!--<table class="stripped selectable">
-  <thead>
-  <tr>
-    <th>Имя</th>
-    <th>e-mail</th>
-    <th>Должность</th>
-  </tr>
-  </thead>
-  <tbody>
-
-    <tr *ngFor="let user of users">
-      <td>{{ user.surname }}</td>
-      <td>{{ user.email }}</td>
-      <td>{{ user.position }}</td>
-    </tr>
-  <tr>
-    <td colspan="3" *ngIf="users.length === 0"></td>
-  </tr>
-  </tbody>
-</table>
--->
-
-
-
-<!--
-<div class="panel no-sidebar">
-
-  <div class="panel-content">
-
-    <div class="header">
-      <div class="row">
-        <div class="width-100 padding-10">
-
-        </div>
-      </div>
-    </div>
-
-    <div class="content">
-
-    </div>
-  </div>
-
-</div>
--->
-
-
-<div class="row margin-bottom-20">
-  <input type="text"
-         name="search"
-         id=""
-         class="width-100 big dark search"
-         placeholder="Введите имя абонента, телефон или email"
-         #userSearch
-         (keyup)="searchForUsers(userSearch.value)"
-         [(ngModel)]="$users.searchQuery">
-</div>
-
-<div class="row">
-
+<div class="row margin-bottom-30">
   <div class="input-with-controls dark">
     <i class="fa fa-search"></i>
-    <input type="text" name="" id="" placeholder="Введите имя или e-mail пользователя">
-    <i class="fa fa-filter clickable" title="Фильтры"></i>
-    <i class="fa fa-spin fa-spinner"></i>
-    <button class="blue appended">
-      <i class="fa fa-dollar"></i>
-    </button>
+    <input type="text"
+           name="search" id="users-search-query"
+           class="big"
+           placeholder="Введите имя или e-mail пользователя"
+           #userSearch
+           (keyup)="searchForUsers(userSearch.value)"
+           [(ngModel)]="$users.searchQuery">
+    <i class="fa fa-times clickable" title="Очистить поиск" *ngIf="$users.searchQuery !== ''" (click)="clearSearch()"></i>
+    <i class="fa fa-spin fa-spinner" *ngIf="$users.isInSearchMode() === true && $users.isLoading() === true"></i>
   </div>
-
+  <div class="row" *ngIf="filerDivisionId !== 0">
+    <span class="filter-caption margin-top-5">Фильтры: &nbsp;</span>
+    <div class="filter margin-top-5" *ngIf="filerDivisionId !== 0">
+      <span class="filter-title">{{ filerDivisionId | divisionTitle }}</span>
+      <span><i class="fa fa-times" title="Отменить фильтр" (click)="cancelFilterDivision()"></i></span>
+    </div>
+  </div>
 </div>
-
-
-
-<!--
-<table class="stripped selectable width-100">
-  <thead>
-  <tr>
-    <th class="width-10"></th>
-    <th class="width-30">Имя</th>
-    <th class="width-20">e-mail</th>
-    <th class="width-20">Должность</th>
-    <th class="width-20">Отдел</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let user of $users.getAll()" (click)="selectUser(user)">
-    <td class="width-10"><img src="" alt=""></td>
-    <td class="width-30">{{ user.fio }}</td>
-    <td class="width-20">{{ user.email }}</td>
-    <td class="width-20">{{ user.position }}</td>
-    <td class="width-30">Сектор по сбору посуды</td>
-  </tr>
-  </tbody>
-</table>
-<button class="blue big width-100"
-        *ngIf="showLoadMoreButton()"
-        (click)="loadMore()">
-  Загрузить еще
-</button>
--->
-
 
 
 <div class="row users-header" *ngIf="$users.getAll().length !== 0">
@@ -107,10 +26,11 @@
   <div class="user-fio">Имя и должность</div>
   <div class="user-email">E-mail</div>
   <div class="user-tab">Табельный #</div>
-  <div class="user-division">Место работы</div>
+  <div class="user-division">Место работы &nbsp;<i class="fa fa-filter" (click)="openDivisionsFilterModal()" title="Выбрать структурное подразделение"></i></div>
 </div>
 
-<div class="user" *ngFor="let user of this.$users.getAll()" (click)="selectUser(user)">
+
+<div class="user" *ngFor="let user of this.$users.getAll() | search:filerDivisionId" (click)="selectUser(user)">
   <div class="user-photo">
     <div class="photo"></div>
   </div>
@@ -125,7 +45,7 @@
   </div>
   <div class="user-division">
     <span class="regular" *ngIf="user.divisionId !== 0" title="{{ user.divisionId | divisionTitle }}">{{ user.divisionId | divisionTitle }}</span>
-    <span class="additional">Северные электрические сети</span>
+    <span class="additional" *ngIf="user.divisionId !== 0">{{ user.divisionId | departmentByDivisionId }}</span>
   </div>
 </div>
 <div class="row" *ngIf="showLoadMoreButton()">
@@ -135,7 +55,33 @@
 </div>
 
 
-<div class="row nothing-found margin-top-30 padding-30" *ngIf="$users.isInSearchMode() === true && $users.getAll().length === 0">
+<div class="row nothing-found margin-top-30 padding-30" *ngIf="($users.isInSearchMode() === true && $users.getAll().length === 0) || (filerDivisionId !== 0 && $users.getAll().length === 0)">
   <i class="fa fa-search"></i>&nbsp; Пользователи не найдены
 </div>
 
+
+<modal [id]="'users-list-division-filter'" [footer]="true" [title]="'Выберите структурное подразделение'" [width]="450" [contentHeight]="400" (onOpen)="populateDivisionsTree()">
+  <div class="modal-content">
+    <div class="row padding-10">
+      <tree [id]="'users-list-division-filter-tree'"
+            [expandOnSelect]="true"
+            [collapseOnDeselect]="true"
+            class="inline">
+      </tree>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="$trees.getById('users-list-division-filter-tree').getSelectedItem() === null" (click)="selectFilterDivision()">
+          <i class="fa fa-check"></i>&nbsp;Выбрать
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban"></i>&nbsp;Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>

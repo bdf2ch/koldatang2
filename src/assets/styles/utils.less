@@ -533,10 +533,17 @@ textarea {
     }
   }
 
+
   input {
     flex: auto;
     padding-left: 10px;
     padding-right: 10px;
+  }
+
+  button {
+    .fa {
+      color: white;
+    }
   }
 
   .fa {
@@ -545,7 +552,7 @@ textarea {
     justify-content: center;
     align-items: center;
     width: 20px;
-    height: @ui-input-height;
+    //height: @ui-input-height;
     text-align: center;
     color: gray;
     &.clickable {
@@ -575,6 +582,10 @@ textarea {
 **********/
 
 input[type='button'], input[type='submit'], button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   height: @ui-input-height;
   padding: 10px;
   border: none;

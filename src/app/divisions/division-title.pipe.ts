@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DivisionsService } from './divisions.service';
 
 @Pipe({
-  name: 'divisionTitle'
+  name: 'divisionTitle',
+  pure: false
 })
 export class DivisionTitlePipe implements PipeTransform {
 

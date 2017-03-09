@@ -35,6 +35,26 @@
 
 
     /**
+    * Получает массив пользователей по идентифкатору структурного подразделения
+    * @divisionId {number} - идентификатор структурного подразделения
+    **/
+    function getUsersByDivisionId ($parameters) {
+        global $link;
+        $divisionId = $parameters -> divisionId;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT get_users_by_division_id($1)",
+            array($divisionId)
+        );
+
+        $users = pg_fetch_result($result, 0, 0);
+        echo is_null($users) ? json_encode(NULL) : $users;
+        return true;
+    }
+
+
+    /**
     *
     **/
     function getUserById ($parameters) {

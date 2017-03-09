@@ -82,9 +82,14 @@ export class DivisionsService {
   };
 
 
+  /**
+   * Возвращает выбранное структурное подраздедление
+   * @returns {Division|null}
+   */
   getSelected(): Division|null {
     return this.selected;
   };
+
 
   /**
    * Добавляет структурное подразделение

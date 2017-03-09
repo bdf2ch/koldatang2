@@ -107,6 +107,7 @@ export class User extends Model {
         this.isAdministrator = config.is_administrator;
     }
     this.fio = this.surname + " " + this.name + " " + this.fname;
+    this.search = this.search.toLowerCase();
   };
 
 

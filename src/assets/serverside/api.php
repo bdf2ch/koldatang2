@@ -16,6 +16,7 @@
 
         case "getAllUsers": getAllUsers(); break;
         case "getUsersPortion": getUsersPortion($params -> data); break;
+        case "getUsersByDivisionId": getUsersByDivisionId($params -> data); break;
         case "getUserById": getUserById($params -> data); break;
         case "searchUsers": searchUsers($params -> data); break;
         case "addUser": addUser($params -> data); break;

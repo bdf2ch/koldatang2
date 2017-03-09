@@ -4,6 +4,7 @@ import { User, UserConfig } from '../models/User.model';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/operator/take';
 
 export const apiUrl = "/assets/serverside/api.php";
 
@@ -49,6 +50,7 @@ export class UsersService {
     let params = { action: "getAllUsers" };
     let users = this.users;
     this.inSearchMode = false;
+    this.loading = true;
     return this.http.post(apiUrl, params, options)
       .map(function (res: Response) {
         let body = res.json();
@@ -61,6 +63,7 @@ export class UsersService {
         }
         return result;
       })
+      .take(1)
       .catch(this.handleError);
   };
 
@@ -74,6 +77,7 @@ export class UsersService {
     let options = new RequestOptions({ headers: headers });
     let params = { action: "getUsersPortion", data: { start: this.start, limit: this.limit } };
     this.inSearchMode = false;
+    this.loading = true;
 
     return this.http.post(apiUrl, params, options)
       .map((res: Response) => {
@@ -90,7 +94,9 @@ export class UsersService {
         }
         console.log(this.users);
         console.log("total = ", this.total);
+        this.loading = false;
       })
+      .take(1)
       .catch(this.handleError);
   };
 
@@ -115,23 +121,22 @@ export class UsersService {
         } else
           return null;
       })
+      .take(1)
       .catch(this.handleError);
   };
 
 
   /**
-   * Запрашивает пользователей с сервера в соответствии сусловиями поиска
-   * @returns {Observable<User>}
+   * Запрашивает пользователей с сервера по идентификатору структурного подразделения
+   * @param id {number} - идентификатор структурного подразделения
+   * @returns {Observable<R>}
    */
-  search(): Observable<User[]> | null {
+  fetchByDivisionId(id: number): Observable<User[]|null> {
     let headers = new Headers({ "Content-Type": "application/json" });
-    let options = new RequestOptions({ headers: headers });
-    let params = { action: "searchUsers", data: { search: this.searchQuery } };
-    this.inSearchMode = true;
-    this.loading = true;
-
-    return this.http.post(apiUrl, params, options)
-      .map((res: Response | null) => {
+    let options = new RequestOptions({ headers: headers })
+    let parameters = {action: "getUsersByDivisionId", data: { divisionId: id } };
+    return this.http.post(apiUrl, parameters, options)
+      .map((res: Response) => {
         if (res instanceof Response) {
           let body = res.json();
           let length = body.length;
@@ -148,7 +153,42 @@ export class UsersService {
           return null;
         }
       })
+      .take(1)
       .catch(this.handleError);
+  };
+
+
+  /**
+   * Запрашивает пользователей с сервера в соответствии сусловиями поиска
+   * @returns {Observable<User>}
+   */
+  search(): Observable<User[]> | null {
+      let headers = new Headers({ "Content-Type": "application/json" });
+      let options = new RequestOptions({ headers: headers });
+      let params = { action: "searchUsers", data: { search: this.searchQuery } };
+      this.inSearchMode = true;
+      this.loading = true;
+
+      return this.http.post(apiUrl, params, options)
+        .map((res: Response|null) => {
+          if (res instanceof Response) {
+            let body = res.json();
+            let length = body.length;
+            this.users.splice(0, this.users.length);
+            for (let i = 0; i < length; i++) {
+              let user = new User(body[i]);
+              user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
+              this.users.push(user);
+              this.start = 0;
+              this.loading = false;
+            }
+          } else {
+            this.loading = false;
+            return null;
+          }
+        })
+        .take(1)
+        .catch(this.handleError);
   };
 
 
@@ -255,6 +295,7 @@ export class UsersService {
         this.loading = false;
         return user;
       })
+      .take(1)
       .catch(this.handleError);
   };
 
@@ -268,7 +309,9 @@ export class UsersService {
   };
 
 
-  isLoading() : boolean {
+  isLoading(flag?: boolean) : boolean {
+    if (flag !== undefined)
+      this.loading = flag;
     return this.loading;
   } ;
 

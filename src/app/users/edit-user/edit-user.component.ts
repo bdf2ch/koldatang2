@@ -68,11 +68,19 @@ export class EditUserComponent implements OnInit {
 
 
   submit(): void {
-    //console.log("form submit");
+    console.log("form submit");
     //this.user.changed(false);
     //this.$modals.close();
     this.$users.edit(this.user).subscribe((user: User) => {
-
+      this.form.reset({
+        name: this.user.name,
+        fname: this.user.fname,
+        surname: this.user.surname,
+        email: this.user.email,
+        position: this.user.position,
+        tab_id: this.user.tabId,
+        active_directory_account: this.user.activeDirectoryAccount
+      });
     });
   };
 
@@ -96,21 +104,22 @@ export class EditUserComponent implements OnInit {
   };
 
 
-  openSelectDivisionModal (form: any) {
+  openSelectDivisionModal(form: any): void {
     this.form = form;
     this.$modals.open('edit-user-division');
   };
 
 
-  closeSelectDivisionModal () {
-    this.form.form.controls.division.markAsPristine();
-    this.user.divisionId = 0;
+  closeSelectDivisionModal(): void {
+    this.form.form.controls.surname.markAsPristine();
+    this.user.restoreBackup(['divisionId']);
     this.$trees.getById('edit-user-divisions-tree').deselectItem();
   };
 
 
-  selectDivision () {
-    this.form.form.controls.division.markAsDirty();
+  selectDivision(): void {
+    console.log(this.$trees.getById('edit-user-divisions-tree').getSelectedItem());
+    this.form.form.controls.surname.markAsDirty();
     this.user.divisionId = this.$divisions.getById(parseInt(this.$trees.getById('edit-user-divisions-tree').getSelectedItem().key)).id;
     this.user.changed(true);
     this.$modals.close(true);
@@ -155,6 +164,7 @@ export class EditUserComponent implements OnInit {
 
 
   cancelChanges(): void {
+    console.log(this.form);
     this.cancel(this.form);
     this.$modals.close(true);
   };
