@@ -132,7 +132,7 @@ body {
   overflow: hidden;
   height: 50px;
   box-sizing: border-box;
-  background: white;
+  background: #7986CB;
   border-bottom: 1px solid #E0E0E0;
 }
 #app-content-header .app-content-title {
@@ -148,10 +148,10 @@ body {
   border-bottom: 4px solid transparent;
 }
 #app-content-header .app-content-title:hover {
-  color: black;
+  color: lightgrey;
 }
 #app-content-header .app-content-title.active {
-  color: black;
+  color: white;
 }
 #app-content-header .app-content-title-divider {
   float: left;
@@ -172,19 +172,19 @@ body {
 }
 #app-content-header #app-content-controls a {
   padding: 10px;
-  color: #BDBDBD !important;
+  color: white !important;
 }
 #app-content-header #app-content-controls a:hover {
-  color: #757575 !important;
+  color: #B2EBF2 !important;
 }
 #app-content-header #app-content-controls .action-link {
   padding-left: 5px;
   padding-right: 5px;
-  color: #BDBDBD;
+  color: white;
   cursor: pointer;
 }
 #app-content-header #app-content-controls .action-link:hover {
-  color: #757575;
+  color: #B2EBF2;
 }
 #app-content-content {
   position: absolute;
@@ -192,7 +192,7 @@ body {
   top: 50px;
   right: 0px;
   bottom: 0px;
-  overflow: auto;
+  overflow: hidden;
 }
 .panel {
   position: relative;

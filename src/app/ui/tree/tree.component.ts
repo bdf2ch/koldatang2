@@ -46,6 +46,7 @@ export class TreeComponent implements OnInit {
     else {
       this.stack = tree.stack;
       this.root = tree.root;
+      this.selected = tree.selected;
     }
     this.onInit.emit(this);
   };
@@ -148,6 +149,7 @@ export class TreeComponent implements OnInit {
       } else
         this.stack[i].isSelected = false;
     }
+    console.log("selected = ", this.selected);
     this.onSelect.emit(this.selected);
   };
 

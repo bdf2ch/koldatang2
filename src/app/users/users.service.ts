@@ -159,36 +159,35 @@ export class UsersService {
 
 
   /**
-   * Запрашивает пользователей с сервера в соответствии сусловиями поиска
+   * Запрашивает пользователей с сервера в соответствии с условиями поиска
    * @returns {Observable<User>}
    */
   search(): Observable<User[]> | null {
-      let headers = new Headers({ "Content-Type": "application/json" });
-      let options = new RequestOptions({ headers: headers });
-      let params = { action: "searchUsers", data: { search: this.searchQuery } };
-      this.inSearchMode = true;
-      this.loading = true;
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "searchUsers", data: { search: this.searchQuery } };
+    this.inSearchMode = true;
+    this.loading = true;
 
-      return this.http.post(apiUrl, params, options)
-        .map((res: Response|null) => {
-          if (res instanceof Response) {
-            let body = res.json();
-            let length = body.length;
-            this.users.splice(0, this.users.length);
-            for (let i = 0; i < length; i++) {
-              let user = new User(body[i]);
-              user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
-              this.users.push(user);
-              this.start = 0;
-              this.loading = false;
-            }
-          } else {
+    return this.http.post(apiUrl, params, options)
+      .map((res: Response) => {
+        this.loading = false;
+        let body = res.json();
+        if (body !== null) {
+          let length = body.length;
+          this.users.splice(0, this.users.length);
+          for (let i = 0; i < length; i++) {
+            let user = new User(body[i]);
+            user.setupBackup(["tabId", "divisionId", "surname", "name", "fname", "position", "email", "activeDirectoryAccount", "fio", "isAdministrator"]);
+            this.users.push(user);
+            this.start = 0;
             this.loading = false;
-            return null;
           }
-        })
-        .take(1)
-        .catch(this.handleError);
+        } else
+          return null;
+      })
+      .take(1)
+      .catch(this.handleError);
   };
 
 

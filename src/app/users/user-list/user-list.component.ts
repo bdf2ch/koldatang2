@@ -51,7 +51,7 @@ export class UserListComponent implements OnInit {
 
 
   showLoadMoreButton(): boolean {
-    return this.$users.isInSearchMode() === false && this.filerDivisionId === 0 && this.$users.isLoading() === false && this.$users.getAll().length < this.$users.getTotal() ? true : false;
+    return this.$users.isInSearchMode() === false && this.filerDivisionId === 0 && this.$users.getAll().length < this.$users.getTotal() && this.$users.isLoading() === false ? true : false;
   };
 
 

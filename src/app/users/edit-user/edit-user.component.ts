@@ -111,18 +111,21 @@ export class EditUserComponent implements OnInit {
 
 
   closeSelectDivisionModal(): void {
+    console.log("close modal callback");
     this.form.form.controls.surname.markAsPristine();
     this.user.restoreBackup(['divisionId']);
     this.$trees.getById('edit-user-divisions-tree').deselectItem();
   };
 
 
-  selectDivision(): void {
-    console.log(this.$trees.getById('edit-user-divisions-tree').getSelectedItem());
+  selectDivision(item: any): void {
+    console.log("select division event", item);
+    console.log("select division selected item", this.$trees.getById('edit-user-divisions-tree').getSelectedItem());
     this.form.form.controls.surname.markAsDirty();
-    this.user.divisionId = this.$divisions.getById(parseInt(this.$trees.getById('edit-user-divisions-tree').getSelectedItem().key)).id;
     this.user.changed(true);
-    this.$modals.close(true);
+    if (item !== null)
+      this.user.divisionId = parseInt(item.key);
+    //this.$modals.close(true);
   };
 
 
@@ -151,14 +154,11 @@ export class EditUserComponent implements OnInit {
 
 
   closeConfirmChangesModal(): void {
-    this.$modals.setAsyncResult('edit-user-confirm-changes', false);
+
   };
 
 
   confirmChanges(): void {
-    //console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
-    //this.$modals.setAsyncResult('edit-user-confirm-changes', true);
-    //console.log(this.$modals.getAsyncResult('edit-user-confirm-changes'));
     this.submit();
   };
 

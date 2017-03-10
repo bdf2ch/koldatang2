@@ -1,31 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {ModalService} from "../ui/modal/modal.service";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-phonebook',
-  templateUrl: './phonebook.component.html',
-  styleUrls: ['./phonebook.component.css']
+  template: "<router-outlet></router-outlet>"
 })
-export class PhonebookComponent implements OnInit {
-
-  constructor(private modals: ModalService) { }
-
-  ngOnInit() {
-  }
-
-  onModalOpen() {
-    console.log("modal opened");
-  };
-
-  openModal() {
-    this.modals.open("test");
-  };
-
-  closeModal() {
-    this.modals.close();
-  };
-
-  onModalClose() {
-    console.log("modal closed");
-  };
-}
+export class PhonebookComponent {};

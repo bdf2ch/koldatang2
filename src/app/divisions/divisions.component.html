@@ -1,128 +1,130 @@
-<div class="panel no-sidebar">
+<div class="row padding-20">
+  <div class="panel no-sidebar">
 
-
-  <div class="panel-content">
-    <div class="content padding-10">
-      <tree [id]="'divisions'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onSelect)="selectDivision($event)"></tree>
+    <div class="panel-content">
+      <div class="content padding-10">
+        <tree [id]="'divisions'" [expandOnSelect]="true" [collapseOnDeselect]="true" (onSelect)="selectDivision($event)"></tree>
+      </div>
     </div>
   </div>
+
+
+  <modal [id]="'add-division'" [footer]="true" [title]="'Новое структурное подразделение'" [width]="450" (onClose)="closeAddDivisionModal(new_division_form)">
+    <div class="modal-content">
+      <div class="row">
+        <form action="" #new_division_form="ngForm">
+          <div class="row padding-10">
+            <label for="new-division-title" class="width-100">Наименование</label>
+            <input type="text"
+                   name="title"
+                   class="width-100"
+                   id="new-division-title"
+                   placeholder="Введите наименование"
+                   required
+                   #title="ngModel"
+                   [(ngModel)]="newDivision.title">
+            <div class="form-error"
+                 *ngIf="title.invalid && title.dirty">
+              Вы не указали наименование структурного подразделения
+            </div>
+          </div>
+
+          <div class="row padding-10">
+            <label for="new-division-parent" class="width-100">Структурное подразделение верхнего уровня</label>
+            <input type="text"
+                   name="parent"
+                   id="new-division-parent"
+                   class="width-100"
+                   placeholder="Выберите родителя"
+                   disabled
+                   [value]="newDivision.parentId | divisionTitle">
+          </div>
+
+          <div class="row padding-10">
+            <label for="new-division-is-department" class="width-100">
+              Структурное подразделение является филиалом
+              <input type="checkbox"
+                     name="isDepartment"
+                     id="new-division-is-department"
+                     class="right"
+                     [(ngModel)]="newDivision.isDepartment">
+            </label>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <div class="row padding-10">
+        <button class="green width-50" [disabled]="new_division_form.invalid" (click)="addDivision()">
+          <i class="fa fa-save"></i>&nbsp;
+          Сохранить
+        </button>
+        <button class="red width-50" (click)="$modals.close();">
+          <i class="fa fa-ban"></i>&nbsp;
+          Отмена
+        </button>
+      </div>
+    </div>
+  </modal>
+
+
+  <modal [id]="'edit-division'" [footer]="true" [title]="$divisions.getSelected()._backupData.title" [width]="450" *ngIf="$divisions.getSelected() !== null" (onClose)="closeEditDivisionModal(edit_division_form)">
+    <div class="modal-content">
+      <div class="row">
+        <form #edit_division_form="ngForm">
+          <div class="row padding-10">
+            <label for="edit-division-title" class="width-100">Наименование</label>
+            <input type="text"
+                   name="title"
+                   class="width-100"
+                   id="edit-division-title"
+                   placeholder="Введите наименование"
+                   required
+                   #title="ngModel"
+                   [(ngModel)]="$divisions.getSelected().title">
+            <div class="form-error"
+                 *ngIf="title.invalid && title.dirty">
+              Вы не указали наименование структурного подразделения
+            </div>
+          </div>
+
+          <div class="row padding-10">
+            <label for="edit-division-parent" class="width-100">Структурное подразделение верхнего уровня</label>
+            <input type="text"
+                   name="parent"
+                   id="edit-division-parent"
+                   class="width-100"
+                   placeholder="Выберите родителя"
+                   disabled
+                   [value]="$divisions.getSelected().parentId | divisionTitle">
+          </div>
+
+          <div class="row padding-10">
+            <label for="edit-division-is-department" class="width-100">
+              Структурное подразделение является филиалом
+              <input type="checkbox"
+                     name="isDepartment"
+                     id="edit-division-is-department"
+                     class="right"
+                     [(ngModel)]="$divisions.getSelected().isDepartment">
+            </label>
+          </div>
+
+          <div class="row padding-10">
+            <button class="green width-50" [disabled]="edit_division_form.invalid || edit_division_form.pristine" (click)="editDivision()">
+              <i class="fa fa-save"></i>&nbsp;
+              Сохранить
+            </button>
+            <button class="red width-50" (click)="$modals.close()">
+              <i class="fa fa-ban"></i>&nbsp;
+              Отмена
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </modal>
+
 </div>
-
-
-<modal [id]="'add-division'" [footer]="true" [title]="'Новое структурное подразделение'" [width]="450" (onClose)="closeAddDivisionModal(new_division_form)">
-  <div class="modal-content">
-    <div class="row">
-      <form action="" #new_division_form="ngForm">
-        <div class="row padding-10">
-          <label for="new-division-title" class="width-100">Наименование</label>
-          <input type="text"
-                 name="title"
-                 class="width-100"
-                 id="new-division-title"
-                 placeholder="Введите наименование"
-                 required
-                 #title="ngModel"
-                 [(ngModel)]="newDivision.title">
-          <div class="form-error"
-               *ngIf="title.invalid && title.dirty">
-            Вы не указали наименование структурного подразделения
-          </div>
-        </div>
-
-        <div class="row padding-10">
-          <label for="new-division-parent" class="width-100">Структурное подразделение верхнего уровня</label>
-          <input type="text"
-                 name="parent"
-                 id="new-division-parent"
-                 class="width-100"
-                 placeholder="Выберите родителя"
-                 disabled
-                 [value]="newDivision.parentId | divisionTitle">
-        </div>
-
-        <div class="row padding-10">
-          <label for="new-division-is-department" class="width-100">
-            Структурное подразделение является филиалом
-            <input type="checkbox"
-                   name="isDepartment"
-                   id="new-division-is-department"
-                   class="right"
-                   [(ngModel)]="newDivision.isDepartment">
-          </label>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <div class="row padding-10">
-      <button class="green width-50" [disabled]="new_division_form.invalid" (click)="addDivision()">
-        <i class="fa fa-save"></i>&nbsp;
-        Сохранить
-      </button>
-      <button class="red width-50" (click)="$modals.close();">
-        <i class="fa fa-ban"></i>&nbsp;
-        Отмена
-      </button>
-    </div>
-  </div>
-</modal>
-
-
-<modal [id]="'edit-division'" [footer]="true" [title]="$divisions.getSelected()._backupData.title" [width]="450" *ngIf="$divisions.getSelected() !== null" (onClose)="closeEditDivisionModal(edit_division_form)">
-  <div class="modal-content">
-    <div class="row">
-      <form #edit_division_form="ngForm">
-        <div class="row padding-10">
-          <label for="edit-division-title" class="width-100">Наименование</label>
-          <input type="text"
-                 name="title"
-                 class="width-100"
-                 id="edit-division-title"
-                 placeholder="Введите наименование"
-                 required
-                 #title="ngModel"
-                 [(ngModel)]="$divisions.getSelected().title">
-          <div class="form-error"
-               *ngIf="title.invalid && title.dirty">
-            Вы не указали наименование структурного подразделения
-          </div>
-        </div>
-
-        <div class="row padding-10">
-          <label for="edit-division-parent" class="width-100">Структурное подразделение верхнего уровня</label>
-          <input type="text"
-                 name="parent"
-                 id="edit-division-parent"
-                 class="width-100"
-                 placeholder="Выберите родителя"
-                 disabled
-                 [value]="$divisions.getSelected().parentId | divisionTitle">
-        </div>
-
-        <div class="row padding-10">
-          <label for="edit-division-is-department" class="width-100">
-            Структурное подразделение является филиалом
-            <input type="checkbox"
-                   name="isDepartment"
-                   id="edit-division-is-department"
-                   class="right"
-                   [(ngModel)]="$divisions.getSelected().isDepartment">
-          </label>
-        </div>
-
-        <div class="row padding-10">
-          <button class="green width-50" [disabled]="edit_division_form.invalid || edit_division_form.pristine" (click)="editDivision()">
-            <i class="fa fa-save"></i>&nbsp;
-            Сохранить
-          </button>
-          <button class="red width-50" (click)="$modals.close()">
-            <i class="fa fa-ban"></i>&nbsp;
-            Отмена
-          </button>
-        </div>
-
-      </form>
-    </div>
-  </div>
-</modal>

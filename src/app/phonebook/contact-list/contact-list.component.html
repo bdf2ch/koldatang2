@@ -1,0 +1,119 @@
+<div class="row">
+  <div id="divisions" class="padding-top-20">
+    <tree [id]="'contacts-list-division-tree'"
+          [expandOnSelect]="true"
+          [collapseOnDeselect]="true"
+          (onSelect)="selectDivision($event)"
+          class="inline">
+    </tree>
+  </div>
+
+  <div id="contacts" class="padding-20">
+
+    <div class="margin-bottom-30">
+      <div class="input-with-controls dark">
+        <i class="fa fa-search"></i>
+        <input type="text"
+               name="search" id="contacts-search-query"
+               class="big"
+               placeholder="Введите имя или телефон абонента"
+               #contactsSearch
+               (keyup)="searchForContacts(contactsSearch.value)"
+               [(ngModel)]="$contacts.searchQuery">
+        <i class="fa fa-times clickable" title="Очистить поиск" *ngIf="$contacts.searchQuery !== ''" (click)="clearSearch()"></i>
+        <i class="fa fa-spin fa-spinner" *ngIf="$contacts.isInSearchMode() === true && $contacts.isLoading() === true"></i>
+      </div>
+      <div class="row" *ngIf="filterDivisionId !== 0">
+        <span class="filter-caption margin-top-5">Фильтры: &nbsp;</span>
+        <div class="filter margin-top-5" *ngIf="filterDivisionId !== 0">
+          <span class="filter-title">{{ filterDivisionId | divisionTitle }}</span>
+          <span><i class="fa fa-times" title="Отменить фильтр" (click)="cancelFilterDivision()"></i></span>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row contacts-header" *ngIf="$contacts.getAll().length !== 0">
+      <div class="contact-photo"></div>
+      <div class="contact-fio">Имя и должность</div>
+      <div class="contact-email">E-mail</div>
+      <div class="contact-phones">Контактные телефоны</div>
+    </div>
+
+
+    <div class="contact" *ngFor="let contact of $contacts.getAll() | searchContacts:filterDivisionId" (click)="selectContact(contact)">
+      <div class="contact-photo">
+        <div class="photo"></div>
+      </div>
+      <div class="contact-fio">
+        <span class="leading">{{ contact.fio }}</span>
+        <span class="additional">{{ contact.position }}</span>
+      </div>
+      <div class="contact-fio">
+        <span class="regular">
+          <span *ngIf="contact.email !== ''">{{ contact.email }}</span>
+          <span class="empty-value" *ngIf="contact.email === ''">E-mail не указан</span>
+        </span>
+      </div>
+      <div class="contact-phones">
+        <span class="regular">
+          <span class="empty-value" *ngIf="contact.phones.length === 0">Телефон не указан</span>
+          <span *ngIf="contact.phones.length > 0">{{ contact.phones.join(', ') }}</span>
+        </span>
+        <span class="additional">
+          <span class="empty-value" *ngIf="contact.mobile === ''">Мобильный не указан</span>
+          <span *ngIf="contact.mobile !== ''">{{ contact.mobile }}</span>
+        </span>
+      </div>
+      <!--
+      <div class="contact-division">
+        <span class="regular" title="{{ contact.divisionId | divisionTitle }}">{{ contact.divisionId | divisionTitle }}</span>
+        <span class="additional" *ngIf="contact.divisionId !== 0">{{ contact.divisionId | departmentByDivisionId }}</span>
+      </div>
+      -->
+    </div>
+
+
+    <div class="row nothing-found margin-top-30 padding-30" *ngIf="($contacts.isInSearchMode() === true && $contacts.getAll().length === 0) || (filterDivisionId !== 0 && $contacts.getAll().length === 0)">
+      <i class="fa fa-search"></i>&nbsp; Абоненты не найдены
+    </div>
+
+    <div class="row nothing-found margin-top-30 padding-30" *ngIf="$contacts.isInSearchMode() === false && filterDivisionId === 0">
+      <i class="fa fa-building"></i>&nbsp; Выберите структурное подразделение
+    </div>
+  </div>
+
+</div>
+
+
+
+
+
+<!--
+<modal [id]="'contacts-list-division-filter'" [footer]="true" [title]="'Выберите структурное подразделение'" [width]="450" [contentHeight]="400" (onOpen)="populateDivisionsTree()">
+  <div class="modal-content">
+    <div class="row padding-10">
+      <tree [id]="'contacts-list-division-filter-tree'"
+            [expandOnSelect]="true"
+            [collapseOnDeselect]="true"
+            class="inline">
+      </tree>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="$trees.getById('contacts-list-division-filter-tree').getSelectedItem() === null" (click)="selectFilterDivision()">
+          <i class="fa fa-check"></i>&nbsp;Выбрать
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban"></i>&nbsp;Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>
+-->
+

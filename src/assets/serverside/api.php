@@ -4,6 +4,7 @@
     require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."config.php";
     require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."users.php";
     require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."divisions.php";
+    require_once $_SERVER["DOCUMENT_ROOT"].$DS."assets".$DS."serverside".$DS."contacts.php";
     $params = json_decode(file_get_contents("php://input"));
 
 
@@ -25,6 +26,9 @@
         case "getAllDivisions": getAllDivisions(); break;
         case "addDivision": addDivision($params -> data); break;
         case "editDivision": editDivision($params -> data); break;
+
+        case "getContactsByDivisionId": getContactsByDivisionId($params -> data); break;
+        case "searchContacts": searchContacts($params -> data); break;
     }
     pg_close($link);
 

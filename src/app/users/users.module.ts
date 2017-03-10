@@ -30,11 +30,12 @@ import { SearchPipe } from './search.pipe';
     EditUserComponent,
     ByUserNamePipe,
     DepartmentByDivisionIdPipe,
-    DepartmentByDivisionIdPipe,
-    DepartmentByDivisionIdPipe,
     SearchPipe,
     SearchPipe,
     SearchPipe
+  ],
+  exports: [
+    DepartmentByDivisionIdPipe
   ],
   providers: [
     UsersService,

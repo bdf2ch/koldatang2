@@ -1,241 +1,245 @@
-<div *ngIf="userNotFound === false">
-  <div class="panel">
+<div class="row padding-20">
+  <div *ngIf="userNotFound === false">
+    <div class="panel">
 
-    <div class="panel-sidebar">
-      <div class="row padding-10">
-        <div class="row margin-bottom-10">
-          <img src="../../../assets/images/no_photo.png" class="width-100" alt="">
+      <div class="panel-sidebar">
+        <div class="row padding-10">
+          <div class="row margin-bottom-10">
+            <img src="../../../assets/images/no_photo.png" class="width-100" alt="">
+          </div>
+          <div class="row">
+            <button class="blue width-100">
+              <i class="fa fa-upload"></i>&nbsp;
+              Загрузить фото
+            </button>
+          </div>
         </div>
-        <div class="row">
-          <button class="blue width-100">
-            <i class="fa fa-upload"></i>&nbsp;
-            Загрузить фото
-          </button>
-        </div>
+
+
       </div>
 
+      <div class="panel-content">
 
-    </div>
+        <div class="content padding-20">
 
-    <div class="panel-content">
-
-      <div class="content padding-20">
-
-        <form (ngSubmit)="submit()" #edit_user_form="ngForm" novalidate>
+          <form (ngSubmit)="submit()" #edit_user_form="ngForm" novalidate>
 
 
-          <!-- Личные данные пользователя -->
-          <div class="row margin-bottom-30">
-            <div class="title margin-bottom-20">Личные данные</div>
-            <div class="row margin-bottom-20">
-              <label for="selected-user-name" class="width-100">Имя пользователя</label>
-              <input type="text"
-                     name="name"
-                     id="selected-user-name"
-                     class="width-100 dark"
-                     placeholder="Введите имя пользователя"
-                     required
-                     #name="ngModel"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.name">
-              <div class="form-error"
-                   *ngIf="name.invalid && name.dirty">
-                Вы не указали имя пользователя
+            <!-- Личные данные пользователя -->
+            <div class="row margin-bottom-30">
+              <div class="title margin-bottom-20">Личные данные</div>
+              <div class="row margin-bottom-20">
+                <label for="selected-user-name" class="width-100">Имя пользователя</label>
+                <input type="text"
+                       name="name"
+                       id="selected-user-name"
+                       class="width-100 dark"
+                       placeholder="Введите имя пользователя"
+                       required
+                       #name="ngModel"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.name">
+                <div class="form-error"
+                     *ngIf="name.invalid && name.dirty">
+                  Вы не указали имя пользователя
+                </div>
+              </div>
+
+              <div class="row margin-bottom-20">
+                <label for="selected-user-fname" class="width-100">Отчество пользователя</label>
+                <input type="text"
+                       name="fname"
+                       id="selected-user-fname"
+                       class="width-100 dark"
+                       placeholder="Введите отчество пользователя"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.fname">
+              </div>
+
+              <div class="row margin-bottom-20">
+                <label for="selected-user-surname" class="width-100">Фамилия пользователя</label>
+                <input type="text" name="surname"
+                       id="selected-user-surname"
+                       class="width-100 dark"
+                       placeholder="Введите фамилию пользователя"
+                       required
+                       #surname="ngModel"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.surname">
+                <div class="form-error"
+                     *ngIf="surname.invalid && surname.dirty">
+                  Вы не указали фамилию пользователя
+                </div>
               </div>
             </div>
 
-            <div class="row margin-bottom-20">
-              <label for="selected-user-fname" class="width-100">Отчество пользователя</label>
-              <input type="text"
-                     name="fname"
-                     id="selected-user-fname"
-                     class="width-100 dark"
-                     placeholder="Введите отчество пользователя"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.fname">
-            </div>
 
-            <div class="row margin-bottom-20">
-              <label for="selected-user-surname" class="width-100">Фамилия пользователя</label>
-              <input type="text" name="surname"
-                     id="selected-user-surname"
-                     class="width-100 dark"
-                     placeholder="Введите фамилию пользователя"
-                     required
-                     #surname="ngModel"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.surname">
-              <div class="form-error"
-                   *ngIf="surname.invalid && surname.dirty">
-                Вы не указали фамилию пользователя
+            <!-- Контактные данные пользователя -->
+            <div class="row margin-bottom-30">
+              <div class="title margin-bottom-20">Контактные данные</div>
+              <div class="row margin-bottom-20">
+                <label for="selected-user-email" class="width-100">E-mail пользователя</label>
+                <input type="text"
+                       name="email"
+                       id="selected-user-email"
+                       class="width-100 dark"
+                       placeholder="Введите e-mail пользователя"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.email">
               </div>
             </div>
-          </div>
 
 
-          <!-- Контактные данные пользователя -->
-          <div class="row margin-bottom-30">
-            <div class="title margin-bottom-20">Контактные данные</div>
-            <div class="row margin-bottom-20">
-              <label for="selected-user-email" class="width-100">E-mail пользователя</label>
-              <input type="text"
-                     name="email"
-                     id="selected-user-email"
-                     class="width-100 dark"
-                     placeholder="Введите e-mail пользователя"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.email">
-            </div>
-          </div>
+            <!-- Место работв и должность пользователя -->
+            <div class="row margin-bottom-30">
+              <div class="title margin-bottom-20">Место работы и должность</div>
+              <div class="row margin-bottom-20">
+                <label for="selected-user-division" class="width-100">Структурное подразделение</label>
 
 
-          <!-- Место работв и должность пользователя -->
-          <div class="row margin-bottom-30">
-            <div class="title margin-bottom-20">Место работы и должность</div>
-            <div class="row margin-bottom-20">
-              <label for="selected-user-division" class="width-100">Структурное подразделение</label>
+                <div class="input-with-controls dark">
+                  <input type="text"
+                         name="division"
+                         id="selected-user-division"
+                         placeholder="Выберите структурное подразделение"
+                         disabled
+                         [value]="user.divisionId | divisionTitle">
+                  <button type="button" class="blue appended" (click)="openSelectDivisionModal(edit_user_form)"><i class="fa fa-building"></i></button>
+                </div>
 
-
-              <div class="input-with-controls dark">
+                <!--
+                <button class="blue append" (click)="openSelectDivisionModal(edit_user_form)">
+                  <i class="fa fa-building"></i>
+                </button>
                 <input type="text"
                        name="division"
                        id="selected-user-division"
+                       class="dark append"
                        placeholder="Выберите структурное подразделение"
                        disabled
                        [value]="user.divisionId | divisionTitle">
-                <button type="button" class="blue appended" (click)="openSelectDivisionModal(edit_user_form)"><i class="fa fa-building"></i></button>
+                       -->
               </div>
 
-              <!--
-              <button class="blue append" (click)="openSelectDivisionModal(edit_user_form)">
-                <i class="fa fa-building"></i>
+              <div class="row margin-bottom-20">
+                <label for="selected-user-position" class="width-100">Должность пользователя</label>
+                <input type="text"
+                       name="position"
+                       id="selected-user-position"
+                       class="width-100 dark"
+                       placeholder="Введите должность пользователя"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.position"
+                       #position="ngModel">
+              </div>
+            </div>
+
+
+            <!-- Прочее -->
+            <div class="row margin-bottom-30">
+              <div class="title margin-bottom-20">Прочее</div>
+              <div class="row margin-bottom-20">
+                <label for="selected-user-tab-id" class="width-100">Табельный номер пользователя</label>
+                <input type="text"
+                       name="tab_id"
+                       id="selected-user-tab-id"
+                       class="width-100 dark"
+                       placeholder="Введите табельный номер пользователя"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.tabId">
+              </div>
+
+              <div class="row margin-bottom-20">
+                <label for="selected-user-active-directory-account" class="width-100">Учетная запись в Active Directory</label>
+                <input type="text"
+                       name="active_directory_account"
+                       id="selected-user-active-directory-account"
+                       class="width-100 dark"
+                       placeholder="Введите учетную запись в AD"
+                       (change)="user.changed(true)"
+                       [(ngModel)]="user.activeDirectoryAccount">
+              </div>
+            </div>
+
+
+            <div class="row">
+              <button type="button"
+                      class="red right"
+                      [disabled]="!edit_user_form.form.dirty"
+                      (click)="cancel(edit_user_form)">
+                <i class="fa fa-ban"></i>&nbsp;Отмена
               </button>
-              <input type="text"
-                     name="division"
-                     id="selected-user-division"
-                     class="dark append"
-                     placeholder="Выберите структурное подразделение"
-                     disabled
-                     [value]="user.divisionId | divisionTitle">
-                     -->
+              <button type="submit"
+                      class="green right margin-right-10"
+                      [disabled]="!edit_user_form.form.valid || !edit_user_form.form.dirty">
+                <i class="fa fa-save"></i>&nbsp;Сохранить изменения
+              </button>
             </div>
 
-            <div class="row margin-bottom-20">
-              <label for="selected-user-position" class="width-100">Должность пользователя</label>
-              <input type="text"
-                     name="position"
-                     id="selected-user-position"
-                     class="width-100 dark"
-                     placeholder="Введите должность пользователя"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.position"
-                     #position="ngModel">
-            </div>
-          </div>
-
-
-          <!-- Прочее -->
-          <div class="row margin-bottom-30">
-            <div class="title margin-bottom-20">Прочее</div>
-            <div class="row margin-bottom-20">
-              <label for="selected-user-tab-id" class="width-100">Табельный номер пользователя</label>
-              <input type="text"
-                     name="tab_id"
-                     id="selected-user-tab-id"
-                     class="width-100 dark"
-                     placeholder="Введите табельный номер пользователя"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.tabId">
-            </div>
-
-            <div class="row margin-bottom-20">
-              <label for="selected-user-active-directory-account" class="width-100">Учетная запись в Active Directory</label>
-              <input type="text"
-                     name="active_directory_account"
-                     id="selected-user-active-directory-account"
-                     class="width-100 dark"
-                     placeholder="Введите учетную запись в AD"
-                     (change)="user.changed(true)"
-                     [(ngModel)]="user.activeDirectoryAccount">
-            </div>
-          </div>
-
-
-          <div class="row">
-            <button type="button"
-                    class="red right"
-                    [disabled]="!edit_user_form.form.dirty"
-                    (click)="cancel(edit_user_form)">
-              <i class="fa fa-ban"></i>&nbsp;Отмена
-            </button>
-            <button type="submit"
-                    class="green right margin-right-10"
-                    [disabled]="!edit_user_form.form.valid || !edit_user_form.form.dirty">
-              <i class="fa fa-save"></i>&nbsp;Сохранить изменения
-            </button>
-          </div>
-
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<div class="nothing-found padding-30" *ngIf="userNotFound === true">
-  <i class="fa fa-exclamation-circle"></i>
-  Пользователь не найден
-</div>
-
-
-<modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="500" [contentHeight]="400" (onClose)="closeSelectDivisionModal()">
-  <div class="modal-content">
-    <div class="row padding-10">
-      <tree [id]="'edit-user-divisions-tree'"
-            [expandOnSelect]="true"
-            [collapseOnDeselect]="true"
-            (onInit)="populateDivisionsTree()"
-            class="inline">
-      </tree>
-    </div>
+  <div class="nothing-found padding-30" *ngIf="userNotFound === true">
+    <i class="fa fa-exclamation-circle"></i>
+    Пользователь не найден
   </div>
-  <div class="modal-footer">
-    <div class="row padding-10">
-      <div class="width-50 padding-right-5">
-        <button class="blue width-100" [disabled]="$trees.getById('edit-user-divisions-tree').getSelectedItem() === null" (click)="selectDivision()">
-          <i class="fa fa-check"></i>&nbsp;Выбрать
-        </button>
-      </div>
-      <div class="width-50 padding-left-5">
-        <button class="red width-100" (click)="$modals.close()">
-          <i class="fa fa-ban"></i>&nbsp;Отмена
-        </button>
+
+
+  <modal [id]="'edit-user-division'" [footer]="true" [title]="'Выбор струкутурного подразделения'" [width]="500" [contentHeight]="400" (onClose)="closeSelectDivisionModal()">
+    <div class="modal-content">
+      <div class="row padding-10">
+        <tree [id]="'edit-user-divisions-tree'"
+              [expandOnSelect]="true"
+              [collapseOnDeselect]="true"
+              (onInit)="populateDivisionsTree()"
+              (onSelect)="selectDivision($event)"
+              class="inline">
+        </tree>
       </div>
     </div>
-
-  </div>
-</modal>
-
-
-
-<modal [id]="'edit-user-confirm-changes'" [footer]="false" [title]="'Данные были изменены'" [width]="350" [result]="false" (onClose)="closeConfirmChangesModal()">
-  <div class="modal-content">
-    <div class="row padding-10">
-      <div class="row margin-bottom-20">Данные пользователя были изменены. Сохранить изменения?</div>
-      <div class="row">
+    <div class="modal-footer">
+      <div class="row padding-10">
         <div class="width-50 padding-right-5">
-          <button class="green width-100" (click)="confirmChanges()">
-            <i class="fa fa-save"></i>&nbsp;Сохранить
+          <button class="blue width-100" [disabled]="$trees.getById('edit-user-divisions-tree').getSelectedItem() === null" (click)="$modals.close(true)">
+            <i class="fa fa-check"></i>&nbsp;Выбрать
           </button>
         </div>
         <div class="width-50 padding-left-5">
-          <button class="red width-100" (click)="cancelChanges()">
+          <button class="red width-100" (click)="$modals.close()">
             <i class="fa fa-ban"></i>&nbsp;Отмена
           </button>
         </div>
       </div>
+
     </div>
-  </div>
-</modal>
+  </modal>
 
 
+
+  <modal [id]="'edit-user-confirm-changes'" [footer]="false" [title]="'Данные были изменены'" [width]="350" [result]="false" (onClose)="closeConfirmChangesModal()">
+    <div class="modal-content">
+      <div class="row padding-10">
+        <div class="row margin-bottom-20">Данные пользователя были изменены. Сохранить изменения?</div>
+        <div class="row">
+          <div class="width-50 padding-right-5">
+            <button class="green width-100" (click)="confirmChanges()">
+              <i class="fa fa-save"></i>&nbsp;Сохранить
+            </button>
+          </div>
+          <div class="width-50 padding-left-5">
+            <button class="red width-100" (click)="cancelChanges()">
+              <i class="fa fa-ban"></i>&nbsp;Отмена
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </modal>
+
+
+
+</div>

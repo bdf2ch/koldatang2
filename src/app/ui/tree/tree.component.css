@@ -39,10 +39,12 @@
 }
 .ui-tree-container.inline .tree-item {
   overflow: auto;
-  min-height: 25px;
+  height: auto !important;
+  min-height: 10px;
   margin: 0px;
+  margin-bottom: 10px;
   box-sizing: border-box;
-  line-height: 25px;
+  line-height: 20px;
   background: white;
   border: none;
 }
@@ -53,6 +55,7 @@
 .ui-tree-container.inline .tree-item .item-details {
   overflow: auto;
   padding-left: 10px;
+  box-sizing: border-box;
 }
 .ui-tree-container.inline .tree-item .item-details.selected {
   background: #E3F2FD;
@@ -61,10 +64,12 @@
   color: #0D47A1;
 }
 .ui-tree-container.inline .tree-item .item-details .item-title {
+  overflow: visible;
   float: left;
-  height: 25px;
-  font-size: 13px;
+  height: auto;
   text-align: left;
+  line-height: 12px;
+  font-size: 13px;
   color: #1E88E5;
   cursor: pointer;
 }
