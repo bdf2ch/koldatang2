@@ -8,6 +8,7 @@ import { PhonebookComponent } from './phonebook.component';
 import { ContactsService } from './contacts.service';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { SearchContactsPipe } from './search-contacts.pipe';
+import { AtsComponent } from './ats/ats.component';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { SearchContactsPipe } from './search-contacts.pipe';
     PhonebookComponent,
     ContactListComponent,
     SearchContactsPipe,
-    SearchContactsPipe
+    SearchContactsPipe,
+    AtsComponent
   ],
   exports: [
     CoreModule

@@ -9,14 +9,12 @@ import { PhonebookModule } from './phonebook/phonebook.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from "./core/core.module";
 import { ApplicationService } from './application.service';
-import { AtsComponent } from './phonebook/ats/ats.component';
 import { AuthComponent } from './auth/auth.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    AtsComponent,
     AuthComponent
   ],
   imports: [

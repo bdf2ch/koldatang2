@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PhonebookComponent } from './phonebook.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
+import { AtsComponent } from './ats/ats.component';
+
 
 const routes: Routes = [
   {
@@ -19,6 +21,15 @@ const routes: Routes = [
         data: {
           extras: {
             title: ""
+          }
+        }
+      },
+      {
+        path: "ats",
+        component: AtsComponent,
+        data: {
+          extras: {
+            title: "АТС и коды выходов"
           }
         }
       }

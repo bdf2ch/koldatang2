@@ -1,3 +1,16 @@
-<p>
-  ats works!
-</p>
+<div class="row">
+
+  <div id="ats" class="padding-top-20">
+    <tree [id]="'contacts-list-division-tree'"
+          [expandOnSelect]="true"
+          [collapseOnDeselect]="true"
+          (onSelect)="selectATS($event)"
+          class="inline">
+    </tree>
+  </div>
+
+  <div id="ats-codes">
+
+  </div>
+
+</div>
