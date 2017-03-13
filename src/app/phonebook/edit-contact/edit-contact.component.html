@@ -1,17 +1,154 @@
-<div class="app-content-header">
+<div id="contact">
+  <div id="contact-header" class="app-content-header">
+      <span class="app-content-title active">
+        <i class="fa fa-user-circle margin-right-10"></i>Контакт
+      </span>
+    <i class="fa fa-times action-button right" title="Удалить абонента" (click)="openDeleteContactModal()"></i>
+  </div>
+
+  <div class="content">
+
+  </div>
+</div>
+
+
+<div id="contact-phones">
   <div id="contact-phones-header" class="app-content-header darker">
-    <span class="app-content-title active">
-      <i class="fa fa-phone margin-right-10"></i>Телефоны
-    </span>
+      <span class="app-content-title active">
+        <i class="fa fa-phone margin-right-10"></i>Телефоны
+      </span>
     <i class="fa fa-plus action-button right" title="Добавить телефон" (click)="openNewPhoneModal()"></i>
     <i class="fa fa-pencil action-button right" title="Редактировать телефон" *ngIf="selectedPhone !== null" (click)="openEditPhoneModal()"></i>
     <i class="fa fa-times action-button right" title="Удалить телефон" *ngIf="selectedPhone !== null" (click)="openDeletePhoneModal()"></i>
   </div>
-  <div id="contact-header" class="app-content-header">
-    <span class="app-content-title active">
-      <i class="fa fa-user-circle margin-right-10"></i>Контакт
-    </span>
-    <i class="fa fa-plus action-button right" title="Добавить АТС" (click)="openNewATSModal()"></i>
-    <i class="fa fa-pencil action-button right" title="Редактировать АТС" *ngIf="selectedATS !== null" (click)="openEditATSModal()"></i>
+
+  <div class="content">
+    <div class="contact-phone" *ngFor="let phone of phones" [ngClass]="{selected: phone === selectedPhone}" (click)="selectPhone(phone)">
+      <span class="leading">{{ phone.number }}</span>
+      <span class="additional">{{ phone.atsId }}</span>
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="selectedATS === null">
+      <i class="fa fa-phone-square"></i>&nbsp; Выберите АТС
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="$contacts.isLoading() === true">
+      <i class="fa fa-spinner fa-spin"></i>&nbsp; Загрузка...
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30"
+         *ngIf="phones.length === 0">
+      <i class="fa fa-phone-square"></i>Телефоны не найдены
+    </div>
   </div>
 </div>
+
+
+<modal [id]="'new-contact-phone'" [footer]="true" [title]="'Новый контактный телефон'" [width]="400" (onClose)="closeNewPhoneModal(newPhoneForm)">
+  <div class="modal-content">
+    <form (submit)="addNewPhone()" #newPhoneForm="ngForm">
+      <div class="row padding-10">
+        <label for="new-phone-tree" class="row width-100 margin-bottom-10">АТС</label>
+        <div class="row width-100">
+          <tree id="new-phone-tree"
+                [id]="'new-phone-ats-tree'"
+                [expandOnSelect]="true"
+                [collapseOnDeselect]="true"
+                (onSelect)="selectNewPhoneATS($event)"
+                class="inline">
+          </tree>
+        </div>
+      </div>
+      <div class="row padding-10">
+        <label for="new-phone-number" class="width-100">Номер телефона</label>
+        <input type="text" name="number" id="new-phone-number" class="width-100 dark" [(ngModel)]="newPhone.number" required #number="ngModel">
+        <div class="form-error"
+             *ngIf="number.invalid && number.dirty">
+          Вы не указали номер телефона
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="newPhoneForm.form.invalid" (click)="addNewPhone(newPhoneForm)">
+          <i class="fa fa-plus margin-right-10"></i>Добавить
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban margin-right-10"></i>Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>
+
+
+<modal [id]="'edit-contact-phone'" [footer]="true" [title]="'Изменение контактного телефонА'" [width]="400" (onClose)="closeEditPhoneModal(editPhoneForm)">
+  <div class="modal-content">
+    <form (submit)="editPhone()" #editPhoneForm="ngForm">
+      <div class="row padding-10">
+        <label for="edit-phone-tree" class="row width-100 margin-bottom-10">АТС</label>
+        <div class="row width-100">
+          <tree id="edit-phone-tree"
+                [id]="'edit-phone-ats-tree'"
+                [expandOnSelect]="true"
+                [collapseOnDeselect]="true"
+                (onSelect)="selectEditPhoneATS($event)"
+                class="inline">
+          </tree>
+        </div>
+      </div>
+      <div class="row padding-10">
+        <label for="new-phone-number" class="width-100">Номер телефона</label>
+        <input type="text" name="number" id="edit-phone-number" class="width-100 dark" [(ngModel)]="selectedPhone.number" required #number="ngModel">
+        <div class="form-error"
+             *ngIf="number.invalid && number.dirty">
+          Вы не указали номер телефона
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="editPhoneForm.form.invalid" (click)="editPhone(editPhoneForm)">
+          <i class="fa fa-plus margin-right-10"></i>Добавить
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban margin-right-10"></i>Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>
+
+
+<modal [id]="'delete-contact-phone'" [footer]="true" [title]="'Удаление контактного телефона'" [width]="300">
+  <div class="modal-content">
+    <form (submit)="deletePhone()">
+      <div class="row padding-10">
+        Удалить код выхода?
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button type="submit" class="blue width-100">
+          <i class="fa fa-times margin-right-10"></i>Удалить
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button type="button" class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban margin-right-10"></i>Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>
+

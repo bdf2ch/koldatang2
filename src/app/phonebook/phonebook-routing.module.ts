@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PhonebookComponent } from './phonebook.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
-import { AtsComponent } from './ats/ats.component';
 import { EditContactComponent } from "./edit-contact/edit-contact.component";
+import { EditContactResolveGuard } from './edit-contact/resolve.guard';
 
 
 const routes: Routes = [
@@ -28,6 +28,9 @@ const routes: Routes = [
       {
         path: "contacts/:id",
         component: EditContactComponent,
+        resolve: {
+          contact: EditContactResolveGuard
+        },
         data: {
           extras: {
             title: ""

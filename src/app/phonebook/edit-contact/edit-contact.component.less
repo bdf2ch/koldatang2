@@ -3,13 +3,172 @@
 @contact-phones-width: 400px;
 
 #contact-header {
-  margin-right: @contact-phones-width;
-  height: 100%;
+  height: @app-content-header-height;
 }
 
 #contact-phones-header {
   float: right;
   width: @contact-phones-width;
-  height: 100%;
+  height: @app-content-header-height;
 }
 
+.content {
+  position: absolute;
+  top: @app-content-header-height;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+
+
+#contact {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: @contact-phones-width;
+  bottom: 0px;
+  box-sizing: border-box;
+
+
+  .ats-codes-header {
+    display: flex;
+    flex-direction: row;
+    height: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: 'Roboto Bold';
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #90A4AE;
+
+    .source-ats {
+      display: flex;
+      flex-direction: column;
+      flex-basis: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 40%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+    .target-ats {
+      display: flex;
+      flex-basis: auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 40%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+    .code {
+      display: flex;
+      flex-basis: auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 20%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+  }
+
+
+
+  .ats-code {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    height: 60px;
+    margin-bottom: 8px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 15px;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    &:hover {
+      background: #E3F2FD;
+    }
+
+    &.selected {
+      background: #E3F2FD;
+    }
+
+    .leading {
+      overflow: hidden;
+      display: block;
+      position: relative;
+      width: 100%;
+      font-family: 'Roboto Bold';
+      color: #37474F;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .additional {
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      padding-top: 3px;
+      color: #78909C;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .regular {
+      overflow: hidden;
+      display: block;
+      width: 100%;
+      padding-top: 3px;
+      color: black;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+    .empty-value {
+      color: grey;
+    }
+
+    .source-ats {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex-basis: auto;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 40%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+
+    .target-ats {
+      display: flex;
+      flex-basis: auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 40%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+
+    .code {
+      overflow: hidden;
+      display: flex;
+      flex-basis: auto;
+      flex-direction: column;
+      justify-content: flex-start;
+      width: 20%;
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+  }
+}
+
+
+#contact-phones {
+  position: absolute;
+  top: 0px;
+  //left: @contact-phones-width;
+  bottom: 0px;
+  right: 0px;
+  width: @contact-phones-width;
+  box-sizing: border-box;
+  background: white;
+}

@@ -1,4 +1,5 @@
 import { Model } from "./Model.class";
+import { Phone } from "./Phone.model";
 
 export class ContactConfig {
   id: number;
@@ -23,7 +24,7 @@ export class Contact extends Model {
   fname: string = "";
   position: string = "";
   email: string = "";
-  phones: string[] = [];
+  phones: Phone[] = [];
   mobile: string = '';
   photo: string = "";
   fio: string = "";

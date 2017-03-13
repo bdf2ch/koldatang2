@@ -4,6 +4,7 @@ import { Contact } from "../models/Contact.model";
 import { Observable } from "rxjs";
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/take';
+import {Phone} from "../models/Phone.model";
 
 const apiUrl = '/assets/serverside/api.php';
 
@@ -35,7 +36,7 @@ export class ContactsService {
         this.loading = false;
         let body = res.json();
         if (body !== null) {
-          let contact = new Contact(body);
+          let contact = new Contact(body.contact);
           contact.setupBackup(["divisionId", "surname", "name", "fname", "position", "email"]);
           return contact;
         } else {
@@ -112,8 +113,112 @@ export class ContactsService {
   };
 
 
+  /**
+   *
+   * @param phone {Phone} - добавляемый телефон
+   * @returns {Observable<R>}
+   */
+  addContactPhone(phone: Phone): Observable<Phone> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "addContactPhone", data: { contactId: phone.contactId, atsId: phone.atsId, number: phone.number }};
+    this.loading = true;
+
+    return this.$http.post(apiUrl, params, options)
+      .map((res: Response) => {
+        this.loading = false;
+        let body = res.json();
+        let phone = new Phone(body);
+        phone.setupBackup(['atsId', 'number']);
+        let contact = this.getById(phone.contactId);
+        if (contact !== null)
+          contact.phones.push(phone);
+        return phone;
+      })
+      .take(1)
+      .catch(this.handleError);
+  };
+
+
+  /**
+   * Изменение контактного телефона
+   * @param phone {Phone} - редактируемый контактный телефон телефон
+   * @returns {Observable<R>}
+   */
+  editContactPhone(phone: Phone): Observable<Phone> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = { action: "editContactPhone", data: { phoneId: phone.id, atsId: phone.atsId, number: phone.number }};
+    this.loading = true;
+
+    return this.$http.post(apiUrl, params, options)
+      .map((res: Response) => {
+        this.loading = false;
+        phone.setupBackup(['atsId', 'number']);
+        phone.changed(false);
+        return phone;
+      })
+      .take(1)
+      .catch(this.handleError);
+  };
+
+
+  /**
+   * Удаление контактного телефона
+   * @param phone {Phone} - удаляемый контактный телефон
+   * @returns {Observable<boolean>}
+   */
+  deleteContactPhone(phone: Phone): Observable<boolean> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    let parameters = { action: 'deleteContactPhone', data: { phoneId: phone.id }};
+    this.loading = true;
+    return this.$http.post(apiUrl, parameters, options)
+      .map((res: Response) => {
+        this.loading = false;
+        let body = res.json();
+        console.log(body);
+        if (body === true) {
+          let contact = this.getById(phone.contactId);
+          if (contact !== null) {
+            let length = contact.phones.length;
+            for (let i = 0; i < length; i++) {
+              if (contact.phones[i].id === phone.id) {
+                contact.phones.splice(i, 1);
+                return true;
+              }
+            }
+          }
+          return false;
+        } else
+          return false;
+      })
+      .take(1)
+      .catch(this.handleError)
+  };
+
+
+  /**
+   *
+   * @returns {Contact[]}
+   */
   getAll(): Contact[] {
     return this.contacts;
+  };
+
+
+  /**
+   *
+   * @param id
+   * @returns {any}
+   */
+  getById(id: number): Contact|null {
+    let length = this.contacts.length;
+    for (let i = 0; i < length; i++) {
+      if (this.contacts[i].id === id)
+        return this.contacts[i];
+    }
+    return null;
   };
 
 

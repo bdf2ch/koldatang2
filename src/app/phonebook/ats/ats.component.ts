@@ -128,7 +128,7 @@ export class AtsComponent implements OnInit {
   /**
    * Добавляет новую АТС, очищает форму и закрывает модальное окно
    */
-  addNewATS(form: any): void {
+  addNewATS(): void {
     this.$ats.addATS(this.newATS).subscribe((ats: ATS) => {
       this.$trees.getById('ats-tree').addItem({
         key: ats.id.toString(),
@@ -137,9 +137,9 @@ export class AtsComponent implements OnInit {
         isRoot: ats.parentId === 0 ? true: false
       });
       this.$modals.close();
-      form.reset({
-        title: this.newATS.title
-      });
+      //form.reset({
+      //  title: this.newATS.title
+      //});
     });
   };
 

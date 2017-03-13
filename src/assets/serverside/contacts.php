@@ -37,4 +37,87 @@
         return true;
     }
 
+
+    /**
+    *
+    *
+    **/
+    function getContactById($parameters) {
+        global link;
+        $contactId = $parameters -> contactId;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT get_contact_by_id($1)",
+            array($contactId)
+        );
+
+        $contact = pg_fetch_all($result);
+        echo is_null($contact) ? json_encode(NULL) : $contact[0]["get_contact_by_id"];
+        return true;
+    }
+
+
+    /**
+    *
+    *
+    **/
+    function addContactPhone ($parameters) {
+        global $link;
+        $contactId = $parameters -> contactId;
+        $atsId = $parameters -> atsId;
+        $number = $parameters - > number;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT add_phone($1, $2, $3)",
+            array($contactId, $atsId, $number)
+        );
+
+        $phone = pg_fetch_all($result);
+        echo is_null($phone) ? json_encode(NULL) : $phone[0]["add_phone"];
+        return true;
+    }
+
+
+    /**
+    *
+    *
+    **/
+    function editContactPhone ($parameters) {
+        global $link;
+        $phoneId = $parameters -> phoneId;
+        $atsId = $parameters -> atsId;
+        $number = $parameters - > number;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT edit_phone($1, $2, $3)",
+            array($phoneId, $atsId, $number)
+        );
+
+        $phone = pg_fetch_all($result);
+        echo is_null($phone) ? json_encode(NULL) : $phone[0]["edit_phone"];
+        return true;
+    }
+
+
+    /**
+    *
+    *
+    **/
+    function deleteContactPhone($parameters) {
+        global $link;
+        $phoneId = $parameters -> phoneId;
+
+        $result = pg_query_params(
+            $link,
+            'SELECT delete_phone($1)',
+            array($phoneId)
+        );
+
+        echo $result != false ? json_encode(true) : json_encode(false);
+        return true;
+    }
+
 ?>

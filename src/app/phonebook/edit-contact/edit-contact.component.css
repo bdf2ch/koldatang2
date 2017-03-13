@@ -1,9 +1,151 @@
 #contact-header {
-  margin-right: 400px;
-  height: 100%;
+  height: 50px;
 }
 #contact-phones-header {
   float: right;
   width: 400px;
-  height: 100%;
+  height: 50px;
+}
+.content {
+  position: absolute;
+  top: 50px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+#contact {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 400px;
+  bottom: 0px;
+  box-sizing: border-box;
+}
+#contact .ats-codes-header {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'Roboto Bold';
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #90A4AE;
+}
+#contact .ats-codes-header .source-ats {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact .ats-codes-header .target-ats {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact .ats-codes-header .code {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact .ats-code {
+  display: flex;
+  flex-direction: row;
+  flex-basis: auto;
+  height: 60px;
+  margin-bottom: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#contact .ats-code:hover {
+  background: #E3F2FD;
+}
+#contact .ats-code.selected {
+  background: #E3F2FD;
+}
+#contact .ats-code .leading {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  width: 100%;
+  font-family: 'Roboto Bold';
+  color: #37474F;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#contact .ats-code .additional {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: #78909C;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#contact .ats-code .regular {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#contact .ats-code .empty-value {
+  color: grey;
+}
+#contact .ats-code .source-ats {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact .ats-code .target-ats {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact .ats-code .code {
+  overflow: hidden;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#contact-phones {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 400px;
+  box-sizing: border-box;
+  background: white;
 }

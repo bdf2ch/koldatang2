@@ -12,6 +12,7 @@ import { AtsComponent } from './ats/ats.component';
 import { AtsService } from "./ats.service";
 import { AtsTitlePipe } from './ats-title.pipe';
 import { EditContactComponent } from './edit-contact/edit-contact.component';
+import { EditContactResolveGuard } from "./edit-contact/resolve.guard";
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { EditContactComponent } from './edit-contact/edit-contact.component';
   ],
   providers: [
     ContactsService,
-    AtsService
+    AtsService,
+    EditContactResolveGuard
   ],
 })
 export class PhonebookModule { }
