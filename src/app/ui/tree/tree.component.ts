@@ -93,6 +93,13 @@ export class TreeComponent implements OnInit {
   };
 
 
+  expandAll(): void {
+    let length = this.root.length;
+    for (let i = 0; i < length; i++)
+      this.stack[i].isExpanded = true;
+  };
+
+
   /**
    * Сворачивание элемента дерева
    * @param key {string} - идентификатор элемента дерева
@@ -107,6 +114,13 @@ export class TreeComponent implements OnInit {
       }
     }
     return false;
+  };
+
+
+  collapseAll(): void {
+    let length = this.stack.length;
+    for (let i = 0; i < length; i++)
+      this.stack[i].isExpanded = false;
   };
 
 

@@ -42,7 +42,6 @@
   height: auto !important;
   min-height: 10px;
   margin: 0px;
-  margin-bottom: 10px;
   box-sizing: border-box;
   line-height: 20px;
   background: white;
@@ -67,6 +66,8 @@
   overflow: visible;
   float: left;
   height: auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
   text-align: left;
   line-height: 12px;
   font-size: 13px;

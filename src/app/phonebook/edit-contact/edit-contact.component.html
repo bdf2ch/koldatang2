@@ -1,0 +1,17 @@
+<div class="app-content-header">
+  <div id="contact-phones-header" class="app-content-header darker">
+    <span class="app-content-title active">
+      <i class="fa fa-phone margin-right-10"></i>Телефоны
+    </span>
+    <i class="fa fa-plus action-button right" title="Добавить телефон" (click)="openNewPhoneModal()"></i>
+    <i class="fa fa-pencil action-button right" title="Редактировать телефон" *ngIf="selectedPhone !== null" (click)="openEditPhoneModal()"></i>
+    <i class="fa fa-times action-button right" title="Удалить телефон" *ngIf="selectedPhone !== null" (click)="openDeletePhoneModal()"></i>
+  </div>
+  <div id="contact-header" class="app-content-header">
+    <span class="app-content-title active">
+      <i class="fa fa-user-circle margin-right-10"></i>Контакт
+    </span>
+    <i class="fa fa-plus action-button right" title="Добавить АТС" (click)="openNewATSModal()"></i>
+    <i class="fa fa-pencil action-button right" title="Редактировать АТС" *ngIf="selectedATS !== null" (click)="openEditATSModal()"></i>
+  </div>
+</div>

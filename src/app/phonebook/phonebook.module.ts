@@ -9,6 +9,9 @@ import { ContactsService } from './contacts.service';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { SearchContactsPipe } from './search-contacts.pipe';
 import { AtsComponent } from './ats/ats.component';
+import { AtsService } from "./ats.service";
+import { AtsTitlePipe } from './ats-title.pipe';
+import { EditContactComponent } from './edit-contact/edit-contact.component';
 
 @NgModule({
   imports: [
@@ -23,13 +26,17 @@ import { AtsComponent } from './ats/ats.component';
     ContactListComponent,
     SearchContactsPipe,
     SearchContactsPipe,
-    AtsComponent
+    AtsComponent,
+    AtsTitlePipe,
+    EditContactComponent
   ],
   exports: [
-    CoreModule
+    CoreModule,
+    AtsTitlePipe
   ],
   providers: [
-    ContactsService
+    ContactsService,
+    AtsService
   ],
 })
 export class PhonebookModule { }

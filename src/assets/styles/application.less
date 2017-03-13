@@ -170,8 +170,7 @@ html, body {
 }
 
 
-
-#app-content-header  {
+.app-content-header  {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -181,7 +180,11 @@ html, body {
   //padding-left: 20px;
   box-sizing: border-box;
   background: @app-content-header-background-color;
-  border-bottom: 1px solid #E0E0E0;
+  //border-bottom: 1px solid #E0E0E0;
+
+  &.darker {
+    background: #5C6BC0;
+  }
 
   .app-content-title {
     float: left;
@@ -213,6 +216,22 @@ html, body {
     transform: rotate(45deg);
     border-top: 1px solid lightgrey;
     border-right: 1px solid lightgrey;
+  }
+
+  .action-button {
+    display: inline-block;
+    float: right;
+    width: @app-content-header-height;
+    height: @app-content-header-height;
+    box-sizing: border-box;
+    line-height: @app-content-header-height;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background: #3F51B5;
+    }
   }
 
   #app-content-controls {
@@ -250,7 +269,7 @@ html, body {
 #app-content-content {
   position: absolute;
   left: 0px;
-  top: @app-content-header-height;
+  top: 0px;
   right: 0px;
   bottom: 0px;
   overflow: hidden;

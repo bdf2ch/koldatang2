@@ -1,7 +1,28 @@
+<div class="app-content-header">
+  <div id="ats-header" class="app-content-header">
+    <span class="app-content-title active">
+      <i class="fa fa-phone-square margin-right-10"></i>АТС
+    </span>
+    <i class="fa fa-plus action-button right" title="Добавить АТС" (click)="openNewATSModal()"></i>
+    <i class="fa fa-pencil action-button right" title="Редактировать АТС" *ngIf="selectedATS !== null" (click)="openEditATSModal()"></i>
+  </div>
+  <div id="ats-codes-header" class="app-content-header darker">
+    <span class="app-content-title active">
+      <i class="fa fa-phone-square"></i>
+      <i class="fa fa-long-arrow-right"></i>
+      <i class="fa fa-phone-square margin-right-10"></i>Коды выходов
+    </span>
+    <i class="fa fa-plus action-button right" title="Добавить код выхода" *ngIf="selectedATS !== null" (click)="openNewATSCodeModal()"></i>
+    <i class="fa fa-pencil action-button right" title="Редактировать код выхода" *ngIf="selectedATSCode !== null" (click)="openEditATSCodeModal()"></i>
+    <i class="fa fa-times action-button right" title="Удалить код выхода" *ngIf="selectedATSCode !== null" (click)="openDeleteATSCodeModal()"></i>
+  </div>
+</div>
+
+
 <div class="row">
 
-  <div id="ats" class="padding-top-20">
-    <tree [id]="'contacts-list-division-tree'"
+  <div id="ats" class="padding-10 padding-top-20">
+    <tree [id]="'ats-tree'"
           [expandOnSelect]="true"
           [collapseOnDeselect]="true"
           (onSelect)="selectATS($event)"
@@ -9,8 +30,199 @@
     </tree>
   </div>
 
-  <div id="ats-codes">
+  <div id="ats-codes" class="padding-20">
+
+    <div class="row ats-codes-header" *ngIf="selectedATS !== null && codes.length > 0">
+      <div class="source-ats">Исходная АТС</div>
+      <div class="target-ats">Целевая АТС</div>
+      <div class="code">Код выхода</div>
+    </div>
+
+    <div class="ats-code" *ngFor="let code of codes" [ngClass]="{selected: code === selectedATSCode}" (click)="selectATSCode(code)">
+      <div class="source-ats">
+        <span class="leading">{{ $ats.getATSById(code.sourceATSId).title }}</span>
+        <span class="additional"></span>
+      </div>
+      <div class="target-ats">
+        <span class="regular">{{ $ats.getATSById(code.targetATSId).title }}</span>
+      </div>
+      <div class="code">
+        <span class="regular">{{ code.code }}</span>
+        <span class="additional"></span>
+      </div>
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="selectedATS === null">
+      <i class="fa fa-phone-square"></i>&nbsp; Выберите АТС
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="selectedATS !== null && $ats.isLoading() === true">
+      <i class="fa fa-spinner fa-spin"></i>&nbsp; Загрузка...
+    </div>
+
+    <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="selectedATS !== null && $ats.isLoading() === false && codes.length === 0">
+      <i class="fa fa-phone-square"></i>&nbsp; Коды выходов не найдены
+    </div>
 
   </div>
+
+  <modal [id]="'new-ats'" [footer]="true" [title]="'Новая АТС'" [width]="400" (onClose)="closeNewATSModal(newATSForm)">
+    <div class="modal-content">
+      <form (submit)="addNewATS()" #newATSForm="ngForm">
+        <div class="row padding-10">
+          <label for="new-ats-title" class="width-100">Наименование</label>
+          <input type="text" name="title" id="new-ats-title" class="width-100 dark" [(ngModel)]="newATS.title" required #title="ngModel">
+          <div class="form-error"
+               *ngIf="title.invalid && title.dirty">
+            Вы не указали наименование АТС
+          </div>
+        </div>
+        <div class="row padding-10">
+          <label for="parent-ats" class="width-100">АТС верхнего уровня</label>
+          <input type="text" name="parent_ats" id="parent-ats" class="width-100 dark" placeholder="АТС верхнего уровня" disabled [value]="newATS.parentId | atsTitle">
+        </div>
+        <div class="row padding-10">
+          <label for="ats-type" class="width-100">Тип АТС</label>
+          <select name="ats_type" id="ats-type" class="width-100" [(ngModel)]="newATS.type">
+            <option value="1" selected>Внутренняя</option>
+            <option value="2">Внешняя</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row padding-10">
+        <div class="width-50 padding-right-5">
+          <button class="blue width-100" [disabled]="newATSForm.form.invalid" (click)="addNewATS(newATSForm)">
+            <i class="fa fa-plus"></i>&nbsp;Добавить
+          </button>
+        </div>
+        <div class="width-50 padding-left-5">
+          <button class="red width-100" (click)="$modals.close()">
+            <i class="fa fa-ban"></i>&nbsp;Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  </modal>
+
+
+  <modal [id]="'edit-ats'" [footer]="true" [title]="selectedATS._backupData.title" [width]="400" *ngIf="selectedATS !== null">
+    <div class="modal-content">
+      <form (submit)="editATS(editATSForm)" #editATSForm="ngForm">
+        <div class="row padding-10">
+          <label for="new-ats-title" class="width-100">Наименование</label>
+          <input type="text" name="title" id="selected-ats-title" class="width-100 dark" [(ngModel)]="selectedATS.title" required #title="ngModel">
+          <div class="form-error"
+               *ngIf="title.invalid && title.dirty">
+            Вы не указали наименование АТС
+          </div>
+        </div>
+        <div class="row padding-10">
+          <label for="parent-ats" class="width-100">АТС верхнего уровня</label>
+          <input type="text" name="parent_ats" id="selected-ats-parent-ats" class="width-100 dark" placeholder="АТС верхнего уровня" disabled [value]="selectedATS.parentId | atsTitle">
+        </div>
+        <div class="row padding-10">
+          <label for="ats-type" class="width-100">Тип АТС</label>
+          <select name="ats_type" id="selected-ats-type" class="width-100" [(ngModel)]="selectedATS.type">
+            <option value="1" selected>Внутренняя</option>
+            <option value="2">Внешняя</option>
+          </select>
+        </div>
+
+        <div class="modal-footer">
+          <div class="row padding-10">
+            <div class="width-50 padding-right-5">
+              <button type="submit" class="green width-100" [disabled]="editATSForm.form.invalid || editATSForm.form.pristine" (click)="editATS(editATSForm)">
+                <i class="fa fa-check"></i>&nbsp;Сохранить
+              </button>
+            </div>
+            <div class="width-50 padding-left-5">
+              <button type="button" class="red width-100" (click)="$modals.close()">
+                <i class="fa fa-ban"></i>&nbsp;Отмена
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+  </modal>
+
+
+  <modal [id]="'new-ats-code'" [footer]="true" [title]="'Новый код выхода'" [width]="400" (onClose)="closeNewATSCodeModal(newATSCodeForm)">
+    <div class="modal-content">
+      <form (submit)="addNewATSCode()" #newATSCodeForm="ngForm">
+        <div class="row padding-10" *ngIf="selectedATS !== null">
+          <label for="new-ats-code-source-ats" class="width-100">Исходная АТС</label>
+          <input type="text" name="source_ats" id="new-ats-code-source-ats" class="width-100 dark" disabled [value]="selectedATS.title">
+        </div>
+        <div class="row padding-10">
+          <label for="new-ats-code-tree" class="row width-100 margin-bottom-10">Целевая АТС</label>
+          <div class="row width-100">
+            <tree id="new-ats-code-tree"
+                  [id]="'new-ats-code-tree'"
+                  [expandOnSelect]="true"
+                  [collapseOnDeselect]="true"
+                  (onSelect)="selectTargetATS($event)"
+                  class="inline">
+            </tree>
+            <div class="form-error"
+                 *ngIf="selectedATS !== null && selectedATS.id === newATSCode.targetATSId">
+              Целевая АТС выбрана некорректно
+            </div>
+          </div>
+        </div>
+        <div class="row padding-10">
+          <label for="new-ats-code-code" class="width-100">Код выхода</label>
+          <input type="text" name="code" id="new-ats-code-code" class="width-100 dark" [(ngModel)]="newATSCode.code" required #code="ngModel">
+          <div class="form-error"
+               *ngIf="code.invalid && code.dirty">
+            Вы не указали код выхода
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row padding-10">
+        <div class="width-50 padding-right-5">
+          <button class="blue width-100" [disabled]="newATSCodeForm.form.invalid || selectedATS !== null && selectedATS.id === newATSCode.targetATSId" (click)="addNewATSCode(newATSCodeForm)">
+            <i class="fa fa-plus margin-right-10"></i>Добавить
+          </button>
+        </div>
+        <div class="width-50 padding-left-5">
+          <button class="red width-100" (click)="$modals.close()">
+            <i class="fa fa-ban margin-right-10"></i>Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  </modal>
+
+
+  <modal [id]="'delete-ats-code'" [footer]="true" [title]="'Удаление кода выхода'" [width]="300">
+    <div class="modal-content">
+      <form (submit)="deleteATSCode()">
+        <div class="row padding-10">
+          Удалить код выхода?
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="row padding-10">
+        <div class="width-50 padding-right-5">
+          <button type="button" class="blue width-100" (click)="deleteATSCode()">
+            <i class="fa fa-times margin-right-10"></i>Удалить
+          </button>
+        </div>
+        <div class="width-50 padding-left-5">
+          <button type="submit" class="red width-100" (click)="$modals.close()">
+            <i class="fa fa-ban margin-right-10"></i>Отмена
+          </button>
+        </div>
+      </div>
+    </div>
+  </modal>
 
 </div>

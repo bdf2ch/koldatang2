@@ -124,7 +124,7 @@ body {
   right: 0px;
   bottom: 0px;
 }
-#app-content-header {
+.app-content-header {
   position: absolute;
   top: 0px;
   left: 0px;
@@ -133,9 +133,11 @@ body {
   height: 50px;
   box-sizing: border-box;
   background: #7986CB;
-  border-bottom: 1px solid #E0E0E0;
 }
-#app-content-header .app-content-title {
+.app-content-header.darker {
+  background: #5C6BC0;
+}
+.app-content-header .app-content-title {
   float: left;
   height: 50px;
   padding-left: 20px;
@@ -147,13 +149,13 @@ body {
   text-decoration: none;
   border-bottom: 4px solid transparent;
 }
-#app-content-header .app-content-title:hover {
+.app-content-header .app-content-title:hover {
   color: lightgrey;
 }
-#app-content-header .app-content-title.active {
+.app-content-header .app-content-title.active {
   color: white;
 }
-#app-content-header .app-content-title-divider {
+.app-content-header .app-content-title-divider {
   float: left;
   width: 50px;
   height: 50px;
@@ -162,7 +164,21 @@ body {
   border-top: 1px solid lightgrey;
   border-right: 1px solid lightgrey;
 }
-#app-content-header #app-content-controls {
+.app-content-header .action-button {
+  display: inline-block;
+  float: right;
+  width: 50px;
+  height: 50px;
+  box-sizing: border-box;
+  line-height: 50px;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+}
+.app-content-header .action-button:hover {
+  background: #3F51B5;
+}
+.app-content-header #app-content-controls {
   float: right;
   height: 50px;
   padding-right: 10px;
@@ -170,26 +186,26 @@ body {
   font-size: 20px;
   line-height: 50px;
 }
-#app-content-header #app-content-controls a {
+.app-content-header #app-content-controls a {
   padding: 10px;
   color: white !important;
 }
-#app-content-header #app-content-controls a:hover {
+.app-content-header #app-content-controls a:hover {
   color: #B2EBF2 !important;
 }
-#app-content-header #app-content-controls .action-link {
+.app-content-header #app-content-controls .action-link {
   padding-left: 5px;
   padding-right: 5px;
   color: white;
   cursor: pointer;
 }
-#app-content-header #app-content-controls .action-link:hover {
+.app-content-header #app-content-controls .action-link:hover {
   color: #B2EBF2;
 }
 #app-content-content {
   position: absolute;
   left: 0px;
-  top: 50px;
+  top: 0px;
   right: 0px;
   bottom: 0px;
   overflow: hidden;

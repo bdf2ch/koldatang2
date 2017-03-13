@@ -1,3 +1,11 @@
+<div class="app-content-header">
+    <span class="app-content-title active">
+      <i class="fa fa-user-circle margin-right-10"></i>Абоненты
+    </span>
+    <i class="fa fa-plus action-button right" title="Добавить аюонента" (click)="openNewATSModal()"></i>
+    <i class="fa fa-pencil action-button right" title="Редактировать абонента" (click)="openEditATSModal()"></i>
+</div>
+
 <div class="row">
   <div id="divisions" class="padding-top-20">
     <tree [id]="'contacts-list-division-tree'"

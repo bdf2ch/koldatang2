@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DivisionsService } from '../../divisions/divisions.service';
 import { ContactsService } from '../contacts.service';
 import { ModalService } from '../../ui/modal/modal.service';
 import { TreeService } from '../../ui/tree/tree.service';
+import { Contact } from "../../models/Contact.model";
 
 @Component({
   selector: 'app-contact-list',
@@ -13,7 +15,9 @@ export class ContactListComponent implements OnInit {
   filterDivisionId: number = 0;
 
 
-  constructor(private $contacts: ContactsService,
+  constructor(private $router: Router,
+              private $route: ActivatedRoute,
+              private $contacts: ContactsService,
               private $divisions: DivisionsService,
               private $trees: TreeService,
               private $modals: ModalService) {};
@@ -48,6 +52,11 @@ export class ContactListComponent implements OnInit {
   selectDivision(item: any): void {
     this.filterDivisionId = parseInt(item.key);
     this.$contacts.fetchByDivisionId(this.filterDivisionId).subscribe();
+  };
+
+
+  selectContact(contact: Contact) {
+    this.$router.navigate(['contacts', contact.id], { relativeTo: this.$route });
   };
 
 

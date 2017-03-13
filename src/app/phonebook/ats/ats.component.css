@@ -1,8 +1,145 @@
+#ats-header {
+  float: left;
+  width: 400px;
+  height: 100%;
+}
+#ats-codes-header {
+  margin-left: 400px;
+  height: 100%;
+}
 #ats {
   position: absolute;
-  top: 0px;
+  top: 50px;
   left: 0px;
   bottom: 0px;
   width: 400px;
+  box-sizing: border-box;
   background: white;
+}
+#ats-codes {
+  position: absolute;
+  top: 50px;
+  left: 400px;
+  right: 0px;
+  bottom: 0px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-codes-header {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-family: 'Roboto Bold';
+  font-size: 12px;
+  text-transform: uppercase;
+  color: #90A4AE;
+}
+#ats-codes .ats-codes-header .source-ats {
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-codes-header .target-ats {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-codes-header .code {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-code {
+  display: flex;
+  flex-direction: row;
+  flex-basis: auto;
+  height: 60px;
+  margin-bottom: 8px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 15px;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+#ats-codes .ats-code:hover {
+  background: #E3F2FD;
+}
+#ats-codes .ats-code.selected {
+  background: #E3F2FD;
+}
+#ats-codes .ats-code .leading {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  width: 100%;
+  font-family: 'Roboto Bold';
+  color: #37474F;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ats-codes .ats-code .additional {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: #78909C;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ats-codes .ats-code .regular {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+#ats-codes .ats-code .empty-value {
+  color: grey;
+}
+#ats-codes .ats-code .source-ats {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-basis: auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-code .target-ats {
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 40%;
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+#ats-codes .ats-code .code {
+  overflow: hidden;
+  display: flex;
+  flex-basis: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 20%;
+  padding-left: 20px;
+  box-sizing: border-box;
 }
