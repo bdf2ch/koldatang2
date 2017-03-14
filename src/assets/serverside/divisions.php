@@ -10,6 +10,7 @@
         $divisions = pg_fetch_all($result);
 
         echo $divisions[0]["get_divisions"];
+        return true;
     }
 
 

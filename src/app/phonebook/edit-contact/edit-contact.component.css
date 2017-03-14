@@ -7,6 +7,7 @@
   height: 50px;
 }
 .content {
+  overflow: auto;
   position: absolute;
   top: 50px;
   left: 0px;

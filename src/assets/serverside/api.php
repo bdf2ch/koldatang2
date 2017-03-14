@@ -38,6 +38,7 @@
         case "getContactsByDivisionId": getContactsByDivisionId($params -> data); break;
         case "searchContacts": searchContacts($params -> data); break;
         case "getContactById": getContactById($params -> data); break;
+        case "editContact": editContact($params -> data); break;
         case "addContactPhone": addContactPhone($params -> data); break;
         case "editContactPhone": editContactPhone($params -> data); break;
         case "deleteContactPhone": deleteContactPhone($params -> data); break;

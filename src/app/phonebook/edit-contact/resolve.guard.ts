@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { ContactsService } from "../contacts.service";
 import { DivisionsService } from "../../divisions/divisions.service";
 import { Contact } from "../../models/Contact.model";
+import { Phone } from "../../models/Phone.model";
 
 const apiUrl = '/assets/sereverside/api.php';
 
@@ -15,8 +16,7 @@ export class EditContactResolveGuard implements Resolve<Observable<Contact>|Cont
 
   constructor(private $http: Http,
               private $contacts: ContactsService,
-              private $divisions: DivisionsService) {
-  };
+              private $divisions: DivisionsService) {};
 
 
   resolve (route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any>|any {
@@ -24,39 +24,18 @@ export class EditContactResolveGuard implements Resolve<Observable<Contact>|Cont
     let contact = this.$contacts.getById(id);
 
     if (contact === null) {
-      if (this.$divisions.getAll().length === 0)
-        this.$divisions.fetchAll().subscribe();
-
       console.log("starting resolving");
-      let headers = new Headers({ "Content-Type": "application/json" });
-      let options = new RequestOptions({ headers: headers });
-      let params = { action: "getContactById", data: { contactId: id }};
-
-      return this.$http.post(apiUrl, params, options)
-        .map((res: Response) => {
-          console.log("RESPONSE", res);
-          let body = res.json();
-          if (body !== null) {
-            let contact = new Contact(body.contact);
-            contact.setupBackup(["divisionId", "surname", "name", "fname", "position", "email"]);
-            let result = {
-              contact: contact,
-              title: contact.name + " " + contact.fname + " " + contact.surname
-            };
-            return result;
-          } else {
-            let result = {
-              contact: null
-            };
-            return result;
-          }
-        })
-        .catch(this.handleError);
+      return this.$contacts.fetchById(id).map((data: any) => {
+        console.log("data = ", data);
+        //if (this.$divisions.getAll().length === 0)
+        //  this.$divisions.fetchAll().subscribe();
+        return data;
+      });
     } else {
       console.log("getting user from cache");
       let result = {
         contact: contact,
-        title: contact.name + " " + contact.fname + " " + contact.surname
+        phones: []
       };
       return result;
     }

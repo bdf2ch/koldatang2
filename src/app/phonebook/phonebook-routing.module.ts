@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AtsComponent } from './ats/ats.component';
 import { PhonebookComponent } from './phonebook.component';
 import { ContactListComponent } from './contact-list/contact-list.component';
 import { EditContactComponent } from "./edit-contact/edit-contact.component";
@@ -22,6 +23,15 @@ const routes: Routes = [
         data: {
           extras: {
             title: ""
+          }
+        }
+      },
+      {
+        path: "ats",
+        component: AtsComponent,
+        data: {
+          extras: {
+            title: "АТС"
           }
         }
       },

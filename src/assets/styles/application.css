@@ -81,7 +81,11 @@ body {
   border-left: 3px solid #FFB74D;
   background: #37474F;
 }
+#app-menu #items-container .menu-item a.active .menu-item-container {
+  display: block;
+}
 #app-menu #items-container .menu-item .menu-item-container {
+  display: none;
   padding-left: 30px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -262,4 +266,71 @@ body {
 }
 .nothing-found .fa {
   font-size: 30px;
+}
+.form {
+  background: white;
+  border-radius: 4px;
+}
+.form .form-section-title {
+  padding-bottom: 5px;
+  font-family: 'Roboto Bold';
+  font-size: 17px;
+  text-transform: uppercase;
+  color: #BDBDBD;
+  border-bottom: 1px solid #BDBDBD;
+}
+.form .form-footer {
+  background: #FAFAFA;
+}
+.list {
+  display: flex;
+  height: 60px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  flex-basis: auto;
+  flex-direction: column;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+}
+.list:hover {
+  background: #E3F2FD;
+}
+.list.dark {
+  background: #ECEFF1;
+}
+.list.selected {
+  background: #CFD8DC;
+}
+.list .leading {
+  overflow: hidden;
+  display: block;
+  position: relative;
+  width: 100%;
+  font-family: 'Roboto Bold';
+  color: #37474F;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.list .additional {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: #78909C;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.list .regular {
+  overflow: hidden;
+  display: block;
+  width: 100%;
+  padding-top: 3px;
+  color: black;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.list .empty-value {
+  color: grey;
 }

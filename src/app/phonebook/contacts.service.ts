@@ -38,7 +38,18 @@ export class ContactsService {
         if (body !== null) {
           let contact = new Contact(body.contact);
           contact.setupBackup(["divisionId", "surname", "name", "fname", "position", "email"]);
-          return contact;
+          let length = body.phones.length;
+          let phones: Phone[] = [];
+          for (let i = 0; i < length; i++) {
+            let phone = new Phone(body.phones[i]);
+            phone.setupBackup(['atsId', 'number']);
+            phones.push(phone);
+          }
+          let result = {
+            contact: contact,
+            phones: phones
+          };
+          return result;
         } else {
           return null;
         }
@@ -107,6 +118,39 @@ export class ContactsService {
             }
           } else
             return null;
+      })
+      .take(1)
+      .catch(this.handleError);
+  };
+
+
+  editContact(contact: Contact): Observable<Contact> {
+    let headers = new Headers({ "Content-Type": "application/json" });
+    let options = new RequestOptions({ headers: headers });
+    let params = {
+      action: "editContact",
+      data: {
+        contactId: contact.id,
+        divisionId: contact.divisionId,
+        surname: contact.surname,
+        name: contact.name,
+        fname: contact.fname,
+        position: contact.position,
+        email: contact.email,
+        mobile: contact.mobile }
+    };
+    this.loading = true;
+
+    return this.$http.post(apiUrl, params, options)
+      .map((res: Response|null) => {
+        this.loading = false;
+        let body = res.json();
+        if (body !== null) {
+          contact.setupBackup(['divisionId', 'surname', 'name', 'fname', 'position', 'email', 'mobile']);
+          contact.changed(false);
+          this.loading = false;
+        } else
+          return null;
       })
       .take(1)
       .catch(this.handleError);

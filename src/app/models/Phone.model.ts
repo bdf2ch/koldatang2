@@ -3,8 +3,8 @@ import { Model } from "./Model.class";
 
 export class PhoneConfig {
   id: number;
-  contactId: number;
-  atsId: number;
+  contact_id: number;
+  ats_id: number;
   number: string;
 };
 
@@ -19,8 +19,8 @@ export class Phone extends Model {
     super();
     if (config) {
       this.id = config.id;
-      this.contactId = config.contactId;
-      this.atsId = config.atsId;
+      this.contactId = config.contact_id;
+      this.atsId = config.ats_id;
       this.number = config.number;
     }
   };

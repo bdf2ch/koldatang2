@@ -43,7 +43,7 @@
     *
     **/
     function getContactById($parameters) {
-        global link;
+        global $link;
         $contactId = $parameters -> contactId;
 
         $result = pg_query_params(
@@ -62,11 +62,38 @@
     *
     *
     **/
+    function editContact($parameters) {
+        global $link;
+        $contactId = $parameters -> contactId;
+        $divisionId = $parameters -> divisionId;
+        $surname = $parameters -> surname;
+        $name = $parameters -> name;
+        $fname = $parameters -> fname;
+        $position = $parameters -> position;
+        $email = $parameters -> email;
+        $mobile = $parameters -> mobile;
+
+        $result = pg_query_params(
+            $link,
+            "SELECT edit_contact($1, $2, $3, $4, $5, $6, $7, $8)",
+            array($contactId, $divisionId, $surname, $name, $fname, $position, $email, $mobile)
+        );
+
+        $contact = pg_fetch_all($result);
+        echo is_null($contact) ? json_encode(NULL) : $contact[0]["edit_contact"];
+        return true;
+    }
+
+
+    /**
+    *
+    *
+    **/
     function addContactPhone ($parameters) {
         global $link;
         $contactId = $parameters -> contactId;
         $atsId = $parameters -> atsId;
-        $number = $parameters - > number;
+        $number = $parameters -> number;
 
         $result = pg_query_params(
             $link,
@@ -88,7 +115,7 @@
         global $link;
         $phoneId = $parameters -> phoneId;
         $atsId = $parameters -> atsId;
-        $number = $parameters - > number;
+        $number = $parameters -> number;
 
         $result = pg_query_params(
             $link,

@@ -103,11 +103,16 @@ html, body {
         &.active {
           border-left: 3px solid #FFB74D;
           background: #37474F;
+
+          .menu-item-container {
+            display: block;
+          }
         }
       }
 
       .menu-item-container {
         //margin-left: 20px;
+        display: none;
         padding-left: 30px;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -348,5 +353,84 @@ html, body {
 
   .fa {
     font-size: 30px;
+  }
+}
+
+
+
+.form {
+  background: white;
+  border-radius: 4px;
+
+  .form-section-title {
+    padding-bottom: 5px;
+    font-family: 'Roboto Bold';
+    font-size: 17px;
+    text-transform: uppercase;
+    color: #BDBDBD;
+    border-bottom: 1px solid #BDBDBD;
+  }
+
+  .form-footer {
+    background: #FAFAFA;
+  }
+}
+
+
+
+
+.list {
+  display: flex;
+  height: 60px;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+  flex-basis: auto;
+  flex-direction: column;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  &:hover {
+    background: #E3F2FD;
+  }
+
+  &.dark {
+    background: #ECEFF1;
+  }
+
+  &.selected {
+    background: #CFD8DC;
+  }
+
+  .leading {
+    overflow: hidden;
+    display: block;
+    position: relative;
+    width: 100%;
+    font-family: 'Roboto Bold';
+    color: #37474F;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .additional {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    padding-top: 3px;
+    color: #78909C;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .regular {
+    overflow: hidden;
+    display: block;
+    width: 100%;
+    padding-top: 3px;
+    color: black;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .empty-value {
+    color: grey;
   }
 }

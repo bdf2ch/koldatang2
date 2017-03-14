@@ -1,13 +1,94 @@
 <div id="contact">
   <div id="contact-header" class="app-content-header">
       <span class="app-content-title active">
-        <i class="fa fa-user-circle margin-right-10"></i>Контакт
+        <i class="fa fa-user-circle margin-right-10"></i>{{ contact._backupData.name + ' ' + contact._backupData.fname + ' ' + contact._backupData.surname }}
       </span>
     <i class="fa fa-times action-button right" title="Удалить абонента" (click)="openDeleteContactModal()"></i>
   </div>
 
-  <div class="content">
+  <div class="content padding-20">
+    <form (submit)="submit(form)" class="form" #form="ngForm" novalidate>
+      <div class="row padding-20 form-content">
+        <div class="row margin-bottom-20 form-section-title">Личные данные</div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-name">Имя абонента</label>
+          <input type="text"
+                 name="name"
+                 id="edit-contact-name"
+                 class="width-100 dark"
+                 placeholder="Введите имя"
+                 required
+                 [(ngModel)]="contact.name"
+                 #name="ngModel">
+          <div class="form-error" *ngIf="name.invalid && name.dirty">Вы не указали имя абонента</div>
+        </div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-fname">Отчество абонента</label>
+          <input type="text"
+                 name="fname"
+                 id="edit-contact-fname"
+                 class="width-100 dark"
+                 placeholder="Введите отчество"
+                 [(ngModel)]="contact.fname">
+        </div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-surname">Фамилия абонента</label>
+          <input type="text"
+                 name="surname"
+                 id="edit-contact-surname"
+                 class="width-100 dark"
+                 placeholder="Введите фамилию"
+                 required
+                 #surname="ngModel"
+                 (change)="contact.changed(true)"
+                 [(ngModel)]="contact.surname">
+          <div class="form-error" *ngIf="surname.invalid">Вы не указали фамилию абонента</div>
+        </div>
 
+        <div class="row margin-bottom-20 form-section-title">Контактные данные</div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-email">E-mail абонента</label>
+          <input type="text"
+                 name="email"
+                 id="edit-contact-email"
+                 class="width-100 dark"
+                 placeholder="Введите e-mail"
+                 [(ngModel)]="contact.email">
+        </div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-mobile">Мобильный телефон абонента</label>
+          <input type="text"
+                 name="email"
+                 id="edit-contact-mobile"
+                 class="width-100 dark"
+                 placeholder="Введите мобильный телефон"
+                 [(ngModel)]="contact.mobile">
+        </div>
+
+        <div class="row margin-bottom-20 form-section-title">Место работы и должность</div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-division" class="row width-100">Структурное подразделение</label>
+          <div class="input-with-controls dark">
+            <input type="text"
+                   name="division"
+                   id="edit-contact-division"
+                   placeholder="Выберите структурное подразделение"
+                   [value]="contact.divisionId | divisionTitle">
+            <button type="button" class="blue appended" (click)="openSelectDivisionModal(form)"><i class="fa fa-building"></i></button>
+          </div>
+        </div>
+        <div class="row margin-bottom-20">
+          <label for="edit-contact-position">Мобильный телефон абонента</label>
+          <input type="text" name="position" id="edit-contact-position" class="width-100 dark" placeholder="Введите Должность" [(ngModel)]="contact.position">
+        </div>
+      </div>
+
+
+      <div class="row width-100 padding-20 form-footer">
+        <button type="button" class="red right" [disabled]="form.pristine" (click)="cancel(form)"><i class="fa fa-ban margin-right-10"></i>Отмена</button>
+        <button type="submit" class="green right margin-right-10" [disabled]="form.invalid || form.pristine"><i class="fa fa-save margin-right-10"></i>Сохранить</button>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -22,10 +103,10 @@
     <i class="fa fa-times action-button right" title="Удалить телефон" *ngIf="selectedPhone !== null" (click)="openDeletePhoneModal()"></i>
   </div>
 
-  <div class="content">
-    <div class="contact-phone" *ngFor="let phone of phones" [ngClass]="{selected: phone === selectedPhone}" (click)="selectPhone(phone)">
+  <div class="content padding-20">
+    <div class="list dark" *ngFor="let phone of phones" [ngClass]="{selected: phone === selectedPhone}" (click)="selectPhone(phone)">
       <span class="leading">{{ phone.number }}</span>
-      <span class="additional">{{ phone.atsId }}</span>
+      <span class="additional">{{ phone.atsId | atsTitle }}</span>
     </div>
 
     <div class="row width-100 nothing-found margin-top-30 padding-30" *ngIf="selectedATS === null">
@@ -44,9 +125,39 @@
 </div>
 
 
+
+<modal [id]="'edit-contact-division'" [footer]="true" [title]="'Выбор структурного подразделения'" [width]="500" [contentHeight]="400" (onClose)="closeSelectDivisionModal()">
+  <div class="modal-content">
+    <div class="row padding-10">
+      <tree [id]="'edit-contact-divisions-tree'"
+            [expandOnSelect]="true"
+            [collapseOnDeselect]="true"
+            (onSelect)="selectDivision($event)"
+            class="inline">
+      </tree>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <div class="row padding-10">
+      <div class="width-50 padding-right-5">
+        <button class="blue width-100" [disabled]="$trees.getById('edit-contact-divisions-tree').getSelectedItem() === null" (click)="$modals.close(true)">
+          <i class="fa fa-check"></i>&nbsp;Выбрать
+        </button>
+      </div>
+      <div class="width-50 padding-left-5">
+        <button class="red width-100" (click)="$modals.close()">
+          <i class="fa fa-ban"></i>&nbsp;Отмена
+        </button>
+      </div>
+    </div>
+  </div>
+</modal>
+
+
+
 <modal [id]="'new-contact-phone'" [footer]="true" [title]="'Новый контактный телефон'" [width]="400" (onClose)="closeNewPhoneModal(newPhoneForm)">
   <div class="modal-content">
-    <form (submit)="addNewPhone()" #newPhoneForm="ngForm">
+    <form (submit)="addNewPhone()" #newPhoneForm="ngForm" novalidate>
       <div class="row padding-10">
         <label for="new-phone-tree" class="row width-100 margin-bottom-10">АТС</label>
         <div class="row width-100">
@@ -61,9 +172,14 @@
       </div>
       <div class="row padding-10">
         <label for="new-phone-number" class="width-100">Номер телефона</label>
-        <input type="text" name="number" id="new-phone-number" class="width-100 dark" [(ngModel)]="newPhone.number" required #number="ngModel">
-        <div class="form-error"
-             *ngIf="number.invalid && number.dirty">
+        <input type="text"
+               name="number"
+               id="new-phone-number"
+               class="width-100 dark"
+               [(ngModel)]="newPhone.number"
+               required
+               #number="ngModel">
+        <div class="form-error" *ngIf="number.invalid && number.dirty">
           Вы не указали номер телефона
         </div>
       </div>
@@ -72,7 +188,7 @@
   <div class="modal-footer">
     <div class="row padding-10">
       <div class="width-50 padding-right-5">
-        <button class="blue width-100" [disabled]="newPhoneForm.form.invalid" (click)="addNewPhone(newPhoneForm)">
+        <button class="blue width-100" [disabled]="newPhoneForm.form.invalid || newPhone.atsId === 0" (click)="addNewPhone(newPhoneForm)">
           <i class="fa fa-plus margin-right-10"></i>Добавить
         </button>
       </div>
@@ -86,7 +202,7 @@
 </modal>
 
 
-<modal [id]="'edit-contact-phone'" [footer]="true" [title]="'Изменение контактного телефонА'" [width]="400" (onClose)="closeEditPhoneModal(editPhoneForm)">
+<modal [id]="'edit-contact-phone'" [footer]="true" [title]="'Изменение контактного телефонА'" [width]="400" (onClose)="closeEditPhoneModal(editPhoneForm)" *ngIf="selectedPhone !== null">
   <div class="modal-content">
     <form (submit)="editPhone()" #editPhoneForm="ngForm">
       <div class="row padding-10">
@@ -128,23 +244,21 @@
 </modal>
 
 
-<modal [id]="'delete-contact-phone'" [footer]="true" [title]="'Удаление контактного телефона'" [width]="300">
+<modal [id]="'delete-contact-phone'" [footer]="true" [title]="'Удаление контактного телефона'" [width]="300" *ngIf="selectedPhone !== null">
   <div class="modal-content">
-    <form (submit)="deletePhone()">
       <div class="row padding-10">
-        Удалить код выхода?
+        Удалить контактный телефон {{ this.selectedPhone.number }}?
       </div>
-    </form>
   </div>
   <div class="modal-footer">
     <div class="row padding-10">
       <div class="width-50 padding-right-5">
-        <button type="submit" class="blue width-100">
+        <button type="submit" class="blue width-100" (click)="deletePhone()">
           <i class="fa fa-times margin-right-10"></i>Удалить
         </button>
       </div>
       <div class="width-50 padding-left-5">
-        <button type="button" class="red width-100" (click)="$modals.close()">
+        <button type="button" class="red width-100">
           <i class="fa fa-ban margin-right-10"></i>Отмена
         </button>
       </div>

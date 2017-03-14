@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DivisionsService } from '../../divisions/divisions.service';
 import { ContactsService } from '../contacts.service';
@@ -11,7 +11,7 @@ import { Contact } from "../../models/Contact.model";
   templateUrl: './contact-list.component.html',
   styleUrls: ['./contact-list.component.css']
 })
-export class ContactListComponent implements OnInit {
+export class ContactListComponent implements OnInit, AfterViewInit {
   filterDivisionId: number = 0;
 
 
@@ -23,10 +23,16 @@ export class ContactListComponent implements OnInit {
               private $modals: ModalService) {};
 
   ngOnInit() {
+
+  };
+
+  ngAfterViewInit() {
     if (this.$divisions.getAll().length === 0)
       this.$divisions.fetchAll().subscribe(() => {
         this.populateDivisionsTree();
       });
+    else
+      this.populateDivisionsTree();
   };
 
 
